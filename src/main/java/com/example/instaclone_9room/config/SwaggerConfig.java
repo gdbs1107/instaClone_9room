@@ -15,8 +15,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI UMCstudyAPI(){
         Info info=new Info()
-                .title("청년연구소")
-                .description("CheerUp Project")
+                .title("인스타 클론 코딩")
+                .description("instagram")
                 .version("1.0");
 
         String jwtSchemeName="JWTToken";
