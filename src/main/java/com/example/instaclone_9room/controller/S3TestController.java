@@ -1,5 +1,6 @@
-package com.example.instaclone_9room.s3;
+package com.example.instaclone_9room.controller;
 
+import com.example.instaclone_9room.service.S3TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,10 +13,10 @@ import java.io.IOException;
 
 @RestController
 @Slf4j
-public class S3Controller {
+public class S3TestController {
 
     @Autowired
-    private S3Service s3Service;
+    private S3TestService s3Service;
 
     @PostMapping(path = "/teams", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity uploadPetImage(

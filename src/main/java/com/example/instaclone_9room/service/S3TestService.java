@@ -1,4 +1,4 @@
-package com.example.instaclone_9room.s3;
+package com.example.instaclone_9room.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-public class S3Service{
+public class S3TestService {
 
     @Autowired
     private AmazonS3 amazonS3;
