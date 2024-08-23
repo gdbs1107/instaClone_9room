@@ -26,5 +26,7 @@ public class UserEntity extends BaseEntity {
     private String password;
     private String role;
 
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<ChatPart> chatPartList = new ArrayList<>();
 
 }
