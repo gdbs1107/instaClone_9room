@@ -25,11 +25,6 @@ public class S3TestController {
 
     @Autowired
     private S3TestService s3Service;
-    private final AmazonS3 amazonS3;
-    private final ImageRepository imageRepository;
-
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
 
     @PostMapping(path = "/teams", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadPetImage(
