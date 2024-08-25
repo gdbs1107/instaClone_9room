@@ -17,6 +17,7 @@ public class ChatPart extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "chat_part_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,7 +25,7 @@ public class ChatPart extends BaseEntity {
     private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chattingRoom_id")
+    @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
 
     @OneToMany(mappedBy = "chatPart", cascade = CascadeType.ALL)

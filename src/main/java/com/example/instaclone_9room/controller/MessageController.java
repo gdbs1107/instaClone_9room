@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/message")
 public class MessageController {
-    private final
+
 }

@@ -27,7 +27,7 @@ public class Message extends BaseEntity {
     private readStatus isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "chatPart_id")
+    @JoinColumn(name = "chat_part_id")
     ChatPart chatPart;
 
 }
