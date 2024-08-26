@@ -15,8 +15,8 @@ public class ChatRoomRequest {
     @Builder
     public static class ChatRoomCreateRequest {
         // 채팅방 만들어지는 요청
-        private Long creatorId;
-        private Long targetUserId;
+        private Long creatorId; // 인스타에서 채팅시작하는 놈
+        private Long targetUserId;  // 채팅받을 놈
         private String roomName;
         private List<Long> participantIds;
 

@@ -1,8 +1,7 @@
-package com.example.instaclone_9room.service.impl;
+package com.example.instaclone_9room.service;
 
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
-import com.example.instaclone_9room.service.UserCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
