@@ -4,7 +4,7 @@ package com.example.instaclone_9room.controller;
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.service.JoinService;
-import com.example.instaclone_9room.service.UserCommandService;
+import com.example.instaclone_9room.service.userService.UserCommandService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

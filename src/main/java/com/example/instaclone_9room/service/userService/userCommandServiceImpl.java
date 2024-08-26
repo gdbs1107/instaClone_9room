@@ -1,7 +1,8 @@
-package com.example.instaclone_9room.service;
+package com.example.instaclone_9room.service.userService;
 
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
+import com.example.instaclone_9room.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ public class userCommandServiceImpl implements UserCommandService {
 
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
+    private final UserRepository userRepository;
+
 
     @Override
     public void logout(String refreshToken) {
