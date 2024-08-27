@@ -29,12 +29,13 @@ public class UserEntity extends BaseEntity {
     private String role;
 
     private String name;
-    private Boolean onPrivate;
+    private Boolean onPrivate=true;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private LocalDate birthday;
     private String link;
+    private String imagePath;
 
     @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
     private List<Follower> followers = new ArrayList<>();
@@ -50,6 +51,24 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<ReelsLikes> reelsLikes=new ArrayList<>();
+
+
+
+
+
+
+
+    //--------연관관계 메서드---------------
+
+
+    public void setInfo(String name,Gender gender,LocalDate birthday,String link){
+        this.name = name;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.link = link;
+    }
+
+/*    public void updateUser()*/
 
 
 }

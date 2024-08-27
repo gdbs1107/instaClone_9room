@@ -2,7 +2,9 @@ package com.example.instaclone_9room.service;
 
 
 import com.example.instaclone_9room.controller.dto.JoinDto;
+import com.example.instaclone_9room.converter.UserConverter;
 import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.enumPackage.Gender;
 import com.example.instaclone_9room.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +18,7 @@ public class JoinService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     public void joinProcess(JoinDto.JoinRequestDTO joinDto){
 
@@ -31,11 +34,16 @@ public class JoinService {
             return;
         }
 
+        Gender gender = UserConverter.toGender(joinDto.getGenderType());
 
         UserEntity userEntity = UserEntity.builder()
                 .username(username)
                 .password(bCryptPasswordEncoder.encode(password))
                 .role("ROLE_USER")
+                .link(joinDto.getLink())
+                .name(joinDto.getName())
+                .gender(gender)
+                .birthday(joinDto.getBirthday())
                 .build();
 
         userRepository.save(userEntity);

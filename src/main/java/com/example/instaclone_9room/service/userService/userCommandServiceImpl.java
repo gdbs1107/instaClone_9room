@@ -1,5 +1,9 @@
 package com.example.instaclone_9room.service.userService;
 
+import com.example.instaclone_9room.controller.dto.UserDTO;
+import com.example.instaclone_9room.converter.UserConverter;
+import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.enumPackage.Gender;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
 import com.example.instaclone_9room.repository.UserRepository;
@@ -13,6 +17,8 @@ public class userCommandServiceImpl implements UserCommandService {
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
     private final UserRepository userRepository;
+
+
 
 
     @Override
@@ -36,5 +42,12 @@ public class userCommandServiceImpl implements UserCommandService {
         String username = jwtUtil.getUsername(refreshToken);
 
         refreshRepository.deleteByRefresh(refreshToken);
+    }
+
+
+    private UserEntity findUser(String username) {
+        return userRepository.findByUsername(username).orElseThrow(
+                ()->new RuntimeException("cannot find users")
+        );
     }
 }
