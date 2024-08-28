@@ -2,6 +2,11 @@ package com.example.instaclone_9room.domain;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
+import com.example.instaclone_9room.domain.follow.Follow;
+import com.example.instaclone_9room.domain.follow.Follower;
+import com.example.instaclone_9room.domain.reels.Reels;
+import com.example.instaclone_9room.domain.reels.ReelsComment;
+import com.example.instaclone_9room.domain.reels.ReelsLikes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +35,7 @@ public class UserEntity extends BaseEntity {
 
     private String name;
     private Boolean onPrivate=true;
+    private String introduction;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -61,14 +67,15 @@ public class UserEntity extends BaseEntity {
     //--------연관관계 메서드---------------
 
 
-    public void setInfo(String name,Gender gender,LocalDate birthday,String link){
+    public void setInfo(String name,Gender gender,LocalDate birthday,String link,String introduction,Boolean onPrivate){
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
         this.link = link;
+        this.introduction = introduction;
+        this.onPrivate=onPrivate;
     }
 
-/*    public void updateUser()*/
 
 
 }
