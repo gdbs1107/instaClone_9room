@@ -23,7 +23,6 @@ public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
     private final FollowerRepository followerRepository;
-    private final CloseFollowerRepository closeFollowerRepository;
     private final BlockedFollowerRepository blockedFollowerRepository;
 
 
@@ -91,69 +90,12 @@ public class FollowServiceImpl implements FollowService {
 
 
 
-    @Override
-    public void toggleCloseFollower(String username, Long followerId) {
-        // 사용자 찾기
-        UserEntity user = findUser(username);
-
-        // 팔로워 찾기
-        Follower follower = user.getFollowers().stream()
-                .filter(f -> f.getId().equals(followerId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Follower not found"));
-
-        // CloseFollower 찾기
-        CloseFollower closeFollower = closeFollowerRepository.findByUserEntityAndFollower(user, follower)
-                .orElse(null);
-
-        if (closeFollower != null) {
-            // 이미 친한 팔로워인 경우, 삭제
-            closeFollowerRepository.delete(closeFollower);
-        } else {
-            // 친한 팔로워가 아닌 경우, 추가
-            CloseFollower newCloseFollower = CloseFollower.builder()
-                    .userEntity(user)
-                    .follower(follower)
-                    .build();
-
-            closeFollowerRepository.save(newCloseFollower);
-        }
-    }
-
-
-    @Override
-    public void toggleBlockedFollower(String username, Long followerId) {
-        // 사용자 찾기
-        UserEntity user = findUser(username);
-
-        // 팔로워 찾기
-        Follower follower = user.getFollowers().stream()
-                .filter(f -> f.getId().equals(followerId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Follower not found"));
-
-        // CloseFollower 찾기
-        BlockedFollower blockedFollower = blockedFollowerRepository.findByUserEntityAndFollower(user, follower)
-                .orElse(null);
-
-        if (blockedFollower != null) {
-            // 이미 친한 팔로워인 경우, 삭제
-            blockedFollowerRepository.delete(blockedFollower);
-        } else {
-            // 친한 팔로워가 아닌 경우, 추가
-            BlockedFollower newBlockedFollower = BlockedFollower.builder()
-                    .userEntity(user)
-                    .follower(follower)
-                    .build();
-
-            blockedFollowerRepository.save(newBlockedFollower);
-        }
-    }
-
     private UserEntity findUser(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
+
+
 }
 
 

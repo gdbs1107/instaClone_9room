@@ -1,9 +1,8 @@
-package com.example.instaclone_9room.controller;
+package com.example.instaclone_9room.controller.followController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.FollowDTO;
 import com.example.instaclone_9room.service.followService.FollowService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,17 +53,4 @@ public class FollowController {
 
 
 
-    @PostMapping("/closeFollower/{closeFollowerId}")
-    public ApiResponse<String> closeFollowers(@AuthenticationPrincipal UserDetails userDetails,
-                                              @PathVariable Long closeFollowerId) {
-        followService.toggleCloseFollower(userDetails.getUsername(), closeFollowerId);
-        return ApiResponse.onSuccess("closeFollow successfully");
-    }
-
-    @PostMapping("/blockFollower/{blockedFollowerId}")
-    public ApiResponse<String> blockedFollowers(@AuthenticationPrincipal UserDetails userDetails,
-                                              @PathVariable Long blockedFollowerId) {
-        followService.toggleBlockedFollower(userDetails.getUsername(), blockedFollowerId);
-        return ApiResponse.onSuccess("closeFollow successfully");
-    }
 }

@@ -14,8 +14,4 @@ public interface FollowService {
     List<FollowDTO.FollowResponseDTO> getFollowedUsers(String username);
 
     List<FollowDTO.FollowerResponseDTO> getFollowers(String username);
-
-    void toggleCloseFollower(String username, Long followerId);
-
-    void toggleBlockedFollower(String username, Long followerId);
 }
