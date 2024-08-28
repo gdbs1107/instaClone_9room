@@ -51,4 +51,20 @@ public class FollowController {
 
         return ApiResponse.onSuccess(followerUsers);
     }
+
+
+
+    @PostMapping("/closeFollower/{closeFollowerId}")
+    public ApiResponse<String> closeFollowers(@AuthenticationPrincipal UserDetails userDetails,
+                                              @PathVariable Long closeFollowerId) {
+        followService.toggleCloseFollower(userDetails.getUsername(), closeFollowerId);
+        return ApiResponse.onSuccess("closeFollow successfully");
+    }
+
+    @PostMapping("/blockFollower/{blockedFollowerId}")
+    public ApiResponse<String> blockedFollowers(@AuthenticationPrincipal UserDetails userDetails,
+                                              @PathVariable Long blockedFollowerId) {
+        followService.toggleBlockedFollower(userDetails.getUsername(), blockedFollowerId);
+        return ApiResponse.onSuccess("closeFollow successfully");
+    }
 }

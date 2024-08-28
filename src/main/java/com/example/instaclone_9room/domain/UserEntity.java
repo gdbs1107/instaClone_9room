@@ -2,8 +2,6 @@ package com.example.instaclone_9room.domain;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
-import com.example.instaclone_9room.domain.follow.BlockedFollower;
-import com.example.instaclone_9room.domain.follow.CloseFollower;
 import com.example.instaclone_9room.domain.follow.Follow;
 import com.example.instaclone_9room.domain.follow.Follower;
 import com.example.instaclone_9room.domain.reels.Reels;
@@ -45,27 +43,20 @@ public class UserEntity extends BaseEntity {
     private String link;
     private String imagePath;
 
-    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<Follower> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<Follow> follows = new ArrayList<>();
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<Reels> reels=new ArrayList<>();
+    private List<Reels> reels = new ArrayList<>();
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<ReelsComment> reelsComments=new ArrayList<>();
+    private List<ReelsComment> reelsComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<ReelsLikes> reelsLikes=new ArrayList<>();
-
-    @OneToMany
-    private List<CloseFollower> closeFollowers=new ArrayList<>();
-
-    @OneToMany
-    private List<BlockedFollower> blockedFollowers=new ArrayList<>();
-
+    private List<ReelsLikes> reelsLikes = new ArrayList<>();
 
 
 
@@ -98,14 +89,6 @@ public class UserEntity extends BaseEntity {
                 .followerUser(this)
                 .build();
         followUser.getFollowers().add(follower);
-    }
-
-    public void unfollow(UserEntity followUser) {
-        // 1. 나의 팔로우 리스트에서 상대방 제거
-        this.follows.removeIf(follow -> follow.getFollowUser().equals(followUser));
-
-        // 2. 상대방의 팔로워 리스트에서 나를 제거
-        followUser.getFollowers().removeIf(follower -> follower.getFollowerUser().equals(this));
     }
 
 

@@ -26,13 +26,9 @@ public class Follower extends BaseEntity {
     @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
 
-    @OneToMany
-    private List<CloseFollower> closeFollowers=new ArrayList<>();
-
-    @OneToMany
-    private List<BlockedFollower> blockedFollowers=new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_user_id")
     private UserEntity followerUser;
+
+
 }

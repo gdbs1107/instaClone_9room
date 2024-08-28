@@ -3,11 +3,11 @@ package com.example.instaclone_9room.service.followService;
 import com.example.instaclone_9room.controller.dto.FollowDTO;
 import com.example.instaclone_9room.converter.FollowConverter;
 import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.follow.BlockedFollower;
+import com.example.instaclone_9room.domain.follow.CloseFollower;
 import com.example.instaclone_9room.domain.follow.Follow;
 import com.example.instaclone_9room.domain.follow.Follower;
-import com.example.instaclone_9room.repository.FollowRepository;
-import com.example.instaclone_9room.repository.FollowerRepository;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,8 @@ public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
     private final FollowerRepository followerRepository;
-
+    private final CloseFollowerRepository closeFollowerRepository;
+    private final BlockedFollowerRepository blockedFollowerRepository;
 
 
     @Override
@@ -49,8 +50,6 @@ public class FollowServiceImpl implements FollowService {
     }
 
 
-
-
     @Override
     public void unfollowUser(String username, Long targetId) {
         UserEntity follower = findUser(username);
@@ -63,7 +62,6 @@ public class FollowServiceImpl implements FollowService {
         // 팔로워 제거
         followerRepository.deleteByUserEntityAndFollowerUser(target, follower);
     }
-
 
 
     @Override
@@ -84,7 +82,7 @@ public class FollowServiceImpl implements FollowService {
     public List<FollowDTO.FollowerResponseDTO> getFollowers(String username) {
 
         UserEntity user = findUser(username);
-        List<Follower> followers=followerRepository.findByUserEntity(user);
+        List<Follower> followers = followerRepository.findByUserEntity(user);
 
         return followers.stream()
                 .map(follower -> FollowConverter.toFollowerResponseDTO(follower.getFollowerUser()))
@@ -93,13 +91,70 @@ public class FollowServiceImpl implements FollowService {
 
 
 
+    @Override
+    public void toggleCloseFollower(String username, Long followerId) {
+        // 사용자 찾기
+        UserEntity user = findUser(username);
+
+        // 팔로워 찾기
+        Follower follower = user.getFollowers().stream()
+                .filter(f -> f.getId().equals(followerId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Follower not found"));
+
+        // CloseFollower 찾기
+        CloseFollower closeFollower = closeFollowerRepository.findByUserEntityAndFollower(user, follower)
+                .orElse(null);
+
+        if (closeFollower != null) {
+            // 이미 친한 팔로워인 경우, 삭제
+            closeFollowerRepository.delete(closeFollower);
+        } else {
+            // 친한 팔로워가 아닌 경우, 추가
+            CloseFollower newCloseFollower = CloseFollower.builder()
+                    .userEntity(user)
+                    .follower(follower)
+                    .build();
+
+            closeFollowerRepository.save(newCloseFollower);
+        }
+    }
 
 
+    @Override
+    public void toggleBlockedFollower(String username, Long followerId) {
+        // 사용자 찾기
+        UserEntity user = findUser(username);
+
+        // 팔로워 찾기
+        Follower follower = user.getFollowers().stream()
+                .filter(f -> f.getId().equals(followerId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Follower not found"));
+
+        // CloseFollower 찾기
+        BlockedFollower blockedFollower = blockedFollowerRepository.findByUserEntityAndFollower(user, follower)
+                .orElse(null);
+
+        if (blockedFollower != null) {
+            // 이미 친한 팔로워인 경우, 삭제
+            blockedFollowerRepository.delete(blockedFollower);
+        } else {
+            // 친한 팔로워가 아닌 경우, 추가
+            BlockedFollower newBlockedFollower = BlockedFollower.builder()
+                    .userEntity(user)
+                    .follower(follower)
+                    .build();
+
+            blockedFollowerRepository.save(newBlockedFollower);
+        }
+    }
 
     private UserEntity findUser(String username) {
-        UserEntity follower = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Follower not found"));
-        return follower;
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
+
+
 
