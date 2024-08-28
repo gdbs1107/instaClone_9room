@@ -37,4 +37,14 @@ public class Reels extends BaseEntity {
 
     @OneToMany(mappedBy = "reels",cascade = CascadeType.ALL)
     private List<ReelsComment> reelsComments =new ArrayList<>();
+
+
+
+    public void setUserEntity(UserEntity userEntity) {
+        if(userEntity != null) {
+            this.userEntity = userEntity;
+        }else {
+            return;
+        }
+    }
 }

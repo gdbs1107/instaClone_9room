@@ -75,22 +75,12 @@ public class UserEntity extends BaseEntity {
         this.onPrivate=onPrivate;
     }
 
-    public void follow(UserEntity followUser) {
-        // 1. 나의 팔로우 리스트에 상대방 추가
-        Follow follow = Follow.builder()
-                .userEntity(this)
-                .followUser(followUser)
-                .build();
-        this.follows.add(follow);
 
-        // 2. 상대방의 팔로워 리스트에 나를 추가
-        Follower follower = Follower.builder()
-                .userEntity(followUser)
-                .followerUser(this)
-                .build();
-        followUser.getFollowers().add(follower);
+
+    public void addReels(Reels reels) {
+        reels.setUserEntity(this);
+        this.reels.add(reels);
     }
-
 
 
 

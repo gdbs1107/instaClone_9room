@@ -5,7 +5,7 @@ import com.example.instaclone_9room.converter.FollowConverter;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.follow.BlockedFollower;
 import com.example.instaclone_9room.domain.follow.Follower;
-import com.example.instaclone_9room.repository.BlockedFollowerRepository;
+import com.example.instaclone_9room.repository.followRepository.BlockedFollowerRepository;
 import com.example.instaclone_9room.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
