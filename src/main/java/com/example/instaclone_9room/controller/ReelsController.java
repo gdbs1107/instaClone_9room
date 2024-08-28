@@ -7,10 +7,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,4 +25,30 @@ public class ReelsController {
 
         return ApiResponse.onSuccess("saved reels");
     }
+
+    @DeleteMapping("/{reelsId}")
+    public ApiResponse<String> delete(@PathVariable Long reelsId,
+                                      @AuthenticationPrincipal UserDetails userDetails) {
+
+        reelsService.deleteReels(userDetails.getUsername(),reelsId);
+        return ApiResponse.onSuccess("deleted reels");
+    }
+
+    @GetMapping("/{reelsId}")
+    public ApiResponse<ReelsDTO.ReelsResponseDTO> getReels(@PathVariable Long reelsId) {
+        ReelsDTO.ReelsResponseDTO reels = reelsService.getReels(reelsId);
+        return ApiResponse.onSuccess(reels);
+    }
+
+    @PutMapping("/{reelsId}")
+    public ApiResponse<String> updateReels(@PathVariable Long reelsId,
+                                           @RequestBody ReelsDTO.ReelsUpdateRequestDTO request,
+                                           @AuthenticationPrincipal UserDetails userDetails) {
+
+        reelsService.updateReels(userDetails.getUsername(),reelsId,request);
+        return ApiResponse.onSuccess("updated reels");
+    }
+
+
+    //릴스 전체조회 API 만들어야함
 }

@@ -28,6 +28,8 @@ public class Reels extends BaseEntity {
     private String audioPath;
     private String audioName;
 
+    private String content;
+
 
 
 
@@ -46,5 +48,11 @@ public class Reels extends BaseEntity {
         }else {
             return;
         }
+    }
+
+    public void update(String content, String audioPath, String audioName) {
+        this.content = content;
+        this.audioPath = audioPath;
+        this.audioName = audioName;
     }
 }

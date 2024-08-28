@@ -1,8 +1,12 @@
 package com.example.instaclone_9room.converter;
 
+import com.example.instaclone_9room.controller.dto.ReelsCommentDTO;
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.reels.Reels;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReelsConverter {
 
@@ -14,6 +18,23 @@ public class ReelsConverter {
                 .audioPath(reelsDTO.getAudioPath())
                 .videoPath(reelsDTO.getVideoPath())
                 .videoName(reelsDTO.getVideoName())
+                .content(reelsDTO.getContent())
                 .build();
     }
+
+    public static ReelsDTO.ReelsResponseDTO toReelsResponseDTO(Reels reels) {
+        List<ReelsCommentDTO.CommentPostResponseDTO> reelsCommentDTOs = reels.getReelsComments().stream()
+                .map(comment -> ReelsCommentDTO.CommentPostResponseDTO.builder()
+                        .content(comment.getContent())
+                        .name(comment.getUserEntity().getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ReelsDTO.ReelsResponseDTO.builder()
+                .videoPath(reels.getVideoPath())
+                .audioPath(reels.getAudioPath())
+                .reelsComments(reelsCommentDTOs)
+                .build();
+    }
+
 }
