@@ -2,6 +2,8 @@ package com.example.instaclone_9room.domain;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
+import com.example.instaclone_9room.domain.follow.BlockedFollower;
+import com.example.instaclone_9room.domain.follow.CloseFollower;
 import com.example.instaclone_9room.domain.follow.Follow;
 import com.example.instaclone_9room.domain.follow.Follower;
 import com.example.instaclone_9room.domain.reels.Reels;
@@ -58,6 +60,12 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<ReelsLikes> reelsLikes=new ArrayList<>();
 
+    @OneToMany
+    private List<CloseFollower> closeFollowers=new ArrayList<>();
+
+    @OneToMany
+    private List<BlockedFollower> blockedFollowers=new ArrayList<>();
+
 
 
 
@@ -75,6 +83,31 @@ public class UserEntity extends BaseEntity {
         this.introduction = introduction;
         this.onPrivate=onPrivate;
     }
+
+    public void follow(UserEntity followUser) {
+        // 1. 나의 팔로우 리스트에 상대방 추가
+        Follow follow = Follow.builder()
+                .userEntity(this)
+                .followUser(followUser)
+                .build();
+        this.follows.add(follow);
+
+        // 2. 상대방의 팔로워 리스트에 나를 추가
+        Follower follower = Follower.builder()
+                .userEntity(followUser)
+                .followerUser(this)
+                .build();
+        followUser.getFollowers().add(follower);
+    }
+
+    public void unfollow(UserEntity followUser) {
+        // 1. 나의 팔로우 리스트에서 상대방 제거
+        this.follows.removeIf(follow -> follow.getFollowUser().equals(followUser));
+
+        // 2. 상대방의 팔로워 리스트에서 나를 제거
+        followUser.getFollowers().removeIf(follower -> follower.getFollowerUser().equals(this));
+    }
+
 
 
 

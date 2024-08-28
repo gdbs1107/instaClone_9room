@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -22,4 +25,14 @@ public class Follower extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
+
+    @OneToMany
+    private List<CloseFollower> closeFollowers=new ArrayList<>();
+
+    @OneToMany
+    private List<BlockedFollower> blockedFollowers=new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "follower_user_id")
+    private UserEntity followerUser;
 }
