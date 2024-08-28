@@ -28,4 +28,11 @@ public class ReelsComment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
+
+
+    /*-------------------------연관관계 메서드------------------------*/
+
+    public void updateComment(String content) {
+        this.content = content;
+    }
 }
