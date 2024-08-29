@@ -1,5 +1,7 @@
 package com.example.instaclone_9room.service.reelsService;
 
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.reels.Reels;
 import com.example.instaclone_9room.domain.reels.ReelsLikes;
@@ -62,7 +64,8 @@ public class ReelsLikesServiceImpl implements ReelsLikesService {
 
 
     private UserEntity findUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByUsername(username).orElseThrow(
+                ()->new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND)
+        );
     }
 }

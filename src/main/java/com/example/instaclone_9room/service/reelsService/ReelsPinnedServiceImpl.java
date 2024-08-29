@@ -1,5 +1,8 @@
 package com.example.instaclone_9room.service.reelsService;
 
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
+import com.example.instaclone_9room.apiPayload.exception.handler.ReelsCategoryHandler;
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.converter.ReelsConverter;
 import com.example.instaclone_9room.converter.ReelsPinnedConverter;
@@ -73,12 +76,13 @@ public class ReelsPinnedServiceImpl implements ReelsPinnedService {
 
 
     private UserEntity findUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByUsername(username).orElseThrow(
+                ()->new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND)
+        );
     }
 
     private Reels findReels(Long id) {
         return reelsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reels not found"));
+                .orElseThrow(() -> new ReelsCategoryHandler(ErrorStatus.REELS_NOT_FOUND));
     }
 }

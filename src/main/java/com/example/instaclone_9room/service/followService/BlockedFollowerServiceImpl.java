@@ -1,5 +1,7 @@
 package com.example.instaclone_9room.service.followService;
 
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.FollowDTO;
 import com.example.instaclone_9room.converter.FollowConverter;
 import com.example.instaclone_9room.domain.UserEntity;
@@ -65,7 +67,8 @@ public class BlockedFollowerServiceImpl implements BlockedFollowerService {
 
 
     private UserEntity findUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByUsername(username).orElseThrow(
+                ()->new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND)
+        );
     }
 }

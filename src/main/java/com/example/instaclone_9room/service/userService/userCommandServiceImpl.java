@@ -1,5 +1,9 @@
 package com.example.instaclone_9room.service.userService;
 
+import com.example.instaclone_9room.apiPayload.code.BaseErrorCode;
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.GeneralException;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.converter.UserConverter;
@@ -9,6 +13,7 @@ import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
 import com.example.instaclone_9room.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +36,14 @@ public class userCommandServiceImpl implements UserCommandService {
         Gender gender = UserConverter.toGender(request.getGenderType());
 
         System.out.println("name="+request.getName());
+
+
+        //글자길이 넘어가면 오류 반환
+        if (request.getName().length()>20 && request.getIntroduction().length()>30 && request.getLink().length()>30){
+
+            throw new MemberCategoryHandler(ErrorStatus.TOO_LONG_REQUEST);
+
+        }
 
 
         user.setInfo(request.getName(),
@@ -90,10 +103,21 @@ public class userCommandServiceImpl implements UserCommandService {
 
         Boolean isExist = userRepository.existsByUsername(username);
 
+
+
         if (isExist){
-            System.out.println("이미 존재하는 회원입니다");
-            return;
+            throw new MemberCategoryHandler(ErrorStatus.USERNAME_EXISTED);
         }
+
+        if (joinDto.getName().length()>20  && joinDto.getLink().length()>30) {
+            throw new MemberCategoryHandler(ErrorStatus.TOO_LONG_REQUEST);
+        }
+
+        if(joinDto.getGenderType()!=1 && joinDto.getGenderType()!=2){
+            throw new MemberCategoryHandler(ErrorStatus.GENDER_ERROR);
+        }
+
+
 
         Gender gender = UserConverter.toGender(joinDto.getGenderType());
 
@@ -140,7 +164,7 @@ public class userCommandServiceImpl implements UserCommandService {
 
     private UserEntity findUser(String username) {
         return userRepository.findByUsername(username).orElseThrow(
-                ()->new RuntimeException("cannot find users")
+                ()->new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND)
         );
     }
 

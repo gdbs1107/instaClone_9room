@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,10 +30,10 @@ public class UserEntity extends BaseEntity {
     @Column(name = "user_entity_id")
     private Long id;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false,unique = true, length = 20)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 20)
+    //해싱돼서 제한을 걸 수 없음
     private String password;
 
     private String role;
@@ -43,6 +44,7 @@ public class UserEntity extends BaseEntity {
     private Boolean onPrivate=true;
 
     @Column(length = 30)
+    @Nullable
     private String introduction;
 
     @Enumerated(EnumType.STRING)
@@ -53,7 +55,9 @@ public class UserEntity extends BaseEntity {
     private String link;
     private String imagePath;
 
+    @Nullable
     private Integer followCount;
+    @Nullable
     private Integer followerCount;
 
 
