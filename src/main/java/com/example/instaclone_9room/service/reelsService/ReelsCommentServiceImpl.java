@@ -1,6 +1,9 @@
 package com.example.instaclone_9room.service.reelsService;
 
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
 import com.example.instaclone_9room.apiPayload.exception.UnauthorizedException;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
+import com.example.instaclone_9room.apiPayload.exception.handler.ReelsCategoryHandler;
 import com.example.instaclone_9room.controller.dto.ReelsCommentDTO;
 import com.example.instaclone_9room.converter.ReelsCommentConverter;
 import com.example.instaclone_9room.domain.UserEntity;
@@ -39,6 +42,10 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
 
         UserEntity user = findUser(username);
 
+        if (content.length() > 100) {
+            throw new ReelsCategoryHandler(ErrorStatus.TOO_LONG_REQUEST);
+        }
+
         ReelsComment comment = findComment(id);
 
         UserEntity commentOwner = comment.getUserEntity();
@@ -52,7 +59,7 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
             reelsCommentRepository.save(comment); // save는 일반적으로 JPA Repository에서 제공하는 메서드
         } else {
             // 작성자가 아니면 예외를 던지거나 오류 처리
-            throw new UnauthorizedException("You are not allowed to update this comment.");
+            throw new MemberCategoryHandler(ErrorStatus.UNAUTHORIZED_ACCESS);
         }
     }
 
@@ -76,7 +83,7 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
 
         } else {
             // 작성자가 아니면 예외를 던지거나 오류 처리
-            throw new UnauthorizedException("You are not allowed to update this comment.");
+            throw new MemberCategoryHandler(ErrorStatus.UNAUTHORIZED_ACCESS);
         }
 
     }
@@ -94,18 +101,19 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
 
 
     private UserEntity findUser(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        return userRepository.findByUsername(username).orElseThrow(
+                ()->new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND)
+        );
     }
 
     private Reels findReels(Long id) {
         return reelsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reels not found"));
+                .orElseThrow(() -> new ReelsCategoryHandler(ErrorStatus.REELS_NOT_FOUND));
     }
 
     private ReelsComment findComment(Long id) {
         return reelsCommentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Comment not found"));
+                .orElseThrow(() -> new ReelsCategoryHandler(ErrorStatus.REELS_COMMENT_NOT_FOUND);
     }
 
 
