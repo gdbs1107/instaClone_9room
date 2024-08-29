@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.service.followService;
 
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.FollowCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.FollowDTO;
 import com.example.instaclone_9room.converter.FollowConverter;
@@ -37,7 +38,7 @@ public class FollowServiceImpl implements FollowService {
 
         // 팔로우 받는 사람 -> target
         UserEntity target = userRepository.findById(targetId)
-                .orElseThrow(() -> new RuntimeException("Target user not found"));
+                .orElseThrow(() -> new FollowCategoryHandler(ErrorStatus.TARGET_NOT_FOUND));
 
         // 이미 팔로우하고 있는지 확인
         boolean isFollowing = followRepository.existsByUserEntityAndFollowUser(follower, target);

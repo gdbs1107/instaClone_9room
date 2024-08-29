@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.service.followService;
 
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.FollowCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.FollowDTO;
 import com.example.instaclone_9room.converter.FollowConverter;
@@ -33,7 +34,7 @@ public class BlockedFollowerServiceImpl implements BlockedFollowerService {
         Follower follower = user.getFollowers().stream()
                 .filter(f -> f.getId().equals(followerId))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Follower not found"));
+                .orElseThrow(()->new FollowCategoryHandler(ErrorStatus.NOT_YOUR_FOLLOWER));
 
         // CloseFollower 찾기
         BlockedFollower blockedFollower = blockedFollowerRepository.findByUserEntityAndFollower(user, follower)
