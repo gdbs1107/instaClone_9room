@@ -113,7 +113,7 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
 
     private ReelsComment findComment(Long id) {
         return reelsCommentRepository.findById(id)
-                .orElseThrow(() -> new ReelsCategoryHandler(ErrorStatus.REELS_COMMENT_NOT_FOUND);
+                .orElseThrow(() -> new ReelsCategoryHandler(ErrorStatus.REELS_COMMENT_NOT_FOUND));
     }
 
 

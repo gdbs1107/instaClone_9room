@@ -4,11 +4,13 @@ import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.service.userService.UserCommandService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,12 +20,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Tag(name = "회원관련 API", description = "로그인을 제외한 회원관련 API 입니다")
 public class UserController {
 
     private final UserCommandService userCommandService;
 
 
-
+    @Operation(
+            summary = "회원정보 업데이트",
+            description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
+            security = @SecurityRequirement(name = "accessToken")
+    )
     @PutMapping("/")
     public ApiResponse<String> updateUser(@RequestBody @Valid UserDTO.UserUpdateRequestDTO request,
                                           @AuthenticationPrincipal UserDetails userDetails){
@@ -32,6 +39,13 @@ public class UserController {
         return ApiResponse.onSuccess("updated user");
     }
 
+
+
+    @Operation(
+            summary = "회원정보 삭제",
+            description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
+            security = @SecurityRequirement(name = "accessToken")
+    )
     @DeleteMapping("/")
     public ApiResponse<String> deleteUser(@AuthenticationPrincipal UserDetails userDetails){
 
@@ -39,6 +53,13 @@ public class UserController {
         return ApiResponse.onSuccess("deleted user");
     }
 
+
+
+
+    @Operation(
+            summary = "회원가입",
+            description = "회원가입 API입니다. 헤더에 accessToken 없이 작동합니다"
+    )
     @PostMapping("/join")
     public String joinProcess(@RequestBody @Valid JoinDto.JoinRequestDTO joinDto){
 
@@ -46,6 +67,14 @@ public class UserController {
         return "ok";
     }
 
+
+
+
+    @Operation(
+            summary = "로그아웃",
+            description = "로그아웃 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
+            security = @SecurityRequirement(name = "accessToken")
+    )
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<String>> logout(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = null;
@@ -72,6 +101,14 @@ public class UserController {
     }
 
 
+
+
+
+    @Operation(
+            summary = "회원정보 상세조회",
+            description = "회원정보 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
+            security = @SecurityRequirement(name = "accessToken")
+    )
     @GetMapping("/")
     public ApiResponse<UserDTO.UserGetResponseDTO> getUser(@AuthenticationPrincipal UserDetails userDetails){
 
@@ -80,6 +117,15 @@ public class UserController {
 
     }
 
+
+
+
+    @Operation(
+            summary = "프로필 홈페이지 조회",
+            description = "프로필 홈페이지 조회 API입니다. 인스타그램 웹에서 프로필 버튼 누르면 바로 보이는 정보가 담겨있습니다." +
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다",
+            security = @SecurityRequirement(name = "accessToken")
+    )
     @GetMapping("/home")
     public ApiResponse<UserDTO.UserGetHomeResponseDTO> getHomeUser(@AuthenticationPrincipal UserDetails userDetails){
 
