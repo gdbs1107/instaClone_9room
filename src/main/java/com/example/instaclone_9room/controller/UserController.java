@@ -7,6 +7,7 @@ import com.example.instaclone_9room.service.userService.UserCommandService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserController {
 
 
     @PutMapping("/")
-    public ApiResponse<String> updateUser(@RequestBody UserDTO.UserUpdateRequestDTO request,
+    public ApiResponse<String> updateUser(@RequestBody @Valid UserDTO.UserUpdateRequestDTO request,
                                           @AuthenticationPrincipal UserDetails userDetails){
 
         userCommandService.updateUser(request,userDetails.getUsername());
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public String joinProcess(@RequestBody JoinDto.JoinRequestDTO joinDto){
+    public String joinProcess(@RequestBody @Valid JoinDto.JoinRequestDTO joinDto){
 
         userCommandService.joinProcess(joinDto);
         return "ok";

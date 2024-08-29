@@ -3,6 +3,7 @@ package com.example.instaclone_9room.controller.reelsController;
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.service.reelsService.ReelsService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ public class ReelsController {
     private final ReelsService reelsService;
 
     @PostMapping("/")
-    public ApiResponse<String> save(@RequestBody ReelsDTO.ReelsRequestDTO requestDTO,
+    public ApiResponse<String> save(@RequestBody @Valid ReelsDTO.ReelsRequestDTO requestDTO,
                                     @AuthenticationPrincipal UserDetails userDetails) {
         reelsService.save(requestDTO,userDetails.getUsername());
 
@@ -39,7 +40,7 @@ public class ReelsController {
 
     @PutMapping("/{reelsId}")
     public ApiResponse<String> updateReels(@PathVariable Long reelsId,
-                                           @RequestBody ReelsDTO.ReelsUpdateRequestDTO request,
+                                           @RequestBody @Valid ReelsDTO.ReelsUpdateRequestDTO request,
                                            @AuthenticationPrincipal UserDetails userDetails) {
 
         reelsService.updateReels(userDetails.getUsername(),reelsId,request);

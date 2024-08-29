@@ -28,6 +28,7 @@ public class Reels extends BaseEntity {
     private String audioPath;
     private String audioName;
 
+    @Column(nullable = false, length = 100)
     private String content;
 
     private Integer commentCount;

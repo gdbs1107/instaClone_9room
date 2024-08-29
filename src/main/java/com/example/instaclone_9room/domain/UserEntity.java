@@ -29,17 +29,27 @@ public class UserEntity extends BaseEntity {
     @Column(name = "user_entity_id")
     private Long id;
 
+    @Column(nullable = false, length = 10)
     private String username;
+
+    @Column(nullable = false, unique = true, length = 20)
     private String password;
+
     private String role;
 
+    @Column(nullable = false, length = 20)
     private String name;
+
     private Boolean onPrivate=true;
+
+    @Column(length = 30)
     private String introduction;
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
     private LocalDate birthday;
+
+    @Column(length = 30)
     private String link;
     private String imagePath;
 

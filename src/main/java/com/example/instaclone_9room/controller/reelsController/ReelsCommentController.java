@@ -3,6 +3,7 @@ package com.example.instaclone_9room.controller.reelsController;
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.ReelsCommentDTO;
 import com.example.instaclone_9room.service.reelsService.ReelsCommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ public class ReelsCommentController {
 
     @PostMapping("/")
     public ApiResponse<String> save(@AuthenticationPrincipal UserDetails userDetails,
-                                    @RequestBody ReelsCommentDTO.CommentPostRequestDTO requestDTO) {
+                                    @RequestBody @Valid ReelsCommentDTO.CommentPostRequestDTO requestDTO) {
 
         reelsCommentService.save(requestDTO,userDetails.getUsername());
         return ApiResponse.onSuccess("saved comment successfully");
@@ -28,7 +29,7 @@ public class ReelsCommentController {
     @PutMapping("/{id}")
     public ApiResponse<String> update(@AuthenticationPrincipal UserDetails userDetails,
                                       @PathVariable Long id,
-                                      @RequestBody String content){
+                                      @RequestBody @Valid String content){
 
         reelsCommentService.update(content,id,userDetails.getUsername());
         return ApiResponse.onSuccess("updated comment successfully");
