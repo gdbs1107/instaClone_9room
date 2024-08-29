@@ -28,40 +28,43 @@ public class FollowServiceImpl implements FollowService {
 
 
     @Override
-    public void followUser(String username, Long targetId) {
+    public void toggleFollowUser(String username, Long targetId) {
 
+        // 팔로우 신청하는 사람 -> follower
         UserEntity follower = findUser(username);
+
+        // 팔로우 받는 사람 -> target
         UserEntity target = userRepository.findById(targetId)
                 .orElseThrow(() -> new RuntimeException("Target user not found"));
 
-        // 팔로우 추가
-        Follow follow = Follow.builder()
-                .userEntity(follower)
-                .followUser(target)
-                .build();
-        followRepository.save(follow);
+        // 이미 팔로우하고 있는지 확인
+        boolean isFollowing = followRepository.existsByUserEntityAndFollowUser(follower, target);
 
-        // 팔로워 추가
-        Follower followerEntity = Follower.builder()
-                .userEntity(target)
-                .followerUser(follower)
-                .build();
-        followerRepository.save(followerEntity);
+        if (isFollowing) {
+            // 팔로우 중이라면 언팔로우
+            followRepository.deleteByUserEntityAndFollowUser(follower, target);
+            follower.minusFollowCount();
+
+            followerRepository.deleteByUserEntityAndFollowerUser(target, follower);
+            target.minusFollowerCount();
+        } else {
+            // 팔로우 중이 아니라면 팔로우
+            Follow follow = Follow.builder()
+                    .userEntity(follower)
+                    .followUser(target)
+                    .build();
+            follower.addFollowCount();
+            followRepository.save(follow);
+
+            Follower followerEntity = Follower.builder()
+                    .userEntity(target)
+                    .followerUser(follower)
+                    .build();
+            target.addFollowerCount();
+            followerRepository.save(followerEntity);
+        }
     }
 
-
-    @Override
-    public void unfollowUser(String username, Long targetId) {
-        UserEntity follower = findUser(username);
-        UserEntity target = userRepository.findById(targetId)
-                .orElseThrow(() -> new RuntimeException("Target user not found"));
-
-        // 팔로우 제거
-        followRepository.deleteByUserEntityAndFollowUser(follower, target);
-
-        // 팔로워 제거
-        followerRepository.deleteByUserEntityAndFollowerUser(target, follower);
-    }
 
 
     @Override

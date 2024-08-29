@@ -59,4 +59,22 @@ public class UserDTO {
         private String introduction;
     }
 
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserGetHomeResponseDTO{
+
+        Integer followCount;
+        Integer followersCount;
+        String name;
+        String imagePath;
+        String link;
+
+        //게시물 수, 전체 게시물 조회 API가 여기 들어가야함 나중에 머지할때 보자
+
+    }
+
+
 }

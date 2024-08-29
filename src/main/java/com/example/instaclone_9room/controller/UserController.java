@@ -78,4 +78,11 @@ public class UserController {
         return ApiResponse.onSuccess(userProfile);
 
     }
+
+    @GetMapping("/home")
+    public ApiResponse<UserDTO.UserGetHomeResponseDTO> getHomeUser(@AuthenticationPrincipal UserDetails userDetails){
+
+        UserDTO.UserGetHomeResponseDTO userGetHomeResponseDTO = userCommandService.userGetHomeProfile(userDetails.getUsername());
+        return ApiResponse.onSuccess(userGetHomeResponseDTO);
+    }
 }

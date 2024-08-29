@@ -13,4 +13,6 @@ public interface UserCommandService {
     void joinProcess(JoinDto.JoinRequestDTO joinDto);
 
     UserDTO.UserGetResponseDTO getUserProfile(String username);
+
+    UserDTO.UserGetHomeResponseDTO userGetHomeProfile(String username);
 }

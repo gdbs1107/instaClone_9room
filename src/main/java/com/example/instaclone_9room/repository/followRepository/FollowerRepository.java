@@ -9,4 +9,5 @@ import java.util.List;
 public interface FollowerRepository extends JpaRepository<Follower, Long> {
     void deleteByUserEntityAndFollowerUser(UserEntity userEntity, UserEntity followUser);
     List<Follower> findByUserEntity(UserEntity userEntity);
+
 }

@@ -21,19 +21,11 @@ public class FollowController {
     public ApiResponse<String> follow(@AuthenticationPrincipal UserDetails userDetails,
                               @PathVariable Long targetUserId) {
 
-        followService.followUser(userDetails.getUsername(), targetUserId);
+        followService.toggleFollowUser(userDetails.getUsername(), targetUserId);
         return ApiResponse.onSuccess("follow successfully");
 
     }
 
-
-    @PostMapping("/unfollow/{targetUserId}")
-    private ApiResponse<String> unfollow(@AuthenticationPrincipal UserDetails userDetails,
-                                         @PathVariable Long targetUserId) {
-
-        followService.unfollowUser(userDetails.getUsername(), targetUserId);
-        return ApiResponse.onSuccess("unfollow successfully");
-    }
 
     @GetMapping("/follows")
     public ApiResponse<List<FollowDTO.FollowResponseDTO>> getAllFollows(@AuthenticationPrincipal UserDetails userDetails) {

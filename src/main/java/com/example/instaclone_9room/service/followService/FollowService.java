@@ -7,9 +7,8 @@ import java.util.List;
 
 @Service
 public interface FollowService {
-    void followUser(String username, Long targetId);
 
-    void unfollowUser(String username, Long targetId);
+    void toggleFollowUser(String username, Long targetId);
 
     List<FollowDTO.FollowResponseDTO> getFollowedUsers(String username);
 

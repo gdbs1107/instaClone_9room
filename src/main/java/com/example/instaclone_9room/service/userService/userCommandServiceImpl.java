@@ -106,6 +106,8 @@ public class userCommandServiceImpl implements UserCommandService {
                 .gender(gender)
                 .birthday(joinDto.getBirthday())
                 .onPrivate(true)
+                .followerCount(0)
+                .followCount(0)
                 .build();
 
         userRepository.save(userEntity);
@@ -123,8 +125,17 @@ public class userCommandServiceImpl implements UserCommandService {
                 .onPrivate(user.getOnPrivate())
                 .genderType(user.getGender())
                 .build();
+    }
+
+    @Override
+    public UserDTO.UserGetHomeResponseDTO userGetHomeProfile(String username){
+
+        UserEntity user = findUser(username);
+        return UserConverter.toUserGetHomeResponseDTO(user);
 
     }
+
+
 
 
     private UserEntity findUser(String username) {

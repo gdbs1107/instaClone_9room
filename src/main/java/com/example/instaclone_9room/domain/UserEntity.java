@@ -43,6 +43,14 @@ public class UserEntity extends BaseEntity {
     private String link;
     private String imagePath;
 
+    private Integer followCount;
+    private Integer followerCount;
+
+
+
+
+
+
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<Follower> followers = new ArrayList<>();
 
@@ -80,6 +88,22 @@ public class UserEntity extends BaseEntity {
     public void addReels(Reels reels) {
         reels.setUserEntity(this);
         this.reels.add(reels);
+    }
+
+    public void addFollowCount(){
+        this.followCount++;
+    }
+    public void minusFollowCount(){
+        this.followCount--;
+    }
+
+
+
+    public void addFollowerCount(){
+        this.followerCount++;
+    }
+    public void minusFollowerCount(){
+        this.followerCount--;
     }
 
 
