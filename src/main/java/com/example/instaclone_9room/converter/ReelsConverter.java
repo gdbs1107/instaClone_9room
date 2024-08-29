@@ -21,6 +21,7 @@ public class ReelsConverter {
                 .content(reelsDTO.getContent())
                 .commentCount(0)
                 .likesCount(0)
+                .pinnedCount(0)
                 .build();
     }
 

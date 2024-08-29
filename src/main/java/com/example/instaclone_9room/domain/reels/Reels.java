@@ -32,6 +32,7 @@ public class Reels extends BaseEntity {
 
     private Integer commentCount;
     private Integer likesCount;
+    private Integer pinnedCount;
 
 
 
@@ -80,6 +81,13 @@ public class Reels extends BaseEntity {
         this.likesCount--;
     }
 
+
+    public void addReelsPinnedCount(){
+        this.pinnedCount++;
+    }
+    public void minusReelsPinnedCount(){
+        this.pinnedCount--;
+    }
 
 
 }
