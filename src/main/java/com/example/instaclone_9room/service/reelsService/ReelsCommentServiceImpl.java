@@ -29,6 +29,7 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
         Reels findReels = findReels(request.getReelsId());
 
         ReelsComment reelsComment = ReelsCommentConverter.toReelsComment(request, findUser, findReels);
+        findReels.addReelsCommentCount();
         reelsCommentRepository.save(reelsComment);
 
     }
@@ -63,10 +64,16 @@ public class ReelsCommentServiceImpl implements ReelsCommentService {
 
         UserEntity user = findUser(username);
         ReelsComment comment = findComment(commentId);
+
+        Reels reels = comment.getReels();
+
+
         UserEntity commentOwner = comment.getUserEntity();
 
         if (user.getId().equals(commentOwner.getId())) {
             reelsCommentRepository.delete(comment);
+            reels.minusReelsCommentCount();
+
         } else {
             // 작성자가 아니면 예외를 던지거나 오류 처리
             throw new UnauthorizedException("You are not allowed to update this comment.");

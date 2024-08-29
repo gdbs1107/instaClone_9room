@@ -19,6 +19,8 @@ public class ReelsConverter {
                 .videoPath(reelsDTO.getVideoPath())
                 .videoName(reelsDTO.getVideoName())
                 .content(reelsDTO.getContent())
+                .commentCount(0)
+                .likesCount(0)
                 .build();
     }
 

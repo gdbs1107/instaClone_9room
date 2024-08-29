@@ -30,6 +30,9 @@ public class Reels extends BaseEntity {
 
     private String content;
 
+    private Integer commentCount;
+    private Integer likesCount;
+
 
 
 
@@ -55,4 +58,28 @@ public class Reels extends BaseEntity {
         this.audioPath = audioPath;
         this.audioName = audioName;
     }
+
+
+
+
+    public void addReelsCommentCount(){
+        this.commentCount++;
+    }
+
+    public void minusReelsCommentCount(){
+        this.commentCount--;
+    }
+
+
+
+
+    public void addReelsLikeCount(){
+        this.likesCount++;
+    }
+    public void minusReelsLikeCount(){
+        this.likesCount--;
+    }
+
+
+
 }

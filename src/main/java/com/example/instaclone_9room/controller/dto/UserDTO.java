@@ -58,4 +58,5 @@ public class UserDTO {
         private Boolean onPrivate;
         private String introduction;
     }
+
 }

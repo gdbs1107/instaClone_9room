@@ -1,8 +1,7 @@
-package com.example.instaclone_9room.controller;
+package com.example.instaclone_9room.controller.reelsController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.ReelsCommentDTO;
-import com.example.instaclone_9room.domain.reels.ReelsComment;
 import com.example.instaclone_9room.service.reelsService.ReelsCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
