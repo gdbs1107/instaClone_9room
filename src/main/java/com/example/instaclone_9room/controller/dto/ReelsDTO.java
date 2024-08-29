@@ -27,8 +27,17 @@ public class ReelsDTO {
     @Builder
     public static class ReelsResponseDTO{
 
+        //릴스 정보
         private String videoPath;
         private String audioPath;
+        private String content;
+        private Integer likeCount;
+        private Integer commentCount;
+
+        //유저정보
+        private String name;
+        private String imagePath;
+
 
         private List<ReelsCommentDTO.CommentPostResponseDTO> reelsComments;
     }

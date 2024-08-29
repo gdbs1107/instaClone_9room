@@ -52,22 +52,21 @@ public class ReelsPinnedServiceImpl implements ReelsPinnedService {
 
 
     @Override
-    public List<ReelsDTO.ReelsResponseDTO> getReelsPinned(String username){
+    public List<ReelsDTO.ReelsResponseDTO> getReelsPinned(String username) {
 
-        UserEntity user = findUser(username);
+        UserEntity user = findUser(username); // 요청한 유저 정보를 가져옴
         List<ReelsPinned> pinnedReelsList = reelsPinnedRepository.findByUserEntity(user);
 
-        List<Reels> reelsList = pinnedReelsList.stream()
-                .map(ReelsPinned::getReels)
-                .collect(Collectors.toList());
 
-        List<ReelsDTO.ReelsResponseDTO> responseDTOList = reelsList.stream()
-                .map(ReelsConverter::toReelsResponseDTO)
+        List<ReelsDTO.ReelsResponseDTO> responseDTOList = pinnedReelsList.stream()
+                .map(pinnedReels -> {
+                    Reels reels = pinnedReels.getReels();
+                    UserEntity reelsUser = reels.getUserEntity();
+                    return ReelsConverter.toReelsResponseDTO(reels, reelsUser);
+                })
                 .collect(Collectors.toList());
 
         return responseDTOList;
-
-
     }
 
 

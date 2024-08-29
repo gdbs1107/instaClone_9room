@@ -25,7 +25,7 @@ public class ReelsConverter {
                 .build();
     }
 
-    public static ReelsDTO.ReelsResponseDTO toReelsResponseDTO(Reels reels) {
+    public static ReelsDTO.ReelsResponseDTO toReelsResponseDTO(Reels reels, UserEntity user) {
         List<ReelsCommentDTO.CommentPostResponseDTO> reelsCommentDTOs = reels.getReelsComments().stream()
                 .map(comment -> ReelsCommentDTO.CommentPostResponseDTO.builder()
                         .content(comment.getContent())
@@ -37,6 +37,11 @@ public class ReelsConverter {
                 .videoPath(reels.getVideoPath())
                 .audioPath(reels.getAudioPath())
                 .reelsComments(reelsCommentDTOs)
+                .commentCount(reels.getCommentCount())
+                .likeCount(reels.getLikesCount())
+                .content(reels.getContent())
+                .imagePath(user.getImagePath())
+                .name(user.getName())
                 .build();
     }
 

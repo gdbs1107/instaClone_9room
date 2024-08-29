@@ -33,8 +33,9 @@ public class ReelsServiceImpl implements ReelsService {
     public ReelsDTO.ReelsResponseDTO getReels(Long reelsId){
 
         Reels findReels = findReels(reelsId);
+        UserEntity userEntity = findReels.getUserEntity();
 
-        return ReelsConverter.toReelsResponseDTO(findReels);
+        return ReelsConverter.toReelsResponseDTO(findReels, userEntity);
 
     }
 
@@ -76,8 +77,7 @@ public class ReelsServiceImpl implements ReelsService {
         }
     }
 
-
-
+    
 
     private UserEntity findUser(String username) {
         return userRepository.findByUsername(username)
