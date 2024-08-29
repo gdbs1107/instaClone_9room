@@ -1,6 +1,8 @@
 package com.example.instaclone_9room.controller;
 
 
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.TokenCategoryHandler;
 import com.example.instaclone_9room.domain.RefreshEntity;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 
@@ -43,7 +46,7 @@ public class ReissueController {
         if (refresh == null) {
 
             //response status code
-            return new ResponseEntity<>("refresh token null", HttpStatus.BAD_REQUEST);
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_NULL);
         }
 
         //expired check
@@ -52,7 +55,7 @@ public class ReissueController {
         } catch (ExpiredJwtException e) {
 
             //response status code
-            return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_EXPIRED);
         }
 
         // 토큰이 refresh인지 확인 (발급시 페이로드에 명시)
@@ -61,7 +64,7 @@ public class ReissueController {
         if (!category.equals("refresh")) {
 
             //response status code
-            return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_NOT_INCORRECT);
         }
 
         //DB에 저장되어 있는지 확인
@@ -69,7 +72,7 @@ public class ReissueController {
         if (!isExist) {
 
             //response body
-            return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_NOT_INCORRECT);
         }
 
         String username = jwtUtil.getUsername(refresh);

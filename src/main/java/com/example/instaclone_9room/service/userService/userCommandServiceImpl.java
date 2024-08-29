@@ -4,6 +4,7 @@ import com.example.instaclone_9room.apiPayload.code.BaseErrorCode;
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
 import com.example.instaclone_9room.apiPayload.exception.GeneralException;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
+import com.example.instaclone_9room.apiPayload.exception.handler.TokenCategoryHandler;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.converter.UserConverter;
@@ -70,19 +71,19 @@ public class userCommandServiceImpl implements UserCommandService {
     @Override
     public void logout(String refreshToken) {
         if (refreshToken == null) {
-            throw new RuntimeException("유효하지 않은 토큰입니다");
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_NOT_INCORRECT);
         }
 
         try {
             jwtUtil.isExpired(refreshToken);
         } catch (Exception e) {
-            throw new RuntimeException("refresh expired token");
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_EXPIRED);
         }
 
         String category = jwtUtil.getCategory(refreshToken);
 
         if (!category.equals("refresh")) {
-            throw new RuntimeException("refresh Token null");
+            throw new TokenCategoryHandler(ErrorStatus.TOKEN_NULL);
         }
 
         String username = jwtUtil.getUsername(refreshToken);
