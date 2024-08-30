@@ -24,8 +24,7 @@ public class ReelsController {
     @Operation(
             summary = "릴스 등록 API",
             description = "릴스 등록 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다<br>" +
-                    "웹에선 지원하지 않는 기능입니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "웹에선 지원하지 않는 기능입니다"
     )
     @PostMapping("/")
     public ApiResponse<String> save(@RequestBody @Valid ReelsDTO.ReelsRequestDTO requestDTO,
@@ -39,8 +38,7 @@ public class ReelsController {
 
     @Operation(
             summary = "릴스 삭제 API",
-            description = "릴스 삭제 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "릴스 삭제 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @DeleteMapping("/{reelsId}")
     public ApiResponse<String> delete(@PathVariable Long reelsId,
@@ -54,8 +52,7 @@ public class ReelsController {
 
     @Operation(
             summary = "단일 릴스 조회 API",
-            description = "릴스 하나를 조회하는 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "릴스 하나를 조회하는 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/{reelsId}")
     public ApiResponse<ReelsDTO.ReelsResponseDTO> getReels(@PathVariable Long reelsId) {
@@ -70,8 +67,7 @@ public class ReelsController {
     @Operation(
             summary = "릴스 수정 API",
             description = "릴스 수정 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다<br>" +
-                    "웹에서는 지원하지 않는 기능입니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "웹에서는 지원하지 않는 기능입니다"
     )
     @PutMapping("/{reelsId}")
     public ApiResponse<String> updateReels(@PathVariable Long reelsId,
@@ -83,5 +79,17 @@ public class ReelsController {
     }
 
 
-    //릴스 전체조회 API 만들어야함
+    @Operation(
+            summary = "릴스 페이지네이션 조회 API",
+            description = "릴스를 한 번에 하나씩 조회하는 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다. \n" +
+                    "페이지 번호를 QueryParam으로 전달하여 원하는 페이지의 릴스를 조회할 수 있습니다."
+    )
+    @GetMapping("/paged")
+    public ApiResponse<ReelsDTO.ReelsResponseDTO> getReelsByPage(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(defaultValue = "0") int page) {
+
+        ReelsDTO.ReelsResponseDTO reels = reelsService.getReelsByPage(userDetails.getUsername(), page);
+        return ApiResponse.onSuccess(reels);
+    }
 }

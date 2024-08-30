@@ -28,8 +28,7 @@ public class FollowController {
             description = "팔로우 등록 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
                     "팔로우 할 대상을 PathVariable에 담아서 요청하시면 됩니다.<br>" +
                     "한 번 클릭하면 팔로우 등록, 두 번 클릭하면 팔로우에서 제외됩니다.<br>" +
-                    "팔로우 할 대상의 팔로워가 추가됩니다.",
-            security = @SecurityRequirement(name = "accessToken")
+                    "팔로우 할 대상의 팔로워가 추가됩니다."
     )
     @PostMapping("/follow/{targetUserId}")
     public ApiResponse<String> follow(@AuthenticationPrincipal UserDetails userDetails,
@@ -43,8 +42,7 @@ public class FollowController {
 
     @Operation(
             summary = "팔로우 조회 API",
-            description = "팔로우 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "팔로우 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/follows")
     public ApiResponse<List<FollowDTO.FollowResponseDTO>> getAllFollows(@AuthenticationPrincipal UserDetails userDetails) {
@@ -58,8 +56,7 @@ public class FollowController {
 
     @Operation(
             summary = "팔로워 조회 API",
-            description = "팔로워 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "팔로워 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/followers")
     public ApiResponse<List<FollowDTO.FollowerResponseDTO>> getAllFollowers(@AuthenticationPrincipal UserDetails userDetails) {

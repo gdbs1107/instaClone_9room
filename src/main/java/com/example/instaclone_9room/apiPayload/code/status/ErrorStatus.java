@@ -33,6 +33,7 @@ public enum ErrorStatus implements BaseErrorCode {
     //릴스 관련 에러
     REELS_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4001", "릴스가 없습니다."),
     REELS_COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4002", "릴스댓글이 없습니다."),
+    REELS_END(HttpStatus.NOT_FOUND,"REELS4003","릴스 전부 조회하였습니다"),
 
     //팔로우, 팔로워 관련 에러
     NOT_YOUR_FOLLOWER(HttpStatus.BAD_REQUEST,"FOLLOW5001","팔로우가 되어있지 않아 요청을 처리 할 수 없습니다"),

@@ -9,6 +9,8 @@ public interface ReelsService {
 
     ReelsDTO.ReelsResponseDTO getReels(Long reelsId);
 
+    ReelsDTO.ReelsResponseDTO getReelsByPage(String username, int page);
+
     void updateReels(String username, Long reelsId, ReelsDTO.ReelsUpdateRequestDTO request);
 
     void deleteReels(String username, Long reelsId);

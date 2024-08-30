@@ -11,6 +11,8 @@ import com.example.instaclone_9room.domain.reels.Reels;
 import com.example.instaclone_9room.repository.reelsRepository.ReelsRepository;
 import com.example.instaclone_9room.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,26 @@ public class ReelsServiceImpl implements ReelsService {
     }
 
 
+
+    @Override
+    public ReelsDTO.ReelsResponseDTO getReelsByPage(String username, int page) {
+
+        UserEntity user = findUser(username);
+
+        Page<Reels> reelsPage = reelsRepository.findAllByUserEntity_Id(
+                user.getId(),
+                PageRequest.of(page, 1) // 한 페이지에 하나의 릴스만 반환
+        );
+
+        if (reelsPage.hasContent()) {
+            Reels reels = reelsPage.getContent().get(0); // 한 페이지에 하나만 있으므로 첫 번째 항목을 가져옴
+            return new ReelsConverter().toReelsResponseDTO(reels, user);
+        } else {
+            throw new ReelsCategoryHandler(ErrorStatus.REELS_END);
+        }
+    }
+
+
     @Override
     public void updateReels(String username, Long reelsId, ReelsDTO.ReelsUpdateRequestDTO request){
 
@@ -59,7 +81,7 @@ public class ReelsServiceImpl implements ReelsService {
 
             reelsRepository.save(findReels);
         }else {
-            throw new UnauthorizedException("니꺼 아니잖아");
+            throw new MemberCategoryHandler(ErrorStatus.UNAUTHORIZED_ACCESS);
         }
     }
 
@@ -76,7 +98,7 @@ public class ReelsServiceImpl implements ReelsService {
 
             reelsRepository.delete(findReels);
         }else {
-            throw new UnauthorizedException("니꺼 아니잖아");
+            throw new MemberCategoryHandler(ErrorStatus.UNAUTHORIZED_ACCESS);
         }
     }
 

@@ -30,8 +30,7 @@ public class BlockedFollowsController {
     @Operation(
             summary = "차단계정 토글",
             description = "차단계정 토글 API입니다. 한 번 호출하면 차단 -> 두 번 호출시 차단이 풀립니다. " +
-                    "헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @ApiResponses({
             @io.swagger.v3.oas.annotations.responses.ApiResponse(
@@ -54,8 +53,7 @@ public class BlockedFollowsController {
 
     @Operation(
             summary = "차단계정 조회 API",
-            description = "차단계정 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "차단계정 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/")
     public ApiResponse<List<FollowDTO.FollowerResponseDTO>> getBlockedFollowers(@AuthenticationPrincipal UserDetails userDetails) {

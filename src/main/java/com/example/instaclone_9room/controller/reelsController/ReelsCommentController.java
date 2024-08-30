@@ -23,8 +23,7 @@ public class ReelsCommentController {
 
     @Operation(
             summary = "댓글 등록 API",
-            description = "댓글 등록 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "댓글 등록 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @PostMapping("/")
     public ApiResponse<String> save(@AuthenticationPrincipal UserDetails userDetails,
@@ -38,8 +37,7 @@ public class ReelsCommentController {
 
     @Operation(
             summary = "댓글 수정 API",
-            description = "댓글 수정 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "댓글 수정 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @PutMapping("/{id}")
     public ApiResponse<String> update(@AuthenticationPrincipal UserDetails userDetails,
@@ -55,8 +53,7 @@ public class ReelsCommentController {
 
     @Operation(
             summary = "댓글 삭제 API",
-            description = "댓글 삭제 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "댓글 삭제 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @DeleteMapping("/{id}")
     public ApiResponse<String> delete(@AuthenticationPrincipal UserDetails userDetails,

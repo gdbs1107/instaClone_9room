@@ -25,8 +25,7 @@ public class ClosedFollowController {
     @Operation(
             summary = "친한계정 토글 API",
             description = "친한계정 토글 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다" +
-                    "한 번 클릭하면 친한친구 등록, 두 번 클릭하면 친한친구에서 제외됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "한 번 클릭하면 친한친구 등록, 두 번 클릭하면 친한친구에서 제외됩니다"
     )
     @PostMapping("/{closeFollowerId}")
     public ApiResponse<String> closeFollowers(@AuthenticationPrincipal UserDetails userDetails,
@@ -38,8 +37,7 @@ public class ClosedFollowController {
 
     @Operation(
             summary = "친한계정 조회 API",
-            description = "친한계정 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "친한계정 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/")
     public ApiResponse<List<FollowDTO.FollowerResponseDTO>> getCloseFollowers(@AuthenticationPrincipal UserDetails userDetails) {

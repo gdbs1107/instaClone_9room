@@ -29,8 +29,7 @@ public class UserController {
 
     @Operation(
             summary = "회원정보 업데이트",
-            description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @PutMapping("/")
     public ApiResponse<String> updateUser(@RequestBody @Valid UserDTO.UserUpdateRequestDTO request,
@@ -44,8 +43,7 @@ public class UserController {
 
     @Operation(
             summary = "회원정보 삭제",
-            description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @DeleteMapping("/")
     public ApiResponse<String> deleteUser(@AuthenticationPrincipal UserDetails userDetails){
@@ -73,8 +71,7 @@ public class UserController {
 
     @Operation(
             summary = "로그아웃",
-            description = "로그아웃 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "로그아웃 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<String>> logout(HttpServletRequest request, HttpServletResponse response) {
@@ -107,8 +104,7 @@ public class UserController {
 
     @Operation(
             summary = "회원정보 상세조회",
-            description = "회원정보 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "회원정보 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/")
     public ApiResponse<UserDTO.UserGetResponseDTO> getUser(@AuthenticationPrincipal UserDetails userDetails){
@@ -125,8 +121,7 @@ public class UserController {
             summary = "프로필 홈페이지 조회",
             description = "프로필 홈페이지 조회 API입니다. 인스타그램 웹에서 프로필 버튼 누르면 바로 보이는 정보가 담겨있습니다." +
                     "헤더에 accessToken을 담아서 요청하시면 됩니다" +
-                    "게시물 API가 완성되면 전체 게시물 조회 API가 담길 예정입니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "게시물 API가 완성되면 전체 게시물 조회 API가 담길 예정입니다"
     )
     @GetMapping("/home")
     public ApiResponse<UserDTO.UserGetHomeResponseDTO> getHomeUser(@AuthenticationPrincipal UserDetails userDetails){

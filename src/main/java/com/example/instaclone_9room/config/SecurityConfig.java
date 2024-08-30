@@ -24,6 +24,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -84,7 +85,7 @@ public class SecurityConfig {
 
         //인가 구현
         http.authorizeHttpRequests((auth)->auth
-                .requestMatchers("users/login","/","users/join").permitAll()
+                .requestMatchers("/login","/","/join").permitAll()
                 .requestMatchers("/reissue").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll() // Swagger 관련 경로를 허용
                 .anyRequest().authenticated());

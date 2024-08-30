@@ -28,8 +28,7 @@ public class ReelsPinnedController {
     @Operation(
             summary = "릴스 저장 토글 API",
             description = "릴스 저장 토글 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다<br>" +
-                    "한 번 누르면 저장, 두번 누르면 삭제됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "한 번 누르면 저장, 두번 누르면 삭제됩니다"
     )
     @PostMapping("/{reelsId}")
     public ApiResponse<String> reelsPinned(@PathVariable("reelsId") Long reelsId,
@@ -42,8 +41,7 @@ public class ReelsPinnedController {
 
     @Operation(
             summary = "저장된 릴스 조회 API",
-            description = "저장된 릴스를 조회하는 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+            description = "저장된 릴스를 조회하는 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/")
     private ApiResponse<List<ReelsDTO.ReelsResponseDTO>> getAllReelsPinned(@AuthenticationPrincipal UserDetails userDetails) {

@@ -27,8 +27,7 @@ public class ReelsLikesController {
             summary = "릴스 좋아요 토글 API",
             description = "릴스 좋아요를 저장/삭제하는 토글 API입니다.<br>" +
                     " 헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
-                    "한 번 클릭하면 좋아요, 두번 클릭하면 좋아요가 취소됩니다",
-            security = @SecurityRequirement(name = "accessToken")
+                    "한 번 클릭하면 좋아요, 두번 클릭하면 좋아요가 취소됩니다"
     )
     @PostMapping("/{reelsId}")
     public ApiResponse<String> toogleLike(@PathVariable Long reelsId,
