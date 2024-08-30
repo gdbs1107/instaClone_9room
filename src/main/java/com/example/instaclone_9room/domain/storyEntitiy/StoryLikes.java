@@ -26,6 +26,6 @@ public class StoryLikes extends BaseEntity {
     private Story story;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userEntity_id")
+    @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
 }

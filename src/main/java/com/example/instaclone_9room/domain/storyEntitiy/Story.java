@@ -26,7 +26,7 @@ public class Story extends BaseEntity {
     private String imagePath;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userEntity_id")
+    @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -24,7 +24,7 @@ public class Feed extends BaseEntity {
     private Long id; //
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userEntity_id")
+    @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -35,7 +35,7 @@ public class Feed extends BaseEntity {
     private List<FeedLikes> likes = new ArrayList<>();
     private Integer likesCount;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
 
     @Column(nullable = false)
