@@ -41,7 +41,7 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
-    private Boolean onPrivate=true;
+    private Boolean onPrivate=false;
 
     @Column(length = 30)
     @Nullable

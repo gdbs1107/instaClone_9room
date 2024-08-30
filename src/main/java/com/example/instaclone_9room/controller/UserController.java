@@ -103,7 +103,7 @@ public class UserController {
 
 
     @Operation(
-            summary = "회원정보 상세조회",
+            summary = "본인 회원정보 상세조회",
             description = "회원정보 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @GetMapping("/")
@@ -128,5 +128,22 @@ public class UserController {
 
         UserDTO.UserGetHomeResponseDTO userGetHomeResponseDTO = userCommandService.userGetHomeProfile(userDetails.getUsername());
         return ApiResponse.onSuccess(userGetHomeResponseDTO);
+    }
+
+
+
+
+    @Operation(
+            summary = "다른 사람의 회원정보 조회",
+            description = "다른 사람의 회원정보를 조회할 수 있는 API입니다. 공개 계정은 인증 없이 조회 가능하며, 비공개 계정은 인증된 사용자만 조회할 수 있습니다."
+    )
+    @GetMapping("/profile/{targetUsername}")
+    public ApiResponse<UserDTO.UserGetResponseDTO> getUserProfileByUsername(
+            @PathVariable String targetUsername,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        String requestingUsername = userDetails != null ? userDetails.getUsername() : null;
+        UserDTO.UserGetResponseDTO userProfile = userCommandService.getUserProfileByUsername(targetUsername, requestingUsername);
+        return ApiResponse.onSuccess(userProfile);
     }
 }

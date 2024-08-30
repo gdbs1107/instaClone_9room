@@ -1,5 +1,7 @@
 package com.example.instaclone_9room.converter;
 
+import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
@@ -21,8 +23,8 @@ public class UserConverter {
 
 
     public static Gender toGender(Integer genderType){
-        if(genderType == null){
-            return null;
+        if(genderType == null ){
+            throw new MemberCategoryHandler(ErrorStatus.GENDER_ERROR);
         }
 
         switch (genderType){
@@ -31,7 +33,7 @@ public class UserConverter {
                 case 2:
                     return Gender.female;
             default:
-                throw new IllegalArgumentException("Invalid genderType: " + genderType);
+                throw new MemberCategoryHandler(ErrorStatus.GENDER_ERROR);
         }
     }
 }

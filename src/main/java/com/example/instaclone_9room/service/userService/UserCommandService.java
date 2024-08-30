@@ -15,4 +15,6 @@ public interface UserCommandService {
     UserDTO.UserGetResponseDTO getUserProfile(String username);
 
     UserDTO.UserGetHomeResponseDTO userGetHomeProfile(String username);
+
+    UserDTO.UserGetResponseDTO getUserProfileByUsername(String targetUsername, String requestingUsername);
 }
