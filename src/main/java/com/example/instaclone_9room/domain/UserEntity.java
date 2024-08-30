@@ -41,7 +41,7 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
-    private Boolean onPrivate=true;
+    private Boolean onPrivate=false;
 
     @Column(length = 30)
     @Nullable
@@ -59,6 +59,7 @@ public class UserEntity extends BaseEntity {
     private Integer followCount;
     @Nullable
     private Integer followerCount;
+
 
 
 
@@ -119,6 +120,8 @@ public class UserEntity extends BaseEntity {
     public void minusFollowerCount(){
         this.followerCount--;
     }
+
+
 
 
 

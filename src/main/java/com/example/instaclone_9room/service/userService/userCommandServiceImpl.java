@@ -1,8 +1,6 @@
 package com.example.instaclone_9room.service.userService;
 
-import com.example.instaclone_9room.apiPayload.code.BaseErrorCode;
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
-import com.example.instaclone_9room.apiPayload.exception.GeneralException;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.TokenCategoryHandler;
 import com.example.instaclone_9room.controller.dto.JoinDto;
@@ -10,14 +8,17 @@ import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.converter.UserConverter;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
+import com.example.instaclone_9room.domain.follow.Follower;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
 import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.followRepository.FollowerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,7 @@ public class userCommandServiceImpl implements UserCommandService {
     private final RefreshRepository refreshRepository;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final FollowerRepository followerRepository;
 
 
     @Override
@@ -137,7 +139,7 @@ public class userCommandServiceImpl implements UserCommandService {
                 .name(joinDto.getName())
                 .gender(gender)
                 .birthday(joinDto.getBirthday())
-                .onPrivate(true)
+                .onPrivate(false)
                 .followerCount(0)
                 .followCount(0)
                 .build();
@@ -164,8 +166,35 @@ public class userCommandServiceImpl implements UserCommandService {
 
         UserEntity user = findUser(username);
         return UserConverter.toUserGetHomeResponseDTO(user);
-
     }
+
+
+
+    @Override
+    public UserDTO.UserGetResponseDTO getUserProfileByUsername(String targetUsername, String requestingUsername) {
+
+        // 타겟 사용자와 요청 사용자 조회
+        UserEntity targetUser = findUser(targetUsername);
+        UserEntity requestingUser = findUser(requestingUsername);
+
+        // 요청 사용자가 타겟 사용자의 팔로워인지 확인하는 쿼리
+        boolean isFollower = followerRepository.existsByUserEntityAndFollowerUser(targetUser, requestingUser);
+
+        // 비공개 상태 확인
+        if (targetUser.getOnPrivate() && !isFollower) {
+            throw new MemberCategoryHandler(ErrorStatus.MEMBER_PRIVATE_ERROR);
+        }
+
+        // 프로필 정보 반환
+        return UserDTO.UserGetResponseDTO.builder()
+                .introduction(targetUser.getIntroduction())
+                .link(targetUser.getLink())
+                .name(targetUser.getName())
+                .onPrivate(targetUser.getOnPrivate())
+                .genderType(targetUser.getGender())
+                .build();
+    }
+
 
 
 

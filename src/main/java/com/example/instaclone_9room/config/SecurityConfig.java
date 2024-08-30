@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,8 +22,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Collections;
+import java.util.List;
 
 
 @Configuration
@@ -49,29 +52,38 @@ public class SecurityConfig {
     }
 
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // 클라이언트 URL
+        configuration.setAllowedMethods(List.of("*")); // 모든 HTTP 메소드 허용
+        configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
+        configuration.setAllowCredentials(true); // 쿠키, 인증 정보 허용
+        configuration.setMaxAge(3600L); // CORS 사전 요청 캐시 시간 설정
+        configuration.setExposedHeaders(List.of("Authorization")); // 클라이언트가 접근할 수 있는 응답 헤더
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http
-                .cors((corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-
-                        CorsConfiguration configuration = new CorsConfiguration();
-
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
-                        configuration.setAllowCredentials(true);
-                        configuration.setAllowedHeaders(Collections.singletonList("*"));
-                        configuration.setMaxAge(3600L);
-
-                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-
-                        return configuration;
-                    }
-                })));
+                .cors(cors -> cors
+                        .configurationSource(request -> {
+                            CorsConfiguration configuration = new CorsConfiguration();
+                            configuration.setAllowedOrigins(List.of("http://localhost:3000")); // 클라이언트 URL
+                            configuration.setAllowedMethods(List.of("*")); // 모든 HTTP 메소드 허용
+                            configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
+                            configuration.setAllowCredentials(true); // 쿠키, 인증 정보 허용
+                            configuration.setMaxAge(3600L); // CORS 사전 요청 캐시 시간 설정
+                            configuration.setExposedHeaders(List.of("Authorization")); // 클라이언트가 접근할 수 있는 응답 헤더
+                            return configuration;
+                        })
+                );
 
 
 
@@ -81,6 +93,10 @@ public class SecurityConfig {
         //위와 동
         http.formLogin((auth)->auth.disable());
         http.httpBasic((auth)->auth.disable());
+
+
+        //소셜로그인
+        http.oauth2Login(Customizer.withDefaults());
 
 
         //인가 구현

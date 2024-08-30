@@ -29,6 +29,7 @@ public enum ErrorStatus implements BaseErrorCode {
     TOO_LONG_REQUEST(HttpStatus.BAD_REQUEST,"MEMBER3004","최대 20자입니다"),
     GENDER_ERROR(HttpStatus.BAD_REQUEST,"MEMBER3005","성별을 제대로 입력해주세요"),
     UNAUTHORIZED_ACCESS(HttpStatus.FORBIDDEN, "MEMBER3006","본인의 계정이 아닙니다"),
+    MEMBER_PRIVATE_ERROR(HttpStatus.UNAUTHORIZED,"MEMBER3007","비공개 계정입니다. 조회 할 권한이 없습니다"),
 
     //릴스 관련 에러
     REELS_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4001", "릴스가 없습니다."),
