@@ -34,6 +34,13 @@ public class userCommandServiceImpl implements UserCommandService {
     public void updateUser(UserDTO.UserUpdateRequestDTO request, String username){
 
         UserEntity user = findUser(username);
+
+
+        if (!username.equals(user.getUsername())) {
+            throw new MemberCategoryHandler(ErrorStatus.UNAUTHORIZED_ACCESS);
+        }
+
+
         Gender gender = UserConverter.toGender(request.getGenderType());
 
         System.out.println("name="+request.getName());

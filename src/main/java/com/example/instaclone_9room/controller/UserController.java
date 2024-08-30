@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.controller;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
+import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.service.userService.UserCommandService;
@@ -35,8 +36,8 @@ public class UserController {
     public ApiResponse<String> updateUser(@RequestBody @Valid UserDTO.UserUpdateRequestDTO request,
                                           @AuthenticationPrincipal UserDetails userDetails){
 
-        userCommandService.updateUser(request,userDetails.getUsername());
-        return ApiResponse.onSuccess("updated user");
+        userCommandService.updateUser(request, userDetails.getUsername());
+        return ApiResponse.onSuccess("User updated successfully");
     }
 
 
@@ -123,7 +124,8 @@ public class UserController {
     @Operation(
             summary = "프로필 홈페이지 조회",
             description = "프로필 홈페이지 조회 API입니다. 인스타그램 웹에서 프로필 버튼 누르면 바로 보이는 정보가 담겨있습니다." +
-                    "헤더에 accessToken을 담아서 요청하시면 됩니다",
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다" +
+                    "게시물 API가 완성되면 전체 게시물 조회 API가 담길 예정입니다",
             security = @SecurityRequirement(name = "accessToken")
     )
     @GetMapping("/home")
