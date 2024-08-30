@@ -5,6 +5,7 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.example.instaclone_9room.domain.Image;
 import com.example.instaclone_9room.repository.ImageRepository;
 import com.example.instaclone_9room.service.S3TestService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,15 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "이미지 CRUD API", description = "Amazon S3, bucket을 이용한 이미지 CRUD TEST API입니다.")
 public class S3TestController {
 
     @Autowired
     private S3TestService s3Service;
+
+
+
+
 
     @PostMapping(path = "/teams", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadPetImage(
@@ -37,12 +43,20 @@ public class S3TestController {
         return new ResponseEntity<>(url, null, HttpStatus.OK);
     }
 
+
+
+
+
     @GetMapping(path = "/teams/{fileName}")
     public ResponseEntity<byte[]> getPetImage(
             @PathVariable String fileName
     ) throws IOException {
         return s3Service.download(fileName);
     }
+
+
+
+
 
     @DeleteMapping(path = "/teams/{imageId}")
     public ResponseEntity<Void> deletePetImage(

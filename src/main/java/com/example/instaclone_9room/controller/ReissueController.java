@@ -7,6 +7,9 @@ import com.example.instaclone_9room.domain.RefreshEntity;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,12 +26,19 @@ import java.util.Date;
 @Controller
 @ResponseBody
 @RequiredArgsConstructor
+@Tag(name = "리프레시,액세스 토큰 재발급 API", description = "리프레시,액세스 토큰 재발급 API입니다.")
 public class ReissueController {
 
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
 
 
+
+    @Operation(
+            summary = "리프레시,액세스 토큰 재발급 API",
+            description = "리프레시,액세스 토큰 재발급 API입니다.<br>" +
+                    "리프레시 토큰 탈취에 대비하여 액세스와 함께 리프레시 토큰도 재발급하는 Refresh Rotate 로직입니다 "
+    )
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 
