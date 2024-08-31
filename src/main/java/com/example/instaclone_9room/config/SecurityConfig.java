@@ -52,38 +52,29 @@ public class SecurityConfig {
     }
 
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // 클라이언트 URL
-        configuration.setAllowedMethods(List.of("*")); // 모든 HTTP 메소드 허용
-        configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
-        configuration.setAllowCredentials(true); // 쿠키, 인증 정보 허용
-        configuration.setMaxAge(3600L); // CORS 사전 요청 캐시 시간 설정
-        configuration.setExposedHeaders(List.of("Authorization")); // 클라이언트가 접근할 수 있는 응답 헤더
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http
-                .cors(cors -> cors
-                        .configurationSource(request -> {
-                            CorsConfiguration configuration = new CorsConfiguration();
-                            configuration.setAllowedOrigins(List.of("http://localhost:3000")); // 클라이언트 URL
-                            configuration.setAllowedMethods(List.of("*")); // 모든 HTTP 메소드 허용
-                            configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
-                            configuration.setAllowCredentials(true); // 쿠키, 인증 정보 허용
-                            configuration.setMaxAge(3600L); // CORS 사전 요청 캐시 시간 설정
-                            configuration.setExposedHeaders(List.of("Authorization")); // 클라이언트가 접근할 수 있는 응답 헤더
-                            return configuration;
-                        })
-                );
+                .cors((corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                        CorsConfiguration configuration = new CorsConfiguration();
+
+                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                        return configuration;
+                    }
+                })));
 
 
 
@@ -95,13 +86,9 @@ public class SecurityConfig {
         http.httpBasic((auth)->auth.disable());
 
 
-        //소셜로그인
-        http.oauth2Login(Customizer.withDefaults());
-
-
         //인가 구현
         http.authorizeHttpRequests((auth)->auth
-                .requestMatchers("/login","/","/join").permitAll()
+                .requestMatchers("/users/join","users/login").permitAll()
                 .requestMatchers("/reissue").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll() // Swagger 관련 경로를 허용
                 .anyRequest().authenticated());
