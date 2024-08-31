@@ -163,7 +163,7 @@ public class ReelsImageServiceImpl implements ReelsImageService {
 
     @Transactional
     @Override
-    public void deleteFile(Long reelsId,String username) throws FileNotFoundException {
+    public void deleteFile(Long reelsId, String username) throws FileNotFoundException {
         try {
 
             UserEntity findUser = findUser(username);
@@ -210,6 +210,27 @@ public class ReelsImageServiceImpl implements ReelsImageService {
             throw new RuntimeException("파일 삭제에 실패했습니다.", e); // 예외 처리 및 롤백 유도
         }
     }
+
+
+    @Transactional
+    @Override
+    public String updateReelsImage(MultipartFile newFile, String dirName, String username, Long reelsId) throws IOException {
+        // 1. 기존 파일 삭제
+        deleteFile(reelsId, username);
+
+        // 2. 새 파일 업로드
+        return upload(newFile, dirName, username, reelsId);
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 

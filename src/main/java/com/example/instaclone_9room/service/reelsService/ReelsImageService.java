@@ -26,4 +26,7 @@ public interface ReelsImageService {
 
     @Transactional
     void deleteFile(Long reelsId, String username) throws FileNotFoundException;
+
+    @Transactional
+    String updateReelsImage(MultipartFile newFile, String dirName, String username, Long reelsId) throws IOException;
 }

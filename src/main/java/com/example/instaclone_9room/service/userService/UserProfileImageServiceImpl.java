@@ -6,7 +6,6 @@ import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.userEntity.UserProfileImage;
-import com.example.instaclone_9room.repository.ImageRepository;
 import com.example.instaclone_9room.repository.userEntityRepository.UserProfileImageRepository;
 import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -202,6 +201,43 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
             throw new RuntimeException("파일 삭제에 실패했습니다.", e); // 예외 처리 및 롤백 유도
         }
     }
+
+
+    @Override
+    public String updateProfileImage(MultipartFile newImageFile, String dirName, String username) throws IOException {
+        // 유저 찾기
+        UserEntity findUser = findUser(username);
+
+        // 기존 프로필 이미지 삭제
+        deleteFile(username);
+
+        // 새로운 이미지 업로드
+        String originalFileName = newImageFile.getOriginalFilename();
+        String uuid = UUID.randomUUID().toString();
+        String uniqueFileName = uuid + "_" + originalFileName.replaceAll("\\s", "_");
+        String fileName = dirName + "/" + uniqueFileName;
+        File uploadFile = convert(newImageFile);
+
+        String uploadImageUrl = putS3(uploadFile, fileName);
+        removeNewFile(uploadFile);
+
+        // 새로운 메타데이터 저장
+        saveFileMetadata(originalFileName, fileName, newImageFile.getSize(), newImageFile.getContentType(), findUser);
+
+        return uploadImageUrl;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

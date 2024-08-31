@@ -100,4 +100,32 @@ public class UserImageController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+
+
+    @Operation(
+            summary = "회원 프로필 사진 업데이트 API",
+            description = "회원의 프로필 사진을 업데이트 할 수 있는 API입니다.<br>" +
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
+                    "사진을 form-data로 MultipartFile 타입으로 요청하시면 기존 사진이 삭제되고 새로운 사진이 저장됩니다."
+    )
+    @PutMapping(path = "/image/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateProfileImage(
+            @RequestPart(value = "file") MultipartFile multipartFile,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) throws IOException {
+        String username = userDetails.getUsername();
+        String dirName = "User Profile Image";
+        try {
+            String url = userProfileImageService.updateProfileImage(multipartFile, dirName, username);
+            log.info("프로필 이미지 업데이트 완료: {}", url);
+            return new ResponseEntity<>(url, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("프로필 이미지 업데이트 오류: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

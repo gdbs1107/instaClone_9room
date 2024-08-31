@@ -24,4 +24,6 @@ public interface UserProfileImageService {
     byte[] download(String username) throws IOException;
 
     void deleteFile(String username) throws FileNotFoundException;
+
+    String updateProfileImage(MultipartFile newImageFile, String dirName, String username) throws IOException;
 }

@@ -35,7 +35,7 @@ public class ReelsImageController {
                     "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
                     "영상을 form-data로 MultipartFile 타입으로 요청하시면 저장됩니다.<br>" +
                     "해당 API는 웹에선 지원하지 않습니다<br>" +
-                    "###############해당 API를 테스트할땐 꼭 전재연에게 먼저 고지를 해주세요#############3"
+                    "<br>############### 해당 API를 테스트할땐 꼭 전재연에게 먼저 고지를 해주세요 ###############"
     )
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadProfileImage(
@@ -100,5 +100,31 @@ public class ReelsImageController {
             log.error("파일 삭제 오류: {}", e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+
+
+
+
+
+    @Operation(
+            summary = "릴스 영상 업데이트 API",
+            description = "릴스 영상을 업데이트할 수 있는 API입니다.<br>" +
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
+                    "새로운 영상을 form-data로 MultipartFile 타입으로 요청하시면 기존 영상을 대체합니다."
+    )
+    @PutMapping(path = "/image/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateReelsImage(
+            @RequestPart(value = "file") MultipartFile newImageFile,
+            @RequestParam(value = "reelsId") Long reelsId,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) throws IOException {
+
+        String username = userDetails.getUsername();
+        String dirName = "reels Image";
+        String updatedUrl = reelsImageService.updateReelsImage(newImageFile, dirName, username, reelsId);
+        log.info("파일 업데이트 완료: {}", updatedUrl);
+        return new ResponseEntity<>(updatedUrl, HttpStatus.OK);
     }
 }
