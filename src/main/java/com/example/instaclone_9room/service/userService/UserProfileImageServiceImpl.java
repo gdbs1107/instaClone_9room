@@ -3,6 +3,7 @@ package com.example.instaclone_9room.service.userService;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.ImageCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.userEntity.UserProfileImage;
@@ -78,11 +79,11 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
                 fos.write(file.getBytes());
             } catch (IOException e) {
                 log.error("파일 변환 중 오류 발생: {}", e.getMessage());
-                throw e;
+                throw new ImageCategoryHandler(ErrorStatus.IMAGE_CONVERT_FAIL);
             }
             return convertFile;
         }
-        throw new IllegalArgumentException(String.format("파일 변환에 실패했습니다. %s", originalFileName));
+        throw new ImageCategoryHandler(ErrorStatus.IMAGE_CONVERT_FAIL);
     }
 
 
@@ -100,6 +101,7 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
             log.info("파일이 삭제되었습니다.");
         } else {
             log.info("파일이 삭제되지 못했습니다.");
+            throw new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_DELETED);
         }
     }
 
@@ -134,11 +136,11 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
 
         UserProfileImage findUserProfileImage = findUser.getUserProfileImages().stream()
                 .findFirst()
-                .orElseThrow(()->new RuntimeException("이미지가 존재하지 않습니다"));
+                .orElseThrow(()->new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_FOUND));
 
 
         UserProfileImage image = userProfileImageRepository.findById(findUserProfileImage.getId())
-                .orElseThrow(()->new RuntimeException("이미지가 존재하지 않습니다"));
+                .orElseThrow(()->new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_FOUND));
 
 
         String uniqueFileName = image.getFilePath();  // Use full path as S3 key
@@ -151,7 +153,7 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
             }
         } catch (AmazonS3Exception e) {
             log.error("S3에서 파일 다운로드 오류: {}", e.getMessage());
-            throw e;
+            throw new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_ALLOWED);
         }
     }
 
@@ -166,12 +168,12 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
             // 첫 번째 프로필 이미지 찾기
             UserProfileImage findUserProfileImage = findUser.getUserProfileImages().stream()
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("이미지가 존재하지 않습니다"));
+                    .orElseThrow(()->new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_FOUND));
 
             // 이미지 ID로 조회
             Long userProfileId = findUserProfileImage.getId();
             UserProfileImage image = userProfileImageRepository.findById(userProfileId)
-                    .orElseThrow(() -> new RuntimeException("이미지가 존재하지 않습니다"));
+                    .orElseThrow(()->new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_FOUND));
 
             // 파일 경로(S3 키)
             String uniqueFileName = image.getFilePath();
@@ -198,7 +200,7 @@ public class UserProfileImageServiceImpl implements UserProfileImageService {
 
         } catch (Exception e) {
             log.error("파일 삭제 중 오류가 발생했습니다: ", e);
-            throw new RuntimeException("파일 삭제에 실패했습니다.", e); // 예외 처리 및 롤백 유도
+            throw new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_DELETED);
         }
     }
 
