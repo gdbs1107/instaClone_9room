@@ -37,8 +37,7 @@ import static org.hibernate.query.sqm.tree.SqmNode.log;
 public class UserController {
 
     private final UserCommandService userCommandService;
-    private final UserProfileImageService s3service;
-
+    private final UserProfileImageService userProfileImageService;
 
     @Operation(
             summary = "회원정보 업데이트",
@@ -162,7 +161,14 @@ public class UserController {
 
 
 
-    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+
+    @Operation(
+            summary = "회원 프로필 사진 등록 API",
+            description = "회원의 프로필 사진을 등록 할 수 있는 API입니다.<br>" +
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
+                    "사진을 form-data로 MultipartFile 타입으로 요청하시면 저장됩니다."
+    )
+    @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadProfileImage(
             @RequestPart(value = "file") MultipartFile multipartFile,
             @AuthenticationPrincipal UserDetails userDetails
@@ -171,7 +177,7 @@ public class UserController {
         String username = userDetails.getUsername();
 
         String dirName="User Profile Image";
-        String url = s3service.upload(multipartFile, dirName, username);
+        String url = userProfileImageService.upload(multipartFile, dirName, username);
         log.info("파일 업로드 완료: {}", url);
         return new ResponseEntity<>(url, HttpStatus.OK);
     }
@@ -179,14 +185,20 @@ public class UserController {
 
 
 
-    @GetMapping(path = "/{imageId}")
+    @Operation(
+            summary = "회원 프로필 사진 조회 API",
+            description = "회원 프로필 사진 조회 API 입니다.<br>" +
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
+                    "토큰 안의 회원정보와 매핑되어 있는 프로필 사진을 가져옵니다"
+    )
+    @GetMapping(path = "/image")
     public ResponseEntity<byte[]> getPetImage(
             @AuthenticationPrincipal UserDetails userDetails
     ) {
 
         String username = userDetails.getUsername();
         try {
-            byte[] fileData = s3service.download(username);
+            byte[] fileData = userProfileImageService.download(username);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
             headers.setContentDispositionFormData("attachment", "filename");
@@ -200,13 +212,19 @@ public class UserController {
 
 
 
-    @DeleteMapping(path = "/{imageId}")
+    @Operation(
+            summary = "회원 프로필 사진 삭제 API",
+            description = "회원 프로필 사진 삭제 API 입니다.<br>" +
+                    "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
+                    "토큰 안의 회원정보와 매핑되어 있는 프로필 사진을 삭제합니다"
+    )
+    @DeleteMapping(path = "/image")
     public ResponseEntity<Void> deletePetImage(
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         String username = userDetails.getUsername();
         try {
-            s3service.deleteFile(username);
+            userProfileImageService.deleteFile(username);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             log.error("파일 삭제 오류: {}", e.getMessage());
