@@ -3,7 +3,7 @@ package com.example.instaclone_9room.converter;
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.UserDTO;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
 
 public class UserConverter {

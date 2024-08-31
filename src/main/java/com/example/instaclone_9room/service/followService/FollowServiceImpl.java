@@ -5,13 +5,13 @@ import com.example.instaclone_9room.apiPayload.exception.handler.FollowCategoryH
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.FollowDTO;
 import com.example.instaclone_9room.converter.FollowConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.follow.Follow;
 import com.example.instaclone_9room.domain.follow.Follower;
-import com.example.instaclone_9room.repository.*;
 import com.example.instaclone_9room.repository.followRepository.BlockedFollowerRepository;
 import com.example.instaclone_9room.repository.followRepository.FollowRepository;
 import com.example.instaclone_9room.repository.followRepository.FollowerRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

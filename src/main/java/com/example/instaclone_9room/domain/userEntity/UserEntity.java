@@ -1,4 +1,4 @@
-package com.example.instaclone_9room.domain;
+package com.example.instaclone_9room.domain.userEntity;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
@@ -82,6 +82,9 @@ public class UserEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<ReelsLikes> reelsLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<UserProfileImage> userProfileImages = new ArrayList<>();
 
 
 

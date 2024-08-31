@@ -4,7 +4,9 @@ import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
+import com.example.instaclone_9room.service.S3TestService;
 import com.example.instaclone_9room.service.userService.UserCommandService;
+import com.example.instaclone_9room.service.userService.UserProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,18 +15,29 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
+import static org.hibernate.query.sqm.tree.SqmNode.log;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Slf4j
 @Tag(name = "회원관련 API", description = "로그인을 제외한 회원관련 API 입니다")
 public class UserController {
 
     private final UserCommandService userCommandService;
+    private final UserProfileImageService s3service;
 
 
     @Operation(
@@ -145,5 +158,59 @@ public class UserController {
         String requestingUsername = userDetails != null ? userDetails.getUsername() : null;
         UserDTO.UserGetResponseDTO userProfile = userCommandService.getUserProfileByUsername(targetUsername, requestingUsername);
         return ApiResponse.onSuccess(userProfile);
+    }
+
+
+
+    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> uploadProfileImage(
+            @RequestPart(value = "file") MultipartFile multipartFile,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) throws IOException {
+
+        String username = userDetails.getUsername();
+
+        String dirName="User Profile Image";
+        String url = s3service.upload(multipartFile, dirName, username);
+        log.info("파일 업로드 완료: {}", url);
+        return new ResponseEntity<>(url, HttpStatus.OK);
+    }
+
+
+
+
+    @GetMapping(path = "/{imageId}")
+    public ResponseEntity<byte[]> getPetImage(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+
+        String username = userDetails.getUsername();
+        try {
+            byte[] fileData = s3service.download(username);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentDispositionFormData("attachment", "filename");
+            log.info("파일 다운로드 완료: ID {}", username);
+            return new ResponseEntity<>(fileData, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("파일 다운로드 오류: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+    @DeleteMapping(path = "/{imageId}")
+    public ResponseEntity<Void> deletePetImage(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        String username = userDetails.getUsername();
+        try {
+            s3service.deleteFile(username);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            log.error("파일 삭제 오류: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

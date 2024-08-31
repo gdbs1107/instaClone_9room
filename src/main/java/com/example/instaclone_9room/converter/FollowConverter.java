@@ -1,8 +1,7 @@
 package com.example.instaclone_9room.converter;
 
 import com.example.instaclone_9room.controller.dto.FollowDTO;
-import com.example.instaclone_9room.domain.UserEntity;
-import com.example.instaclone_9room.domain.follow.Follow;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 
 public class FollowConverter {
 

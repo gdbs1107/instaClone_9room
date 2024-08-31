@@ -6,19 +6,16 @@ import com.example.instaclone_9room.apiPayload.exception.handler.TokenCategoryHa
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.converter.UserConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
-import com.example.instaclone_9room.domain.follow.Follower;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.followRepository.FollowerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

@@ -6,10 +6,10 @@ import com.example.instaclone_9room.apiPayload.exception.handler.ReelsCategoryHa
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.converter.ReelsConverter;
 import com.example.instaclone_9room.converter.ReelsPinnedConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.reels.Reels;
 import com.example.instaclone_9room.domain.reels.ReelsPinned;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.reelsRepository.ReelsPinnedRepository;
 import com.example.instaclone_9room.repository.reelsRepository.ReelsRepository;
 import lombok.RequiredArgsConstructor;

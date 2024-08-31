@@ -1,15 +1,14 @@
 package com.example.instaclone_9room.service.reelsService;
 
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
-import com.example.instaclone_9room.apiPayload.exception.UnauthorizedException;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.ReelsCategoryHandler;
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.converter.ReelsConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.reels.Reels;
 import com.example.instaclone_9room.repository.reelsRepository.ReelsRepository;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
