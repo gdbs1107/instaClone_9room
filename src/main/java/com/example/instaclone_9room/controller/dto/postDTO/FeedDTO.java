@@ -37,8 +37,6 @@ public class FeedDTO {
         private String location;
         private List<Image> images;
         private List<Comment> comments;
-        private
-        
         
     }
 }
