@@ -17,25 +17,25 @@ import java.util.List;
 @Getter
 @Builder
 public class Comment extends BaseEntity {
-
+    
+    private String content;
+    private Integer likesCount;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feed_id")
     private Feed feed;
-
+    
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentLikes> likes = new ArrayList<>();
-    private Integer likesCount;
-
-    private String content;
     
     //====비즈니스 로직=====//
     public void update(String content) {

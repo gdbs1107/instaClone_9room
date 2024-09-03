@@ -29,18 +29,19 @@ public class Feed extends BaseEntity {
 
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
-    private Integer commentCount;
-
+    
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FeedLikes> likes = new ArrayList<>();
-    private Integer likesCount;
-
+    
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Image> images = new ArrayList<>();
-
+    
     @Column(nullable = false)
     private String content;
-
+    
+    private Integer commentCount;
+    private Integer likesCount;
+    private Integer pinnedCount;
     private String location;
     
     //======비즈니스 로직======//
@@ -62,6 +63,13 @@ public class Feed extends BaseEntity {
     
     public void updateCommentCount() {
         this.commentCount = this.comments.size();
+    }
+    
+    public void addPinCount() {
+        this.pinnedCount = this.pinnedCount + 1;
+    }
+    public void removePinCount() {
+        this.pinnedCount = this.pinnedCount -1;
     }
 
 }
