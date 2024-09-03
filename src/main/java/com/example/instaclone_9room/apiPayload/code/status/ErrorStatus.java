@@ -32,8 +32,8 @@ public enum ErrorStatus implements BaseErrorCode {
     MEMBER_PRIVATE_ERROR(HttpStatus.UNAUTHORIZED,"MEMBER3007","비공개 계정입니다. 조회 할 권한이 없습니다"),
 
     //릴스 관련 에러
-    REELS_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4001", "릴스가 없습니다."),
-    REELS_COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4002", "릴스댓글이 없습니다."),
+    REELS_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4001", "릴스를 찾을 수 없습니다"),
+    REELS_COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "REELS4002", "릴스댓글을 찾을 수 없습니다."),
     REELS_END(HttpStatus.NOT_FOUND,"REELS4003","릴스 전부 조회하였습니다"),
 
     //팔로우, 팔로워 관련 에러
