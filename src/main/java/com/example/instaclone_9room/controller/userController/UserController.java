@@ -38,6 +38,9 @@ public class UserController {
             description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3002", description = "닉네임은 필수입니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3005", description = "성별을 제대로 입력해주세요"),
@@ -61,6 +64,9 @@ public class UserController {
             description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
@@ -81,6 +87,9 @@ public class UserController {
             description = "회원가입 API입니다. 헤더에 accessToken 없이 작동합니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3002", description = "닉네임은 필수입니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3005", description = "성별을 제대로 입력해주세요"),
@@ -137,6 +146,9 @@ public class UserController {
             description = "회원정보 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
@@ -160,6 +172,9 @@ public class UserController {
                     "게시물 API가 완성되면 전체 게시물 조회 API가 담길 예정입니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
@@ -180,6 +195,9 @@ public class UserController {
             description = "다른 사람의 회원정보를 조회할 수 있는 API입니다. 공개 계정은 인증 없이 조회 가능하며, 비공개 계정은 팔로워만 조회할 수 있습니다."
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
                     content = @Content(schema = @Schema(implementation = ApiResponse.class)))

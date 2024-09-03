@@ -42,6 +42,9 @@ public class UserImageController {
                     "사진을 form-data로 MultipartFile 타입으로 요청하시면 저장됩니다."
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
@@ -72,6 +75,9 @@ public class UserImageController {
                     "토큰 안의 회원정보와 매핑되어 있는 프로필 사진을 가져옵니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
@@ -106,6 +112,9 @@ public class UserImageController {
                     "토큰 안의 회원정보와 매핑되어 있는 프로필 사진을 삭제합니다"
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
@@ -138,6 +147,9 @@ public class UserImageController {
                     "사진을 form-data로 MultipartFile 타입으로 요청하시면 기존 사진이 삭제되고 새로운 사진이 저장됩니다."
     )
     @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
