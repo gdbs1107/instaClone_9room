@@ -55,6 +55,11 @@ public class BlockedFollowsController {
             summary = "차단계정 조회 API",
             description = "차단계정 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @GetMapping("/")
     public ApiResponse<List<FollowDTO.FollowerResponseDTO>> getBlockedFollowers(@AuthenticationPrincipal UserDetails userDetails) {
         List<FollowDTO.FollowerResponseDTO> blockedFollowers = blockedFollowerService.getBlockedFollowers(userDetails.getUsername());
