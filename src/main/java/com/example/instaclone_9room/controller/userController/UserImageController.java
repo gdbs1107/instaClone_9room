@@ -1,8 +1,12 @@
 package com.example.instaclone_9room.controller.userController;
 
+import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.service.userService.UserCommandService;
 import com.example.instaclone_9room.service.userService.UserProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +41,13 @@ public class UserImageController {
                     "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
                     "사진을 form-data로 MultipartFile 타입으로 요청하시면 저장됩니다."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @PostMapping(path = "/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> uploadProfileImage(
             @RequestPart(value = "file") MultipartFile multipartFile,
@@ -60,6 +71,13 @@ public class UserImageController {
                     "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
                     "토큰 안의 회원정보와 매핑되어 있는 프로필 사진을 가져옵니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @GetMapping(path = "/image")
     public ResponseEntity<byte[]> getPetImage(
             @AuthenticationPrincipal UserDetails userDetails
@@ -87,6 +105,14 @@ public class UserImageController {
                     "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
                     "토큰 안의 회원정보와 매핑되어 있는 프로필 사진을 삭제합니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6004", description = "이미지 삭제에 실패하였습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @DeleteMapping(path = "/image")
     public ResponseEntity<Void> deletePetImage(
             @AuthenticationPrincipal UserDetails userDetails
@@ -111,6 +137,13 @@ public class UserImageController {
                     "헤더에 accessToken을 담아서 요청하시면 됩니다.<br>" +
                     "사진을 form-data로 MultipartFile 타입으로 요청하시면 기존 사진이 삭제되고 새로운 사진이 저장됩니다."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6001", description = "파일 변환에 실패하였습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6002", description = "이미지를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "IMAGE6003", description = "Amazon S3에서 파일을 불러올 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @PutMapping(path = "/image/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateProfileImage(
             @RequestPart(value = "file") MultipartFile multipartFile,

@@ -6,6 +6,9 @@ import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.service.userService.UserCommandService;
 import com.example.instaclone_9room.service.userService.UserProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,16 +16,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,12 +29,23 @@ import java.io.IOException;
 @Tag(name = "회원관련 API", description = "로그인을 제외한 회원관련 API 입니다")
 public class UserController {
 
+
     private final UserCommandService userCommandService;
+
 
     @Operation(
             summary = "회원정보 업데이트",
             description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3002", description = "닉네임은 필수입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3005", description = "성별을 제대로 입력해주세요"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3004", description = "최대 20자입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+            content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @PutMapping("/")
     public ApiResponse<String> updateUser(@RequestBody @Valid UserDTO.UserUpdateRequestDTO request,
                                           @AuthenticationPrincipal UserDetails userDetails){
@@ -51,6 +60,12 @@ public class UserController {
             summary = "회원정보 삭제",
             description = "회원정보 업데이트 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @DeleteMapping("/")
     public ApiResponse<String> deleteUser(@AuthenticationPrincipal UserDetails userDetails){
 
@@ -65,6 +80,15 @@ public class UserController {
             summary = "회원가입",
             description = "회원가입 API입니다. 헤더에 accessToken 없이 작동합니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3002", description = "닉네임은 필수입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3005", description = "성별을 제대로 입력해주세요"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3004", description = "최대 20자입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @PostMapping("/join")
     public String joinProcess(@RequestBody @Valid JoinDto.JoinRequestDTO joinDto){
 
@@ -112,6 +136,12 @@ public class UserController {
             summary = "본인 회원정보 상세조회",
             description = "회원정보 조회 API입니다. 헤더에 accessToken을 담아서 요청하시면 됩니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @GetMapping("/")
     public ApiResponse<UserDTO.UserGetResponseDTO> getUser(@AuthenticationPrincipal UserDetails userDetails){
 
@@ -129,6 +159,12 @@ public class UserController {
                     "헤더에 accessToken을 담아서 요청하시면 됩니다" +
                     "게시물 API가 완성되면 전체 게시물 조회 API가 담길 예정입니다"
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3006", description = "본인의 계정이 아닙니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @GetMapping("/home")
     public ApiResponse<UserDTO.UserGetHomeResponseDTO> getHomeUser(@AuthenticationPrincipal UserDetails userDetails){
 
@@ -143,6 +179,11 @@ public class UserController {
             summary = "다른 사람의 회원정보 조회",
             description = "다른 사람의 회원정보를 조회할 수 있는 API입니다. 공개 계정은 인증 없이 조회 가능하며, 비공개 계정은 팔로워만 조회할 수 있습니다."
     )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     @GetMapping("/profile/{targetUsername}")
     public ApiResponse<UserDTO.UserGetResponseDTO> getUserProfileByUsername(
             @PathVariable String targetUsername,
