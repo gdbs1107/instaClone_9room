@@ -2,7 +2,6 @@ package com.example.instaclone_9room.domain.storyEntitiy;
 
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
-import com.example.instaclone_9room.domain.postEntity.Comment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

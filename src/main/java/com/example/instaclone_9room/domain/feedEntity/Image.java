@@ -1,6 +1,5 @@
-package com.example.instaclone_9room.domain.postEntity;
+package com.example.instaclone_9room.domain.feedEntity;
 
-import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,18 +12,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FeedLikes extends BaseEntity {
+public class Image extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "feedLikes_id")
+    @Column(name = "image_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feed_id")
     private Feed feed;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_entity_id")
-    private UserEntity userEntity;
+    private String imagePath;
+    private String fileName;
 }

@@ -1,4 +1,4 @@
-package com.example.instaclone_9room.domain.postEntity;
+package com.example.instaclone_9room.domain.feedEntity;
 
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
@@ -42,5 +42,26 @@ public class Feed extends BaseEntity {
     private String content;
 
     private String location;
+    
+    //======비즈니스 로직======//
+    public void update(String content, String location, List<Image> images) {
+        this.content = content;
+        this.location = location;
+        this.images = images;
+    }
+    
+    public void addLike() {
+        this.likesCount = this.likesCount == null ? 1 : this.likesCount + 1;
+    }
+    
+    public void removeLike() {
+        if (this.likesCount != null && this.likesCount > 0) {
+            this.likesCount = this.likesCount - 1;
+        }
+    }
+    
+    public void updateCommentCount() {
+        this.commentCount = this.comments.size();
+    }
 
 }
