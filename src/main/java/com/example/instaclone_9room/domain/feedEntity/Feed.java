@@ -41,8 +41,8 @@ public class Feed extends BaseEntity {
     
     private Integer commentCount;
     private Integer likesCount;
-    private Integer pinnedCount;
     private String location;
+//    private Integer pinnedCount;
     
     //======비즈니스 로직======//
     public void update(String content, String location, List<Image> images) {
@@ -65,11 +65,12 @@ public class Feed extends BaseEntity {
         this.commentCount = this.comments.size();
     }
     
-    public void addPinCount() {
-        this.pinnedCount = this.pinnedCount + 1;
-    }
-    public void removePinCount() {
-        this.pinnedCount = this.pinnedCount -1;
-    }
+//    public void addPinCount() {
+//        this.pinnedCount = this.pinnedCount + 1;
+//    }
+
+//    public void removePinCount() {
+//        this.pinnedCount = this.pinnedCount -1;
+//    }
 
 }

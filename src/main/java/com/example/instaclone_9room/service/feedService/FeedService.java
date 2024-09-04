@@ -7,4 +7,10 @@ import org.springframework.stereotype.Service;
 public interface FeedService {
     
     void postFeed(FeedDTO.FeedPostRequestDTO feedPostRequestDTO, String username);
+    
+    void updateFeed(Long feedId, FeedDTO.FeedUpdateRequestDTO feedUpdateRequestDTO, String username);
+    
+    void deleteFeed(Long feedId, String username);
+    
+    void searchFeed(Long feedId);
 }

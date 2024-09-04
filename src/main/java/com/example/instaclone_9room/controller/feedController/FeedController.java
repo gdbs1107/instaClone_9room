@@ -2,14 +2,12 @@ package com.example.instaclone_9room.controller.feedController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.postDTO.FeedDTO;
+import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.service.feedService.FeedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +21,23 @@ public class FeedController {
                                         @AuthenticationPrincipal UserDetails userDetails) {
         feedService.postFeed(req, userDetails.getUsername());
         return ApiResponse.onSuccess("saved feed");
+    }
+    
+    @PutMapping("/{feedId}")
+    public ApiResponse<String> updateFeed(@PathVariable Long feedId,
+                                          @RequestBody FeedDTO.FeedUpdateRequestDTO req,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+        feedService.updateFeed(feedId, req, userDetails.getUsername());
+        
+        return ApiResponse.onSuccess("updated feed");
+    }
+    
+    @DeleteMapping("/{feedId}")
+    public ApiResponse<String> deleteFeed(@PathVariable Long feedId,
+                                          @AuthenticationPrincipal UserDetails userDetails) {
+        
+        feedService.deleteFeed(feedId, userDetails.getUsername());
+        
+        return ApiResponse.onSuccess("deleted feed");
     }
 }
