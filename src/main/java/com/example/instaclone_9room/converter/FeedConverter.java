@@ -8,19 +8,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FeedConverter {
     
-    public static Feed toFeed(FeedDTO.FeedPostRequestDTO feedPostRequestDTO, UserEntity user) {
+    public static Feed toFeed(FeedDTO.FeedPostRequestDTO req, UserEntity user) {
         
         return Feed.builder()
-                .content(feedPostRequestDTO.getContent())
-                .images(ImageConverter.toImageList(feedPostRequestDTO.getImages()))
-                .location(feedPostRequestDTO.getLocation())
+                .content(req.getContent())
+                .images(ImageConverter.toImageList(req.getImages()))
+                .location(req.getLocation())
                 .likesCount(0)
                 .commentCount(0)
                 .userEntity(user)
                 .build();
     }
-    
-    
-    
-    
 }

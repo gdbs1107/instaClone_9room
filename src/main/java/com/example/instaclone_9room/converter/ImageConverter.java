@@ -17,10 +17,13 @@ public class ImageConverter {
                 .build();
     }
     
-    public static List<Image> toImageList(List<ImageDTO> imageDTOList) {
+    public static List<Image> toImageList(List<ImageDTO> imageListDTO) {
         
-        return imageDTOList.stream()
-                .map(ImageConverter::toImage)
+        return imageListDTO.stream()
+                .map(image -> Image.builder()
+                        .fileName(image.getFileName())
+                        .imagePath(image.getImagePath())
+                        .build())
                 .collect(Collectors.toList());
     }
 }

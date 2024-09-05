@@ -26,12 +26,13 @@ public class FeedServiceImpl implements FeedService {
     
     
     @Override
-    public void postFeed(FeedDTO.FeedPostRequestDTO feedPostRequestDTO, String username) {
+    public void postFeed(FeedDTO.FeedPostRequestDTO req, String username) {
         
         UserEntity user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("user not found"));
         
-        Feed newFeed = FeedConverter.toFeed(feedPostRequestDTO, user);
+        Feed newFeed = FeedConverter.toFeed(req, user);
+        
         feedRepository.save(newFeed);
     }
     
