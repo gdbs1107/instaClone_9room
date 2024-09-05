@@ -12,13 +12,15 @@ public class FeedConverter {
         
         return Feed.builder()
                 .content(feedPostRequestDTO.getContent())
-                .images(feedPostRequestDTO.getImages())
+                .images(ImageConverter.toImageList(feedPostRequestDTO.getImages()))
                 .location(feedPostRequestDTO.getLocation())
                 .likesCount(0)
                 .commentCount(0)
                 .userEntity(user)
                 .build();
     }
+    
+    
     
     
 }

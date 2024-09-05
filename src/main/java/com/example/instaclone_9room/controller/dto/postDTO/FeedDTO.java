@@ -18,7 +18,7 @@ public class FeedDTO {
     public static class FeedPostRequestDTO {
         
         private String content;
-        private List<Image> images;
+        private List<ImageDTO> images;
         private String location;
     }
     
@@ -26,7 +26,7 @@ public class FeedDTO {
     public static class FeedUpdateRequestDTO {
         
         private String content;
-        private List<Image> images;
+        private List<ImageDTO> images;
         private String location;
     }
     
