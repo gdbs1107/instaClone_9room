@@ -2,7 +2,7 @@ package com.example.instaclone_9room.jwt;
 
 
 import com.example.instaclone_9room.controller.dto.CustomUserDetails;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

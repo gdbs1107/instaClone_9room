@@ -2,8 +2,8 @@ package com.example.instaclone_9room.service;
 
 
 import com.example.instaclone_9room.controller.dto.CustomUserDetails;
-import com.example.instaclone_9room.domain.UserEntity;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

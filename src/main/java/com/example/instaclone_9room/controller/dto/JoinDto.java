@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 
 public class JoinDto {
 
@@ -21,6 +23,12 @@ public class JoinDto {
 
         @NotNull(message = "null값입니다")
         private String password;
+
+
+        private String name;
+        private Integer genderType;
+        private LocalDate birthday;
+        private String link;
 
     }
 

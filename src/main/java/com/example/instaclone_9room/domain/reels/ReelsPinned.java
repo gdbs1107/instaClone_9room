@@ -1,6 +1,6 @@
-package com.example.instaclone_9room.domain;
+package com.example.instaclone_9room.domain.reels;
 
-import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,13 +12,19 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Follower extends BaseEntity {
+public class ReelsPinned {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reels_id")
+    private Reels reels;
 }
