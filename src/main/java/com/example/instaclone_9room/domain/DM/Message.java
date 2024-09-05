@@ -1,8 +1,8 @@
-package com.example.instaclone_9room.domain;
+package com.example.instaclone_9room.domain.DM;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 
-import com.example.instaclone_9room.domain.enums.readStatus;
+import com.example.instaclone_9room.domain.enums.ReadStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +24,7 @@ public class Message extends BaseEntity {
     private String image;
 
     // 메세지 읽음 확인
-    private readStatus isRead;
+    private ReadStatus isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_part_id")

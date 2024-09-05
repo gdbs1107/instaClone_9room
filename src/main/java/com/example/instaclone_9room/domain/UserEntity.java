@@ -1,5 +1,6 @@
 package com.example.instaclone_9room.domain;
 
+import com.example.instaclone_9room.domain.DM.ChatPart;
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
 import jakarta.persistence.*;
@@ -54,6 +55,8 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<ReelsLikes> reelsLikes=new ArrayList<>();
 
+    @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private Memo memo;
 
 
 }

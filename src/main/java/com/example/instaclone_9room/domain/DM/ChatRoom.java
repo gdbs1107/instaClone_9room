@@ -1,4 +1,4 @@
-package com.example.instaclone_9room.domain;
+package com.example.instaclone_9room.domain.DM;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 
