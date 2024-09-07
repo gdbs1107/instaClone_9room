@@ -39,6 +39,9 @@ public class S3TestService {
         this.imageRepository = imageRepository;
     }
 
+
+
+
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         String originalFileName = multipartFile.getOriginalFilename();
         String uuid = UUID.randomUUID().toString();
@@ -54,6 +57,10 @@ public class S3TestService {
 
         return uploadImageUrl;
     }
+
+
+
+
 
     private File convert(MultipartFile file) throws IOException {
         String originalFileName = file.getOriginalFilename();
@@ -79,6 +86,10 @@ public class S3TestService {
         return amazonS3.getUrl(bucket, fileName).toString();
     }
 
+
+
+
+
     private void removeNewFile(File targetFile) {
         if (targetFile.delete()) {
             log.info("파일이 삭제되었습니다.");
@@ -86,6 +97,9 @@ public class S3TestService {
             log.info("파일이 삭제되지 못했습니다.");
         }
     }
+
+
+
 
     private void saveFileMetadata(String originalFileName, String uniqueFileName, long fileSize, String contentType) {
 
@@ -101,6 +115,10 @@ public class S3TestService {
 
         imageRepository.save(image);
     }
+
+
+
+
 
     public byte[] download(Long imageId) throws IOException {
         Image image = imageRepository.findById(imageId)
@@ -119,6 +137,9 @@ public class S3TestService {
             throw e;
         }
     }
+
+
+
 
     public void deleteFile(Long imageId) throws FileNotFoundException {
         Image image = imageRepository.findById(imageId)
