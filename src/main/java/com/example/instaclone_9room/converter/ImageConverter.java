@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ImageConverter {
-
+    
     public static Image toImage(ImageDTO imageDTO) {
         
         return Image.builder()

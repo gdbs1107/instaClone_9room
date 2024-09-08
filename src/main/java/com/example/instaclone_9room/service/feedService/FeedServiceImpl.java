@@ -33,11 +33,12 @@ public class FeedServiceImpl implements FeedService {
         
         Feed newFeed = FeedConverter.toFeed(req, user);
         
+        imageRepository.saveAll(newFeed.getImages());
         feedRepository.save(newFeed);
     }
     
     @Override
-    public void updateFeed(Long feedId, FeedDTO.FeedUpdateRequestDTO feedUpdateRequestDTO, String username) {
+    public void updateFeed(Long feedId, FeedDTO.FeedUpdateRequestDTO req, String username) {
         
         UserEntity user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("user not found"));
@@ -45,10 +46,17 @@ public class FeedServiceImpl implements FeedService {
         Feed existingFeed = feedRepository.findByIdAndUserEntity(feedId, user).orElseThrow(
                 () -> new RuntimeException("feed not found or user not authorized"));
         
-        List<Image> updateImages = ImageConverter.toImageList(feedUpdateRequestDTO.getImages());
+        List<Image> images = ImageConverter.toImageList(req.getImageDTOS());
         
-        existingFeed.update(feedUpdateRequestDTO.getContent(), feedUpdateRequestDTO.getLocation(), updateImages);
+        existingFeed.getImages().forEach(image -> image.setFeed(null));
+        existingFeed.getImages().clear();
         
+        images.forEach(image -> image.setFeed(existingFeed));
+        existingFeed.getImages().addAll(images);
+        
+        existingFeed.update(req.getContent(), req.getLocation()); //본문 지역 제거
+        
+        imageRepository.saveAll(existingFeed.getImages());
         feedRepository.save(existingFeed);
     
     }

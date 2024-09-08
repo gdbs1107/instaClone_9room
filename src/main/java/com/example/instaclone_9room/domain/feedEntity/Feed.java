@@ -45,10 +45,14 @@ public class Feed extends BaseEntity {
 //    private Integer pinnedCount;
     
     //======비즈니스 로직======//
-    public void update(String content, String location, List<Image> images) {
+    public void update(String content, String location) {
         this.content = content;
         this.location = location;
+    }
+    
+    public void setImages(List<Image> images) {
         this.images = images;
+        images.forEach(image -> image.setFeed(this));
     }
     
     public void addLike() {
@@ -59,6 +63,10 @@ public class Feed extends BaseEntity {
         if (this.likesCount != null && this.likesCount > 0) {
             this.likesCount = this.likesCount - 1;
         }
+    }
+    
+    public void updateImages(List<Image> images) {
+        this.images = images;
     }
     
     public void updateCommentCount() {
