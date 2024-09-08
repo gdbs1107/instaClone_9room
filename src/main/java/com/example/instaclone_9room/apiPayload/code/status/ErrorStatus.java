@@ -44,7 +44,11 @@ public enum ErrorStatus implements BaseErrorCode {
     IMAGE_CONVERT_FAIL(HttpStatus.METHOD_NOT_ALLOWED,"IMAGE6001","파일 변환에 실패하였습니다"),
     IMAGE_NOT_FOUND(HttpStatus.NOT_FOUND,"IMAGE6002","이미지를 찾을 수 없습니다"),
     IMAGE_NOT_ALLOWED(HttpStatus.NOT_FOUND,"IMAGE6003","Amazon S3에서 파일을 불러올 수 없습니다"),
-    IMAGE_NOT_DELETED(HttpStatus.NOT_FOUND,"IMAGE6004","이미지 삭제에 실패하였습니다");
+    IMAGE_NOT_DELETED(HttpStatus.NOT_FOUND,"IMAGE6004","이미지 삭제에 실패하였습니다"),
+
+    //메모 관련 에러
+    MEMO_NOT_FOUND(HttpStatus.NOT_FOUND,"IMAGE6001","메모를 찾을 수 없습니다."),
+    MEMO_EXISTED(HttpStatus.BAD_REQUEST, "MEMO6002", "이미 메모가 존재합니다. 삭제 혹은 수정 바랍니다.");
 
 
 

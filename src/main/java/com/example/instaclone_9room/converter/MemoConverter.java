@@ -3,7 +3,7 @@ package com.example.instaclone_9room.converter;
 
 import com.example.instaclone_9room.controller.dto.MemoDTO;
 import com.example.instaclone_9room.domain.Memo;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 
 
 import java.util.List;
@@ -29,13 +29,13 @@ public class MemoConverter {
     }
 
     // List<Memo> -> MemoListDTO (엔티티 변환)
-    public static MemoDTO.MemoListResponseDTO toMemoListDTO(List<Memo> memos, int totalPages, long totalElements) {
-        List<MemoDTO.MemoSummaryDTO> memoSummaryDTOS = memos.stream()
-                .map(MemoConverter::toMemoSummaryDTO)
-                .collect(Collectors.toList());
+    public static MemoDTO.MemoListResponseDTO toMemoListDTO(List<MemoDTO.MemoSummaryDTO> memos, int totalPages, long totalElements) {
+//        List<MemoDTO.MemoSummaryDTO> memoSummaryDTOS = memos.stream()
+//                .map(MemoConverter::toMemoSummaryDTO)
+//                .collect(Collectors.toList());
 
         return MemoDTO.MemoListResponseDTO.builder()
-                .memoSummaryDTOS(memoSummaryDTOS)
+                .memoSummaryDTOS(memos)
                 .totalPages(totalPages)
                 .totalElements(totalElements)
                 .build();

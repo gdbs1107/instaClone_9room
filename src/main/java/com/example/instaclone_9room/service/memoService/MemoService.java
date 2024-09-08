@@ -1,7 +1,6 @@
 package com.example.instaclone_9room.service.memoService;
 
 import com.example.instaclone_9room.controller.dto.MemoDTO;
-import com.example.instaclone_9room.domain.UserEntity;
 
 public interface MemoService {
 
