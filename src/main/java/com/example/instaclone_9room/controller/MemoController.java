@@ -84,4 +84,27 @@ public class MemoController {
 
         return ApiResponse.onSuccess("update memo");
     }
+
+    @Operation(
+            summary = "메모 조회 API",
+            description = "메모 조회 API입니다. 페이징을 통해 5개씩 받습니다. 개수 조절희망 시 이야기 주세요"
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
+
+    })
+    @GetMapping("/")
+    public ApiResponse<MemoDTO.MemoListResponseDTO> getMemoPage(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(defaultValue = "0") int page
+
+    ) {
+        MemoDTO.MemoListResponseDTO memoList = memoService.getMemoList(userDetails.getUsername(), page);
+        return ApiResponse.onSuccess(memoList);
+    }
 }
