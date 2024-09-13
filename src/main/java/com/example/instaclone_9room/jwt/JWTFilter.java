@@ -6,9 +6,11 @@ import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JWTFilter extends OncePerRequestFilter{
 
     private final JwtUtil jwtUtil;
@@ -24,38 +27,45 @@ public class JWTFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        // 헤더에서 Authorization 토큰을 꺼냄
-        String authorizationHeader = request.getHeader("Authorization");
+        log.info("JWTFilter가 작동합니다");
+        String access = null;
 
-        // Authorization 헤더가 없거나 Bearer 스킴이 없으면 다음 필터로 이동
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+
+            System.out.println(cookie.getName());
+            if (cookie.getName().equals("access")) {
+                access = cookie.getValue();
+            }
+        }
+
+        //Authorization 헤더 검증
+        if (access == null) {
+
+            System.out.println("token null");
             filterChain.doFilter(request, response);
+
+            //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
-        // Bearer 뒤의 토큰을 추출
-        String accessToken = authorizationHeader.substring(7).trim();
+        //토큰
+        String token = access;
 
-        // 토큰 만료 여부 확인
-        try {
-            jwtUtil.isExpired(accessToken);
-        } catch (ExpiredJwtException e) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().print("access token expired");
+        //토큰 소멸 시간 검증
+        if (jwtUtil.isExpired(token)) {
+
+            System.out.println("token expired");
+            filterChain.doFilter(request, response);
+
+            //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
-        // 토큰이 access인지 확인
-        String category = jwtUtil.getCategory(accessToken);
-        if (!category.equals("access")) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().print("invalid access token");
-            return;
-        }
-
-        // username, role 값을 획득
-        String username = jwtUtil.getUsername(accessToken);
-        String role = jwtUtil.getRole(accessToken);
+        //토큰에서 username과 role 획득
+        String username = jwtUtil.getUsername(token);
+        String role = jwtUtil.getRole(token);
 
         UserEntity userEntity = UserEntity.builder()
                 .username(username)

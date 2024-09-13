@@ -30,7 +30,6 @@ public class UserEntity extends BaseEntity {
     @Column(name = "user_entity_id")
     private Long id;
 
-    @Column(nullable = false,unique = true, length = 20)
     private String username;
 
     //해싱돼서 제한을 걸 수 없음
@@ -64,6 +63,7 @@ public class UserEntity extends BaseEntity {
 
 
 
+    private String email;
 
 
 
@@ -126,6 +126,18 @@ public class UserEntity extends BaseEntity {
         this.followerCount--;
     }
 
+
+    public void setEmail(String email) {
+        if (email != null) {
+            this.email = email;
+        }
+    }
+
+    public void setName(String name) {
+        if (name != null) {
+            this.name=name;
+        }
+    }
 
 
 

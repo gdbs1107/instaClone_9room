@@ -128,6 +128,7 @@ public class userCommandServiceImpl implements UserCommandService {
 
         Gender gender = UserConverter.toGender(joinDto.getGenderType());
 
+        //일반로그인에서는 이메일을 요구하지 않기 때문에 temp 기입
         UserEntity userEntity = UserEntity.builder()
                 .username(username)
                 .password(bCryptPasswordEncoder.encode(password))
@@ -139,6 +140,7 @@ public class userCommandServiceImpl implements UserCommandService {
                 .onPrivate(false)
                 .followerCount(0)
                 .followCount(0)
+                .email("temp@temp.com")
                 .build();
 
         userRepository.save(userEntity);

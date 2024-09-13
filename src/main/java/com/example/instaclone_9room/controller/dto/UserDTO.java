@@ -10,7 +10,19 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
+
+    private String username;
+    private String name;
+    private String role;
+
+
+
 
     @Getter
     @Builder
