@@ -53,9 +53,6 @@ public class UserEntity extends BaseEntity {
     @Column(length = 30)
     private String link;
 
-    private String imageName;
-    private String imagePath;
-
     @Nullable
     private Integer followCount;
     @Nullable
