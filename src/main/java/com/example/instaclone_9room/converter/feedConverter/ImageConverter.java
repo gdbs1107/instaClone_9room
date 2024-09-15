@@ -1,4 +1,4 @@
-package com.example.instaclone_9room.converter.feedconverter;
+package com.example.instaclone_9room.converter.feedConverter;
 
 import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.domain.feedEntity.Image;

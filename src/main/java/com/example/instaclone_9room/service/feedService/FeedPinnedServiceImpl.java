@@ -1,8 +1,8 @@
 package com.example.instaclone_9room.service.feedService;
 
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
-import com.example.instaclone_9room.converter.feedconverter.FeedConverter;
-import com.example.instaclone_9room.converter.feedconverter.FeedPinnedConverter;
+import com.example.instaclone_9room.converter.feedConverter.FeedConverter;
+import com.example.instaclone_9room.converter.feedConverter.FeedPinnedConverter;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.FeedPinned;

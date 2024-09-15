@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
-import com.example.instaclone_9room.converter.feedconverter.ImageConverter;
+import com.example.instaclone_9room.converter.feedConverter.ImageConverter;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
@@ -36,7 +36,6 @@ public class ImageServiceImpl implements ImageService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
     private final FeedRepository feedRepository;
-    private final S3Service s3Service;
     private final AmazonS3 s3Client;
     
     @Value("${cloud.aws.s3.bucket}")
