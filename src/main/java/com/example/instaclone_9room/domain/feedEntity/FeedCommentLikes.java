@@ -13,15 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommentLikes extends BaseEntity {
+public class FeedCommentLikes extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentLikes_id")
+    @Column(name = "feedCommentLikes_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id")
+    @JoinColumn(name = "feedComment_id")
     private FeedComment feedComment;
 
     @ManyToOne(fetch = FetchType.LAZY)

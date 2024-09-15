@@ -23,7 +23,7 @@ public class FeedComment extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
+    @Column(name = "feedComment_id")
     private Long id;
     
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +35,7 @@ public class FeedComment extends BaseEntity {
     private Feed feed;
     
     @OneToMany(mappedBy = "feedComment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CommentLikes> likes = new ArrayList<>();
+    private List<FeedCommentLikes> likes = new ArrayList<>();
     
     //====비즈니스 로직=====//
     public void update(String content) {
