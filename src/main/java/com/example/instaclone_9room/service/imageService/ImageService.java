@@ -1,6 +1,6 @@
 package com.example.instaclone_9room.service.imageService;
 
-import com.example.instaclone_9room.controller.dto.postDTO.ImageDTO;
+import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import io.jsonwebtoken.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

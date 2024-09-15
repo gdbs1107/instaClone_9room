@@ -1,7 +1,7 @@
 package com.example.instaclone_9room.service.feedService;
 
-import com.example.instaclone_9room.controller.dto.postDTO.FeedDTO;
-import com.example.instaclone_9room.controller.dto.postDTO.ImageDTO;
+import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
+import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.converter.feedconverter.FeedConverter;
 import com.example.instaclone_9room.converter.feedconverter.ImageConverter;
 import com.example.instaclone_9room.domain.UserEntity;

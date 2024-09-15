@@ -1,7 +1,7 @@
 package com.example.instaclone_9room.controller.feedController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
-import com.example.instaclone_9room.controller.dto.postDTO.FeedCommentDTO;
+import com.example.instaclone_9room.controller.dto.feedDTO.FeedCommentDTO;
 import com.example.instaclone_9room.service.feedService.FeedCommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

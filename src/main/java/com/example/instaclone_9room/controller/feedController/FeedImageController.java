@@ -1,7 +1,7 @@
 package com.example.instaclone_9room.controller.feedController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
-import com.example.instaclone_9room.controller.dto.postDTO.ImageDTO;
+import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.service.imageService.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;

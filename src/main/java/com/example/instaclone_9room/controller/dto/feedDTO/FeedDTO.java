@@ -1,4 +1,4 @@
-package com.example.instaclone_9room.controller.dto.postDTO;
+package com.example.instaclone_9room.controller.dto.feedDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
