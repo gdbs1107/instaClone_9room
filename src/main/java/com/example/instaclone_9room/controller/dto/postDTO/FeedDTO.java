@@ -33,7 +33,7 @@ public class FeedDTO {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class FeedDetailResponseDTO {
+    public static class FeedResponseDTO {
         //피드 정보
         private String content;
         private String location;
