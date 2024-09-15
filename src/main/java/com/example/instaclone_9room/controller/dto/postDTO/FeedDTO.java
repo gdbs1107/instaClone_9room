@@ -1,8 +1,5 @@
 package com.example.instaclone_9room.controller.dto.postDTO;
 
-import com.example.instaclone_9room.domain.feedEntity.Comment;
-import com.example.instaclone_9room.domain.feedEntity.Feed;
-import com.example.instaclone_9room.domain.feedEntity.Image;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +15,7 @@ public class FeedDTO {
     public static class FeedPostRequestDTO {
         
         private String content;
-        private List<ImageDTO> imageDTOS;
+        private List<ImageDTO.ImageRequestDTO> images;
         private String location;
     }
     
@@ -26,7 +23,7 @@ public class FeedDTO {
     public static class FeedUpdateRequestDTO {
         
         private String content;
-        private List<ImageDTO> imageDTOS;
+        private List<ImageDTO.ImageRequestDTO> images;
         private String location;
     }
     
@@ -40,9 +37,22 @@ public class FeedDTO {
         //피드 정보
         private String content;
         private String location;
-        private List<Image> images;
-        private List<Comment> comments;
+        private List<ImageDTO.ImageResponseDTO> images;
+        private List<CommentDTO.CommentResponseDTO> comments;
+        private Integer commentsCount;
         private Integer likesCount;
+    }
+    
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class FeedSmallResponseDTO {
+        private String likesCount;
+        private List<ImageDTO.ImageResponseDTO> images;
+        private Integer commentsCount;
+        
+        
     }
     
     @Getter
@@ -51,6 +61,6 @@ public class FeedDTO {
     @Builder
     public static class FeedSearchAllResponseDTO {
         
-        private List<Feed> feeds;
+        private List<FeedDTO.FeedSmallResponseDTO> feeds;
     }
 }

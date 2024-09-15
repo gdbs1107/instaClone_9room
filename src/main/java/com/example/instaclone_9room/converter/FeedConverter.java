@@ -6,27 +6,24 @@ import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class FeedConverter {
     
-    public static Feed toFeed(FeedDTO.FeedPostRequestDTO req, UserEntity user) {
+    public static Feed toFeed(FeedDTO.FeedPostRequestDTO req, UserEntity user, List<Image> images) {
         
-        List<Image> images = ImageConverter.toImageList(req.getImageDTOS());
-        
-        Feed newFeed = Feed.builder()
+        Feed feed = Feed.builder()
                 .content(req.getContent())
-                .images(images)
                 .location(req.getLocation())
+                .images(images)
                 .likesCount(0)
                 .commentCount(0)
                 .userEntity(user)
                 .build();
         
-        newFeed.setImages(images);
+        feed.setImages(images);
         
-        return newFeed;
+        return feed;
     }
 }

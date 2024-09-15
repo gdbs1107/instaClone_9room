@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.service.feedService;
 
 import com.example.instaclone_9room.controller.dto.postDTO.FeedDTO;
+import com.example.instaclone_9room.controller.dto.postDTO.ImageDTO;
 import com.example.instaclone_9room.converter.FeedConverter;
 import com.example.instaclone_9room.converter.ImageConverter;
 import com.example.instaclone_9room.domain.UserEntity;
@@ -9,10 +10,12 @@ import com.example.instaclone_9room.domain.feedEntity.Image;
 import com.example.instaclone_9room.repository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
 import com.example.instaclone_9room.repository.postRepository.ImageRepository;
+import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,14 +29,26 @@ public class FeedServiceImpl implements FeedService {
     
     
     @Override
-    public void postFeed(FeedDTO.FeedPostRequestDTO req, String username) {
+    public void postFeed(FeedDTO.FeedPostRequestDTO req, String username) throws IOException {
         
         UserEntity user = userRepository.findByUsername(username).orElseThrow(
                 () -> new RuntimeException("user not found"));
         
-        Feed newFeed = FeedConverter.toFeed(req, user);
+        List<String> fileNames = req.getImages().stream()
+                .map(ImageDTO.ImageRequestDTO::getFileName)
+                .toList();
         
-        imageRepository.saveAll(newFeed.getImages());
+        List<Image> images = new ArrayList<>();
+        
+        for (String fileName : fileNames) {
+            Image image = imageRepository.findByFileName(fileName).orElseThrow(
+                    () -> new RuntimeException("image not found"));
+            images.add(image);
+        }
+        
+        Feed newFeed = FeedConverter.toFeed(req, user, images);
+        
+        imageRepository.saveAll(images);
         feedRepository.save(newFeed);
     }
     
@@ -46,7 +61,7 @@ public class FeedServiceImpl implements FeedService {
         Feed existingFeed = feedRepository.findByIdAndUserEntity(feedId, user).orElseThrow(
                 () -> new RuntimeException("feed not found or user not authorized"));
         
-        List<Image> images = ImageConverter.toImageList(req.getImageDTOS());
+        List<Image> images = ImageConverter.toImageList(req.getImages());
         
         existingFeed.getImages().forEach(image -> image.setFeed(null));
         existingFeed.getImages().clear();
@@ -58,7 +73,6 @@ public class FeedServiceImpl implements FeedService {
         
         imageRepository.saveAll(existingFeed.getImages());
         feedRepository.save(existingFeed);
-    
     }
     
     @Override
