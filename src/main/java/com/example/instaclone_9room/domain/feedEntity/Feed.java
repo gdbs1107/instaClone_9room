@@ -65,10 +65,6 @@ public class Feed extends BaseEntity {
         }
     }
     
-    public void updateImages(List<Image> images) {
-        this.images = images;
-    }
-    
     public void updateCommentCount() {
         this.commentCount = this.feedComments.size();
     }
