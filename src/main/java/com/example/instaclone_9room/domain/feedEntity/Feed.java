@@ -28,7 +28,7 @@ public class Feed extends BaseEntity {
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    private List<FeedComment> feedComments = new ArrayList<>();
     
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FeedLikes> likes = new ArrayList<>();
@@ -70,15 +70,7 @@ public class Feed extends BaseEntity {
     }
     
     public void updateCommentCount() {
-        this.commentCount = this.comments.size();
+        this.commentCount = this.feedComments.size();
     }
-    
-//    public void addPinCount() {
-//        this.pinnedCount = this.pinnedCount + 1;
-//    }
-
-//    public void removePinCount() {
-//        this.pinnedCount = this.pinnedCount -1;
-//    }
 
 }

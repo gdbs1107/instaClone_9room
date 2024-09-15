@@ -38,7 +38,7 @@ public class FeedDTO {
         private String content;
         private String location;
         private List<ImageDTO.ImageResponseDTO> images;
-        private List<CommentDTO.CommentResponseDTO> comments;
+        private List<FeedCommentDTO.CommentResponseDTO> comments;
         private Integer commentsCount;
         private Integer likesCount;
     }

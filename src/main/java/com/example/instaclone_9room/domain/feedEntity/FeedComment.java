@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Comment extends BaseEntity {
+public class FeedComment extends BaseEntity {
     
     private String content;
     private Integer likesCount;
@@ -34,7 +34,7 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "feed_id")
     private Feed feed;
     
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "feedComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CommentLikes> likes = new ArrayList<>();
     
     //====비즈니스 로직=====//

@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.instaclone_9room.controller.dto.postDTO.ImageDTO;
-import com.example.instaclone_9room.converter.ImageConverter;
+import com.example.instaclone_9room.converter.feedconverter.ImageConverter;
 import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
