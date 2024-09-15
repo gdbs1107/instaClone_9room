@@ -9,20 +9,23 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Image extends BaseEntity{
-
+public class Image extends BaseEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private Long id;
-
+    
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "feed_id")
     private Feed feed;
-
+    
     private String imagePath;
     private String fileName;
     
-    //연관관계 메서드
+    public void update(String imagePath, String fileName) {
+        this.imagePath = imagePath;
+        this.fileName = fileName;
+    }
 }
