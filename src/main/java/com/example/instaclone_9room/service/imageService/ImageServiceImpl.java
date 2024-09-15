@@ -13,7 +13,6 @@ import com.example.instaclone_9room.domain.feedEntity.Image;
 import com.example.instaclone_9room.repository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
 import com.example.instaclone_9room.repository.postRepository.ImageRepository;
-import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.webjars.NotFoundException;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -53,8 +53,7 @@ public class ImageServiceImpl implements ImageService {
                     .collect(Collectors.toList());
             
             imageRepository.saveAll(images);
-        } catch (IOException e) {
-            log.error("Image upload failed", e);
+        } catch (Exception e) {
             throw new RuntimeException("Failed to upload images", e);
         }
         
@@ -68,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
         
         // S3에서 이미지 삭제
         try {
-            s3Service.delete(image.getImagePath(), fileName);
+            s3Client.deleteObject(bucket, fileName);
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete image from S3: " + e.getMessage(), e);
         }
