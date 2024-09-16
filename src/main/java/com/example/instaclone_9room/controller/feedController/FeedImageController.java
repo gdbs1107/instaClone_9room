@@ -23,7 +23,7 @@ public class FeedImageController {
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<List<ImageDTO.ImageResponseDTO>> addImages(@RequestPart List<MultipartFile> files) {
         
-        String dirName = "Feed Image";
+        String dirName = "Feed_Image";
         List<ImageDTO.ImageResponseDTO> imageResponseDTOS = imageService.uploadImages(files, dirName);
         
         return ApiResponse.onSuccess(imageResponseDTOS);

@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 public class FeedConverter {
     
     public static Feed toFeed(FeedDTO.FeedPostRequestDTO req, UserEntity user, List<Image> images) {

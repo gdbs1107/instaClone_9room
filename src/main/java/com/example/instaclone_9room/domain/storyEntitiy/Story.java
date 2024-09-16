@@ -23,7 +23,8 @@ public class Story extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "story_id")
     private Long id;
-
+    
+    private String fileName;
     private String imagePath;
     private Boolean viewable;
     
