@@ -1,13 +1,11 @@
 package com.example.instaclone_9room.converter.storyConverter;
 
-import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import com.example.instaclone_9room.controller.dto.storyDTO.StoryDTO;
 import com.example.instaclone_9room.domain.UserEntity;
-import com.example.instaclone_9room.domain.feedEntity.Feed;
-import com.example.instaclone_9room.domain.feedEntity.Image;
 import com.example.instaclone_9room.domain.storyEntitiy.Story;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StoryConverter {
     public static Story toStory(Story story, UserEntity user) {
@@ -27,6 +25,19 @@ public class StoryConverter {
                 .likesCount(story.getLikesCount())
                 .imagePath(story.getImagePath())
                 .build();
+    }
+    
+    public static List<StoryDTO.StoryResponseDTO> toViewableStoryResponseDTOList(List<Story> storyList) {
+        
+        return storyList.stream()
+                .peek(Story::editViewable)
+                .filter(Story::getViewable)
+                .map(story -> StoryDTO.StoryResponseDTO.builder()
+                        .likesCount(story.getLikesCount())
+                        .imagePath(story.getImagePath())
+                        .fileName(story.getFileName())
+                        .build())
+                .collect(Collectors.toList());
     }
     
 }

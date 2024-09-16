@@ -1,7 +1,6 @@
 package com.example.instaclone_9room.controller.storyController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
-import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import com.example.instaclone_9room.controller.dto.storyDTO.StoryDTO;
 import com.example.instaclone_9room.service.storyService.StoryService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,4 +43,11 @@ public class StoryController {
         return ApiResponse.onSuccess(responseDTO);
     }
     
+    
+    @GetMapping("/{id}/stories")
+    public ApiResponse<List<StoryDTO.StoryResponseDTO>> getStoryById(@PathVariable Long id) {
+        List<StoryDTO.StoryResponseDTO> responseDTOS = storyService.searchStoryById(id);
+        
+        return ApiResponse.onSuccess(responseDTOS);
+    }
 }

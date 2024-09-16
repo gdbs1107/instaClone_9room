@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -68,7 +69,13 @@ public class StoryServiceImpl implements StoryService {
         return StoryConverter.toStoryResponseDTO(story);
     }
     
-    //회원 아이디 조회시 그 회원의 스토리중 올린지 24시간 전에 스토리들만 반환
+    @Override
+    public List<StoryDTO.StoryResponseDTO> searchStoryById(Long id) {
+        
+        List<Story> findStories = storyRepository.findAllById(id);
+        
+        return StoryConverter.toViewableStoryResponseDTOList(findStories); // 24시간이 지난 스토리 제외하여 반환
+    }
     
     private UserEntity findUser(String username) {
         return userRepository.findByUsername(username).orElseThrow(
