@@ -4,7 +4,7 @@ import com.example.instaclone_9room.controller.dto.MemoDTO;
 
 public interface MemoService {
 
-    void create(MemoDTO.MemoCreateDTO request, String userName);
+    MemoDTO.MemoCreateResp create(MemoDTO.MemoCreateDTO request, String userName);
 
     void delete(String userName, Long memoId);
 

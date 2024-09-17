@@ -36,11 +36,11 @@ public class MemoController {
 
     })
     @PostMapping("/")
-    public ApiResponse<String> save(@RequestBody @Valid MemoDTO.MemoCreateDTO requestDTO,
-                                    @AuthenticationPrincipal UserDetails userDetails) {
-        memoService.create(requestDTO, userDetails.getUsername());
+    public ApiResponse<MemoDTO.MemoCreateResp> save(@RequestBody @Valid MemoDTO.MemoCreateDTO requestDTO,
+                                                    @AuthenticationPrincipal UserDetails userDetails) {
+        MemoDTO.MemoCreateResp response = memoService.create(requestDTO, userDetails.getUsername());
 
-        return ApiResponse.onSuccess("create memo");
+        return ApiResponse.onSuccess(response);
     }
 
     @Operation(

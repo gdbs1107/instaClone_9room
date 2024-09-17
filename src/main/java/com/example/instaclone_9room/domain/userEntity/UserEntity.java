@@ -1,5 +1,6 @@
 package com.example.instaclone_9room.domain.userEntity;
 
+import com.example.instaclone_9room.domain.DM.ChatPart;
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
 import com.example.instaclone_9room.domain.follow.Follow;
@@ -86,21 +87,21 @@ public class UserEntity extends BaseEntity {
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<UserProfileImage> userProfileImages = new ArrayList<>();
 
-
-
-
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<ChatPart> chatParts = new ArrayList<>();
 
 
     //--------연관관계 메서드---------------
 
 
-    public void setInfo(String name,Gender gender,LocalDate birthday,String link,String introduction,Boolean onPrivate){
+    public void setInfo(String name, Gender gender, LocalDate birthday, String link, String introduction, Boolean onPrivate) {
+
         this.name = name;
         this.gender = gender;
         this.birthday = birthday;
         this.link = link;
         this.introduction = introduction;
-        this.onPrivate=onPrivate;
+        this.onPrivate = onPrivate;
     }
 
 

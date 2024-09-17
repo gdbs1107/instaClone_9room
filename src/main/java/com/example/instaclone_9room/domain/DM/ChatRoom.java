@@ -2,6 +2,7 @@ package com.example.instaclone_9room.domain.DM;
 
 import com.example.instaclone_9room.domain.baseEntity.BaseEntity;
 
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +19,7 @@ public class ChatRoom extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_room_id")
     private Long id;
-
-    private String roomName;
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL)
     private List<ChatPart> chatPartList = new ArrayList<>();
@@ -29,6 +27,13 @@ public class ChatRoom extends BaseEntity {
     public List<Long> getParticipantIds() {
         return chatPartList.stream()
                 .map(chatPart -> chatPart.getUserEntity().getId())
+                .collect(Collectors.toList());
+    }
+
+    public List<Long> getChatRoomIdByUser(UserEntity user) {
+        return chatPartList.stream()
+                .filter(chatPart -> chatPart.getUserEntity().equals(user))
+                .map(chatPart -> chatPart.getChatRoom().getId())
                 .collect(Collectors.toList());
     }
 }

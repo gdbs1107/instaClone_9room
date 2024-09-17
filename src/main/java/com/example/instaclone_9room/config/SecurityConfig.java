@@ -22,10 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Collections;
-import java.util.List;
 
 
 @Configuration
@@ -75,9 +72,6 @@ public class SecurityConfig {
                         return configuration;
                     }
                 })));
-
-
-
         //csrf는 rest구조에서 필요없음(STATELESS상태이기 때문)
         http.csrf((auth)->auth.disable());
 
@@ -91,6 +85,7 @@ public class SecurityConfig {
                 .requestMatchers("/users/join","users/login").permitAll()
                 .requestMatchers("/reissue").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll() // Swagger 관련 경로를 허용
+                .requestMatchers("/ws/**").permitAll()
                 .anyRequest().authenticated());
 
         http
@@ -107,6 +102,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
 }

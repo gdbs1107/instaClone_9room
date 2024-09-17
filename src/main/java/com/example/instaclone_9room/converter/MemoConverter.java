@@ -41,4 +41,12 @@ public class MemoConverter {
                 .build();
     }
 
+    /// ---------- Response ----------- //
+
+    public static MemoDTO.MemoCreateResp toMemoCreateResp(Memo memo) {
+        return MemoDTO.MemoCreateResp.builder()
+                .memoId(memo.getId())
+                .build();
+    }
+
 }

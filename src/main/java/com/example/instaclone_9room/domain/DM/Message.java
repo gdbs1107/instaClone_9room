@@ -21,9 +21,6 @@ public class Message extends BaseEntity {
     @Lob
     private String content;
 
-    // URL 주소 관리 필요
-    private String image;
-
     // 메세지 읽음 확인
     private ReadStatus isRead;
 

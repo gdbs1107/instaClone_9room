@@ -20,6 +20,7 @@ public class ChatPart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String chatRoomName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_entity_id")
@@ -31,4 +32,8 @@ public class ChatPart extends BaseEntity {
 
     @OneToMany(mappedBy = "chatPart", cascade = CascadeType.ALL)
     private List<Message> messageList = new ArrayList<>();
+
+    public void update(String chatRoomName) {
+        this.chatRoomName = chatRoomName;
+    }
 }

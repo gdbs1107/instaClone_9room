@@ -25,6 +25,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.instaclone_9room.converter.MemoConverter.toMemoCreateResp;
+
 
 @Service
 @Transactional
@@ -39,7 +41,7 @@ public class MemoServiceImpl implements MemoService{
 
 
     @Override
-    public void create(MemoDTO.MemoCreateDTO request, String userName) {
+    public MemoDTO.MemoCreateResp create(MemoDTO.MemoCreateDTO request, String userName) {
         UserEntity findUser = findUser(userName);
 
         Optional<Memo> existedMemo = memoRepository.findByUserEntity(findUser);
@@ -47,9 +49,13 @@ public class MemoServiceImpl implements MemoService{
         if (existedMemo.isEmpty()) {
             Memo memo = MemoConverter.toMemo(request, findUser);
             memoRepository.save(memo);
+
+            return new MemoDTO.MemoCreateResp(memo.getId());
         } else {
             throw new MemoCategoryHandler(ErrorStatus.MEMO_EXISTED);
         }
+
+
     }
 
     @Override

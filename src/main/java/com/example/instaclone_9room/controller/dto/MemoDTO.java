@@ -1,5 +1,6 @@
 package com.example.instaclone_9room.controller.dto;
 
+import ch.qos.logback.core.sift.AppenderTracker;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Builder;
@@ -55,6 +56,31 @@ public class MemoDTO {
         private Integer totalPages;
         private Long totalElements;
 
+    }
+
+    // ---------- Response ---------- //
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MemoCreateResp {
+        private Long memoId;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MemoDeleteResp {
+        private Long deletedMemoId;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MemoUpdateResp {
+        private Long updatedMemoId;
     }
 
 }

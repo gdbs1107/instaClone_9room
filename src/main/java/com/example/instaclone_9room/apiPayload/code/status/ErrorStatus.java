@@ -47,8 +47,13 @@ public enum ErrorStatus implements BaseErrorCode {
     IMAGE_NOT_DELETED(HttpStatus.NOT_FOUND,"IMAGE6004","이미지 삭제에 실패하였습니다"),
 
     //메모 관련 에러
-    MEMO_NOT_FOUND(HttpStatus.NOT_FOUND,"IMAGE6001","메모를 찾을 수 없습니다."),
-    MEMO_EXISTED(HttpStatus.BAD_REQUEST, "MEMO6002", "이미 메모가 존재합니다. 삭제 혹은 수정 바랍니다.");
+    MEMO_NOT_FOUND(HttpStatus.NOT_FOUND,"MEMO7001","메모를 찾을 수 없습니다."),
+    MEMO_EXISTED(HttpStatus.BAD_REQUEST, "MEMO7002", "이미 메모가 존재합니다. 삭제 혹은 수정 바랍니다."),
+
+    //채팅 관련 에러
+    CHATROOM_NOT_FOUND(HttpStatus.NOT_FOUND,"CHAT8001","채팅방을 찾을 수 없습니다."),
+    CHATPART_NOT_FOUND(HttpStatus.NOT_FOUND,"CHAT8002","채팅 설정에 오류가 있습니다. 다시 시도해주세요.");
+
 
 
 
