@@ -3,10 +3,13 @@ package com.example.instaclone_9room.controller.feedController;
 import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import com.example.instaclone_9room.service.feedService.FeedService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,5 +41,19 @@ public class FeedController {
         feedService.deleteFeed(feedId, userDetails.getUsername());
         
         return ApiResponse.onSuccess("deleted feed");
+    }
+    
+    @GetMapping("/{feedId}")
+    public ApiResponse<FeedDTO.FeedResponseDTO> getFeed(@PathVariable Long feedId) {
+        
+        FeedDTO.FeedResponseDTO feedResponseDTO = feedService.searchFeed(feedId);
+        return ApiResponse.onSuccess(feedResponseDTO);
+    }
+    
+    @GetMapping("/{username}")
+    public ApiResponse<List<FeedDTO.FeedSmallResponseDTO>> getFeedByUsername(@PathVariable String username) {
+        
+        List<FeedDTO.FeedSmallResponseDTO> feedSmallResponseDTOList = feedService.searchFeedByUsername(username);
+        return ApiResponse.onSuccess(feedSmallResponseDTOList);
     }
 }

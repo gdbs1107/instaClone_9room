@@ -3,6 +3,8 @@ package com.example.instaclone_9room.service.feedService;
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface FeedService {
     
@@ -12,5 +14,7 @@ public interface FeedService {
     
     void deleteFeed(Long feedId, String username);
     
-    void searchFeed(Long feedId);
+    FeedDTO.FeedResponseDTO searchFeed(Long feedId);
+    
+    List<FeedDTO.FeedSmallResponseDTO> searchFeedByUsername(String username);
 }

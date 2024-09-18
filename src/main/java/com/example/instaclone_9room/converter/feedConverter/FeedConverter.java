@@ -45,4 +45,14 @@ public class FeedConverter {
                 .location(feed.getLocation())
                 .build();
     }
+    
+    public static List<FeedDTO.FeedSmallResponseDTO> toFeedSmallResponseDTOList(List<Feed> feeds) {
+        return feeds.stream()
+                .map(feed -> FeedDTO.FeedSmallResponseDTO.builder()
+                        .likesCount(feed.getLikesCount())
+                        .commentsCount(feed.getCommentCount())
+                        .images(ImageConverter.toImageDTOList(feed.getImages()))
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

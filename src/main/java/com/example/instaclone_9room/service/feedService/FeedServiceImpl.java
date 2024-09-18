@@ -1,5 +1,6 @@
 package com.example.instaclone_9room.service.feedService;
 
+import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.converter.feedConverter.FeedConverter;
@@ -90,8 +91,21 @@ public class FeedServiceImpl implements FeedService {
     }
     
     @Override
-    public void searchFeed(Long feedId) {
+    public FeedDTO.FeedResponseDTO searchFeed(Long feedId) {
+        Feed existingFeed = feedRepository.findById(feedId).orElseThrow(
+                () -> new RuntimeException("feed not found"));
+        
+        return FeedConverter.toFeedResponseDTO(existingFeed);
+    }
     
+    @Override
+    public List<FeedDTO.FeedSmallResponseDTO> searchFeedByUsername(String username) {
+        UserEntity user = userRepository.findByUsername(username).orElseThrow(
+                () -> new RuntimeException("user not found"));
+        
+        List<Feed> feedList = feedRepository.findAllFeedByUsername(username);
+        
+        return FeedConverter.toFeedSmallResponseDTOList(feedList);
     }
     
     private static void userValidate(Feed existingFeed, UserEntity user) {

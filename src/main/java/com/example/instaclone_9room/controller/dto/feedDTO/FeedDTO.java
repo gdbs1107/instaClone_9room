@@ -48,7 +48,7 @@ public class FeedDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FeedSmallResponseDTO {
-        private String likesCount;
+        private Integer likesCount;
         private List<ImageDTO.ImageResponseDTO> images;
         private Integer commentsCount;
         
@@ -59,7 +59,7 @@ public class FeedDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class FeedSearchAllResponseDTO {
+    public static class FeedSearchAllSmallResponseDTO {
         
         private List<FeedDTO.FeedSmallResponseDTO> feeds;
     }
