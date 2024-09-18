@@ -195,7 +195,24 @@ public class userCommandServiceImpl implements UserCommandService {
     }
 
 
-    //프로필 사진 넣기 API
+    @Override
+    public void setUserInfo(UserDTO.UserSetInfo request, String username){
+        UserEntity user = findUser(username);
+
+        Gender gender = UserConverter.toGender(request.getGenderType());
+
+        user.setUserInfo(
+                false,
+                null,
+                0,
+                0,
+                gender,
+                request.getBirthday(),
+                request.getLink()
+        );
+
+        userRepository.save(user);
+    }
 
 
 

@@ -138,6 +138,20 @@ public class UserEntity extends BaseEntity {
     }
 
 
+    //소셜로그인 후 상세정보 입력하는 메서드
+    public void setUserInfo(Boolean onPrivate,String introduction,Integer followCount,Integer followerCount,Gender gender,
+                            LocalDate birthdate,String link){
+
+        this.onPrivate=onPrivate;
+        this.introduction=introduction;
+        this.followCount=followCount;
+        this.followerCount=followerCount;
+        this.gender=gender;
+        this.birthday=birthdate;
+        this.link=link;
+    }
+
+
 
 
 }

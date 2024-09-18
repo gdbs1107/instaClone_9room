@@ -89,4 +89,19 @@ public class UserDTO {
     }
 
 
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserSetInfo{
+
+        Integer genderType;
+        String link;
+        LocalDate birthday;
+
+        //소셜로그인 후 상세정보 입력
+
+    }
+
+
 }
