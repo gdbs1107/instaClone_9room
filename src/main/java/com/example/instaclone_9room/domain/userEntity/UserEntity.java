@@ -57,7 +57,6 @@ public class UserEntity extends BaseEntity {
     private Integer followCount;
     @Nullable
     private Integer followerCount;
-    private String imagePath;
 
 
 

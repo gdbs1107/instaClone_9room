@@ -8,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -21,6 +22,7 @@ import java.util.Iterator;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final JwtUtil jwtUtil;
@@ -32,6 +34,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 
+        log.info("onAuthenticationSuccess가 작동하여 쿠키가 생성됩니다");
 
         //OAuth2User
         CustomOAuth2User customUserDetails = (CustomOAuth2User) authentication.getPrincipal();

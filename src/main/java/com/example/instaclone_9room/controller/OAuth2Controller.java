@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:3000")
 public class OAuth2Controller {
 
     private final OAuth2JWTHeaderService oAuth2JwtHeaderService;
@@ -24,4 +27,5 @@ public class OAuth2Controller {
         log.info("oauth2-jwt-header 컨트롤러가 실행됩니다");
         return oAuth2JwtHeaderService.oauth2JwtHeaderSet(request, response);
     }
+
 }

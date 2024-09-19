@@ -67,16 +67,18 @@ public class SecurityConfig {
 
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        // 특정 도메인 지정 또는 "http://localhost:3000", "http://localhost:8080"와 같이 명시
                         configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
-                        configuration.setAllowCredentials(true); // 쿠키 전송 허용
+                        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
-                        configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "access"));
+
+                        // exposedHeaders에 중복 설정 제거하고, 두 개의 헤더를 노출
+                        configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "access", "Authorization"));
+
                         return configuration;
                     }
                 }));

@@ -5,18 +5,19 @@ import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryH
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
+import com.example.instaclone_9room.domain.userEntity.UserProfileImage;
 
 public class UserConverter {
 
 
-    public static UserDTO.UserGetHomeResponseDTO toUserGetHomeResponseDTO(UserEntity userEntity) {
+    public static UserDTO.UserGetHomeResponseDTO toUserGetHomeResponseDTO(UserEntity userEntity, UserProfileImage userProfileImage) {
 
         return UserDTO.UserGetHomeResponseDTO.builder()
                 .name(userEntity.getName())
                 .link(userEntity.getLink())
                 .followCount(userEntity.getFollowCount())
                 .followersCount(userEntity.getFollowerCount())
-                .imagePath(userEntity.getImagePath())
+                .imagePath(userProfileImage.getFilePath())
                 .build();
     }
 
