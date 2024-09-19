@@ -113,22 +113,27 @@ public class ChatController {
     }
 
 
-//    @Operation(
-//            summary = "채팅방 이름 변경 API",
-//            description = "채팅방 이름을 변경할 때 사용되는 API입니다. 기본적으로 여러명이 포함된 그룹 채팅에서만 사용이 가능합니다."
-//    )
-//    @ApiResponses(value = {
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
-//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
-//                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
-//
-//    })
-//    @PostMapping
-//    public ApiResponse<ChatDTO.UserLeaveResp> leaveChatRoom() {
-//
-//    }
+    @Operation(
+            summary = "그룹 채팅 나가기API",
+            description = "그룹 채팅에서 나가는 경우입니다."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
+
+    })
+    @PatchMapping("/leave/{chatRoomId}")
+    public ApiResponse<ChatDTO.UserLeaveResp> leaveChatRoom(@PathVariable Long chatRoomId,
+                                                            @AuthenticationPrincipal UserDetails userDetails) {
+
+        ChatDTO.UserLeaveResp response = chatService.leaveUser(userDetails.getUsername(), chatRoomId);
+
+        return ApiResponse.onSuccess(response);
+
+    }
 
 }

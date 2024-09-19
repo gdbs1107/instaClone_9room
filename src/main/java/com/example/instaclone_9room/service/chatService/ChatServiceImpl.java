@@ -21,7 +21,6 @@ import com.example.instaclone_9room.repository.userEntityRepository.UserReposito
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -206,18 +205,56 @@ public class ChatServiceImpl implements ChatService {
                 .map(UserEntity::getId)
                 .toList();
 
-        return new ChatDTO.UserInviteResp(invitedUserIds,findUser.getId(),chatRoomId);
+        return new ChatDTO.UserInviteResp(invitedUserIds, findUser.getId(), chatRoomId);
     }
 
-    @Override
+    @Transactional
     public ChatDTO.UserLeaveResp leaveUser(String userName, Long chatRoomId) {
         UserEntity findUser = findUser(userName);
-        ChatPart chatPart = findChatPartByChatRoomIdAndUserId(findUser.getId(), chatRoomId);
+        ChatPart findChatPart = findChatPartByChatRoomIdAndUserId(findUser.getId(), chatRoomId);
+        ChatRoom findChatRoom = findChatRoomById(chatRoomId);
 
-        chatPartRepository.delete(chatPart);
+        // 현재 방에 있는 사용자들 (아직 방에 나가지 X)
+        List<UserEntity> currentUsers = findChatRoom.getChatPartList().stream()
+                .map(ChatPart::getUserEntity)
+                .toList();
+
+        // 현재 방 이름
+        String defaultChatRoomName = currentUsers.stream()
+                .map(UserEntity::getUsername)
+                .sorted()
+                .filter(name -> !name.equals(userName))
+                .collect(Collectors.joining(", "));
+
+        // default check
+        boolean isDefaultName = findChatPart.getChatRoomName().equals(defaultChatRoomName);
+
+        // 남아 있을 user 모음
+        List<UserEntity> remainUsers = new ArrayList<>(currentUsers);
+        remainUsers.remove(findUser);
+
+        // 방 이름이 default면 전체 처리
+        if (isDefaultName) {
+            for (UserEntity remainUser : remainUsers) {
+                String newChatRoomName = remainUsers.stream()
+                        .map(UserEntity::getUsername)
+                        .sorted()
+                        .filter(name -> !name.equals(remainUser.getUsername()))
+                        .collect(Collectors.joining(", "));
+
+                ChatPart remainUserChatPart = findChatPartByChatRoomIdAndUserId(chatRoomId, remainUser.getId());
+                remainUserChatPart.update(newChatRoomName);
+            }
+        }
+
+        // User와 ChatRoom에서 ChatPart를 제거
+        findChatRoom.getChatPartList().remove(findChatPart);
+        findUser.getChatParts().remove(findChatPart);
+
+        // ChatPart 삭제
+        chatPartRepository.delete(findChatPart);
 
         return new ChatDTO.UserLeaveResp(findUser.getId(), chatRoomId);
-
     }
 
 

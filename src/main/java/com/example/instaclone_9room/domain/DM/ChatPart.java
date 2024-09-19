@@ -30,7 +30,7 @@ public class ChatPart extends BaseEntity {
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
 
-    @OneToMany(mappedBy = "chatPart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "chatPart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messageList = new ArrayList<>();
 
     public void update(String chatRoomName) {
