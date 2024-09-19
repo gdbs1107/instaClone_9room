@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.service.GenericResponseService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -59,14 +58,77 @@ public class ChatController {
                     content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
 
     })
-    @PatchMapping("/message/update-read-status/{chatRoomId}")
+    @PatchMapping("/update-room-name/{chatRoomId}")
     public ApiResponse<ChatDTO.ChatRoomNameUpdateResp> chatRoomNameUpdate(@RequestBody @Valid ChatDTO.ChatRoomNameUpdateDTO request,
                                                                           @PathVariable Long chatRoomId,
                                                                           @AuthenticationPrincipal UserDetails userDetails) {
 
-        ChatDTO.ChatRoomNameUpdateResp response = chatService.updateChatRoomName(request, chatRoomId, userDetails.getUsername());
+        ChatDTO.ChatRoomNameUpdateResp response = chatService.setChatRoomName(request, chatRoomId, userDetails.getUsername());
         return ApiResponse.onSuccess(response);
     }
 
+    @Operation(
+            summary = "메시지 읽음 상태 변경API",
+            description = "메시지를 읽었을 경우 변동이 되는 API입니다. WS 진행을 하면서 동시에 화면을 확인 했을 경우 update가 되면 됩니다."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
+
+    })
+    @PatchMapping("/message/update-read-status/{chatRoomId}")
+    public ApiResponse<String> updateReadStatus(@PathVariable Long chatRoomId,
+                                                @AuthenticationPrincipal UserDetails userDetails) {
+        chatService.updateMessageReadStatus(userDetails.getUsername(),chatRoomId);
+
+        return ApiResponse.onSuccess("메시지를 확인했습니다");
+    }
+
+
+    @Operation(
+            summary = "채팅방 사용자 초대 API",
+            description = "그룹 채팅일 때 추가적으로 사용자를 초대할 때 사용되는 API입니다."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
+
+    })
+    @PostMapping("/invite/{chatRoomId}")
+    public ApiResponse<ChatDTO.UserInviteResp> userInvite(@RequestBody @Valid ChatDTO.UserInviteDTO request,
+                                                         @PathVariable Long chatRoomId,
+                                                         @AuthenticationPrincipal UserDetails userDetails) {
+        ChatDTO.UserInviteResp response = chatService.inviteUser(request, userDetails.getUsername(), chatRoomId);
+
+        return ApiResponse.onSuccess(response);
+
+    }
+
+
+//    @Operation(
+//            summary = "채팅방 이름 변경 API",
+//            description = "채팅방 이름을 변경할 때 사용되는 API입니다. 기본적으로 여러명이 포함된 그룹 채팅에서만 사용이 가능합니다."
+//    )
+//    @ApiResponses(value = {
+//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
+//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+//            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+//                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
+//
+//    })
+//    @PostMapping
+//    public ApiResponse<ChatDTO.UserLeaveResp> leaveChatRoom() {
+//
+//    }
 
 }

@@ -57,20 +57,17 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         }
         Set<WebSocketSession> chatRoomSession = chatRoomSessionMap.get(chatRoomId);
 
-        // message 에 담긴 타입을 확인한다.
-        // 이때 message 에서 getType 으로 가져온 내용이
-        // ChatDTO 의 열거형인 MessageType 안에 있는 ENTER 과 동일한 값이라면
-        if (messageDTO.getMessageType().equals(ChatDTO.MessageDTO.MessageType.ENTER)) {
-            // sessions 에 넘어온 session 을 담고,
-            chatRoomSession.add(session);
+        switch (messageDTO.getMessageType()) {
+            case ENTER:
+                chatRoomSession.add(session);
+                break;
+            case CHAT:
+                service.saveMessage(messageDTO);
+                sendMessageToChatRoom(messageDTO, chatRoomSession);
+                break;
+            default:
+                log.warn("알 수 없는 메시지 타입: {}", messageDTO.getMessageType());
         }
-        if (chatRoomSession.size()>=3) {
-            removeClosedSession(chatRoomSession);
-        }
-
-        service.saveMessage(messageDTO);
-
-        sendMessageToChatRoom(messageDTO, chatRoomSession);
     }
 
     // 소켓 종료 확인, 세션 정리 작업
@@ -78,20 +75,22 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         log.info("{} 연결 끊김", session.getId());
         sessions.remove(session);
+
+        for (Set<WebSocketSession> chatRoomSessions : chatRoomSessionMap.values()) {
+            chatRoomSessions.remove(session);
+        }
     }
 
     // 메시지 송신, 메시지를 보내는 역할
-    public <T> boolean sendMessage(WebSocketSession session, T message) {
+    public <T> void sendMessage(WebSocketSession session, T message) {
         if (!session.isOpen()) {
             log.warn("세션이 닫혀 있습니다: {}", session.getId());
-            return false;
+            return;
         }
         try {
             session.sendMessage(new TextMessage(mapper.writeValueAsString(message)));
-            return true;
         } catch (IOException e) {
             log.error("메시지 전송 실패: {}, 세션 ID: {}", e.getMessage(), session.getId());
-            return false;
         }
     }
 

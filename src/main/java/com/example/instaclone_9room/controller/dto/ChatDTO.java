@@ -2,6 +2,7 @@ package com.example.instaclone_9room.controller.dto;
 
 import ch.qos.logback.core.sift.AppenderTracker;
 import lombok.*;
+import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,22 +21,19 @@ public class ChatDTO {
     @Getter
     public static class UserInviteDTO {
 
-        private Long chatRoomId;
         private List<String> invitedUserNames;
 
     }
+
 
     // 채팅방 이름 바꿀 때 (1:1 채팅방은 불가)
     @Getter
     public static class ChatRoomNameUpdateDTO {
 
         private String newChatRoomName;
+
     }
 
-    @Getter
-    public static class ChatRoomDeleteDTO {
-        private Long chatRoomId;
-    }
 
     @NoArgsConstructor
     @AllArgsConstructor
@@ -66,7 +64,7 @@ public class ChatDTO {
     @Setter
     public static class MessageDTO {
         public enum MessageType {
-            ENTER, TALK
+            ENTER, CHAT, LEAVE
         }
 
         private MessageType messageType;
@@ -103,6 +101,31 @@ public class ChatDTO {
     public static class ChatRoomNameUpdateResp {
         private Long chatRoomId;
         private String newChatRoomName;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class UserInviteResp {
+
+        private List<Long> invitedUserId;
+
+        private Long inviterUserId;
+
+        private Long chatRoomId;
+
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class UserLeaveResp {
+
+        private Long leaveUserId;
+
+        private Long chatRoomId;
     }
 
 

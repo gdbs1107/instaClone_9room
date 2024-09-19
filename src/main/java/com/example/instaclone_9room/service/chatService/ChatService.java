@@ -2,10 +2,6 @@ package com.example.instaclone_9room.service.chatService;
 
 
 import com.example.instaclone_9room.controller.dto.ChatDTO;
-import com.example.instaclone_9room.domain.enumPackage.ReadStatus;
-import org.springframework.web.socket.WebSocketSession;
-
-import java.util.List;
 
 public interface ChatService {
 
@@ -13,15 +9,22 @@ public interface ChatService {
 
     void chatRoomDelete(Long chatRoomId, String userName);
 
-    ChatDTO.ChatRoomNameUpdateResp updateChatRoomName(ChatDTO.ChatRoomNameUpdateDTO request, Long chatRoomId, String userName);
+    ChatDTO.ChatRoomNameUpdateResp setChatRoomName(ChatDTO.ChatRoomNameUpdateDTO request, Long chatRoomId, String userName);
 
     ChatDTO.ChatRoomListResponse getChatRoomSummaryList(String userName);
 
-    void updateMessageReadStatus(Long chatRoomId, Long userId, ReadStatus readStatus);
+    void updateMessageReadStatus(String userName, Long chatRoomId);
+
+    ChatDTO.UserInviteResp inviteUser(ChatDTO.UserInviteDTO request, String userName, Long chatRoomId);
+
+    ChatDTO.UserLeaveResp leaveUser(String userName, Long chatRoomId);
+
 
     // ------ 세션 사용 ----- //
 
     void saveMessage(ChatDTO.MessageDTO messageDTO);
+
+
 
 
 

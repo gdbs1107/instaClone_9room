@@ -10,11 +10,9 @@ public interface ChatPartRepository extends JpaRepository<ChatPart, Long> {
 
     List<ChatPart> findAllByChatRoomId(Long chatRoomId);
 
-    Optional<ChatPart> findByChatRoomId(Long chatRoomId);
 
-    Optional<ChatPart> findByUserEntityId(Long userEntityId);
-
-    List<ChatPart> findAllByUserEntityId(Long userId);
 
     Optional<ChatPart> findChatPartByChatRoomIdAndUserEntityId(Long chatRoomId, Long senderId);
+
+
 }
