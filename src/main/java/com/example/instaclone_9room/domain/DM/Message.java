@@ -22,11 +22,15 @@ public class Message extends BaseEntity {
     private String content;
 
     // 메세지 읽음 확인
+    @Enumerated(EnumType.STRING)
     private ReadStatus isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_part_id")
     ChatPart chatPart;
 
+    public void updateStatus(ReadStatus status) {
+        this.isRead = status;
+    }
 
 }

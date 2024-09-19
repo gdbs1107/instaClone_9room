@@ -29,7 +29,7 @@ public class ChatDTO {
     @Getter
     public static class ChatRoomNameUpdateDTO {
 
-        private String chatRoomName;
+        private String newChatRoomName;
     }
 
     @Getter
@@ -94,6 +94,15 @@ public class ChatDTO {
     @Builder
     public static class ChatRoomDeleteResp {
         private Long deletedChatRoomId;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class ChatRoomNameUpdateResp {
+        private Long chatRoomId;
+        private String newChatRoomName;
     }
 
 

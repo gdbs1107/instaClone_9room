@@ -10,6 +10,7 @@ import com.example.instaclone_9room.converter.ChatConverter;
 import com.example.instaclone_9room.domain.DM.ChatPart;
 import com.example.instaclone_9room.domain.DM.ChatRoom;
 import com.example.instaclone_9room.domain.DM.Message;
+import com.example.instaclone_9room.domain.enumPackage.ReadStatus;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.repository.DmRepository.ChatPartRepository;
 
@@ -74,7 +75,7 @@ public class ChatServiceImpl implements ChatService{
 
 
     @Override
-    public void updateChatRoomName(ChatDTO.ChatRoomNameUpdateDTO request, Long chatRoomId, String userName) {
+    public ChatDTO.ChatRoomNameUpdateResp updateChatRoomName(ChatDTO.ChatRoomNameUpdateDTO request, Long chatRoomId, String userName) {
 
         UserEntity findUser = findUser(userName);
         List<ChatPart> chatParts = chatPartRepository.findAllByChatRoomId(chatRoomId);
@@ -85,10 +86,12 @@ public class ChatServiceImpl implements ChatService{
         if (!isAuthorized) {
             throw new ChatCategoryHandler(ErrorStatus.UNAUTHORIZED_ACCESS);
         } else {
-            chatParts.forEach(chatPart -> chatPart.update(request.getChatRoomName()));
+            chatParts.forEach(chatPart -> chatPart.update(request.getNewChatRoomName()));
         }
 
         chatPartRepository.saveAll(chatParts);
+
+        return new ChatDTO.ChatRoomNameUpdateResp(chatRoomId, request.getNewChatRoomName());
 
     }
 
@@ -100,8 +103,18 @@ public class ChatServiceImpl implements ChatService{
         return null;
     }
 
+    @Override
+    public void chatRoomDelete(Long chatRoomId, String userName) {
+
+    }
+
+    @Override
+    public void updateMessageReadStatus(Long chatRoomId, Long userId, ReadStatus readStatus) {
 
 
+
+
+    }
     // -----------------------소켓 통신 사용 예정----------------------- //
 
     @Override
@@ -117,74 +130,14 @@ public class ChatServiceImpl implements ChatService{
         messageRepository.save(message);
     }
 
-//    @Override
-//    public void startChat(Long chatRoomId, WebSocketSession session) {
-//        // 채팅방을 찾기
-//        ChatRoom chatRoom = findChatRoom(chatRoomId);
-//        Set<WebSocketSession> chatRoomSessions = webSocketChatHandler.getChatRoomSessions(chatRoomId);
-//
-//        if (chatRoomSessions == null) {
-//            chatRoomSessions = new HashSet<>();
-//            webSocketChatHandler.addChatRoomSessions(chatRoomId, chatRoomSessions);
-//        }
-//
-//        // 새로운 세션을 추가합니다.
-//        chatRoomSessions.add(session);
-//
-//        // 입장 메시지를 전송합니다.
-//        ChatDTO.MessageDTO enterMessage = ChatDTO.MessageDTO.builder()
-//                .messageType(ChatDTO.MessageDTO.MessageType.ENTER)
-//                .chatRoomId(chatRoomId)
-//                .message("사용자가 채팅방에 입장했습니다.")
-//                .build();
-//
-//        webSocketChatHandler.sendMessageToChatRoom(enterMessage,chatRoomSessions);
-//    }
-//
-//    @Override
-//    public void sendMessage(ChatDTO.MessageDTO messageDTO) {
-//        Long chatRoomId = messageDTO.getChatRoomId();
-//        Set<WebSocketSession> chatRoomSessions = webSocketChatHandler.getChatRoomSessions(chatRoomId);
-//
-//        if (chatRoomSessions == null) {
-//            // 채팅방 세션이 없으면 로그를 남기고 리턴
-//            log.warn("채팅방 세션이 없습니다: chatRoomId={}", chatRoomId);
-//            return;
-//        }
-//
-//        // 메시지를 채팅방 세션으로 전송
-//        webSocketChatHandler.sendMessageToChatRoom(messageDTO, chatRoomSessions);
-//
-//    }
 
-    @Override
-    public void chatRoomDelete(Long chatRoomId, String userName) {
 
-    }
+
+
 
 
     private UserEntity findUser(String userName) {
         return userRepository.findByUsername(userName).orElseThrow(
                 () -> new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND));
     }
-
-    private ChatRoom findChatRoom(Long chatRoomId) {
-        return chatRoomRepository.findById(chatRoomId).orElseThrow(
-                () -> new ChatCategoryHandler(ErrorStatus.CHATROOM_NOT_FOUND));
-    }
-
-    private ChatPart findChatPartByRoom(Long chatRoomId) {
-        return chatPartRepository.findByChatRoomId(chatRoomId).orElseThrow(
-                () -> new ChatCategoryHandler(ErrorStatus.CHATPART_NOT_FOUND)
-        );
-    }
-
-
-    private ChatPart findChatPartByUser(Long userId) {
-        return chatPartRepository.findByUserEntityId(userId
-        ).orElseThrow(
-                () -> new ChatCategoryHandler(ErrorStatus.CHATPART_NOT_FOUND)
-        );
-    }
-
 }
