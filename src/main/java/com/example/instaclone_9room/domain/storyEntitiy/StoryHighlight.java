@@ -26,10 +26,4 @@ public class StoryHighlight extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "highlight_id")
     private Highlight highlight;
-    
-    public void setMapping(Story story, Highlight highlight) {
-        this.story = story;
-        this.highlight = highlight;
-        highlight.getStoryHighlights().add(this);
-    }
 }

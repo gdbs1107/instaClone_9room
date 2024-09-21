@@ -28,7 +28,4 @@ public class Highlight extends BaseEntity {
     private UserEntity userEntity;
     
     private String text;
-    
-    @OneToMany(mappedBy = "highlight", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<StoryHighlight> storyHighlights = new ArrayList<>();
 }

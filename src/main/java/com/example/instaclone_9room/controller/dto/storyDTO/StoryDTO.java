@@ -8,6 +8,15 @@ import lombok.NoArgsConstructor;
 
 public class StoryDTO {
     
+    @Getter
+    public static class StoryRequestDTO {
+        private Long id;
+        private String imagePath;
+        private String fileName;
+        private Integer likesCount;
+    }
+    
+    
     //--------------responseDTO---------------//
     
     @Getter
