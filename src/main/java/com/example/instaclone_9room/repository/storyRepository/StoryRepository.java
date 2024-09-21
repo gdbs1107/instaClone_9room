@@ -1,5 +1,6 @@
 package com.example.instaclone_9room.repository.storyRepository;
 
+import com.example.instaclone_9room.domain.UserEntity;
 import com.example.instaclone_9room.domain.storyEntitiy.Story;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public interface StoryRepository extends JpaRepository<Story, Long> {
     
-    @Query("select s from Story s where s.userEntity.id = :id")
     List<Story> findAllById(Long id);
+    
+    List<Story> findByUserEntity(UserEntity userEntity);
 }

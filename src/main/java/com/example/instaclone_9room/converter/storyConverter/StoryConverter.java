@@ -21,10 +21,17 @@ public class StoryConverter {
     
     public static StoryDTO.StoryResponseDTO toStoryResponseDTO(Story story) {
         return StoryDTO.StoryResponseDTO.builder()
+                .id(story.getId())
                 .fileName(story.getFileName())
                 .likesCount(story.getLikesCount())
                 .imagePath(story.getImagePath())
                 .build();
+    }
+    
+    public static List<StoryDTO.StoryResponseDTO> toStoryResponseDTOList(List<Story> storyList) {
+        return storyList.stream()
+                .map(StoryConverter::toStoryResponseDTO)
+                .collect(Collectors.toList());
     }
     
     public static List<StoryDTO.StoryResponseDTO> toViewableStoryResponseDTOList(List<Story> storyList) {
@@ -32,11 +39,7 @@ public class StoryConverter {
         return storyList.stream()
                 .peek(Story::editViewable)
                 .filter(Story::getViewable)
-                .map(story -> StoryDTO.StoryResponseDTO.builder()
-                        .likesCount(story.getLikesCount())
-                        .imagePath(story.getImagePath())
-                        .fileName(story.getFileName())
-                        .build())
+                .map(StoryConverter::toStoryResponseDTO)
                 .collect(Collectors.toList());
     }
     

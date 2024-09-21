@@ -70,6 +70,15 @@ public class StoryServiceImpl implements StoryService {
     }
     
     @Override
+    public List<StoryDTO.StoryResponseDTO> searchAllStory(String username) {
+        UserEntity findUser = findUser(username);
+        
+        List<Story> storyList = storyRepository.findByUserEntity(findUser);
+        
+        return StoryConverter.toStoryResponseDTOList(storyList);
+    }
+    
+    @Override
     public List<StoryDTO.StoryResponseDTO> searchStoryById(Long id) {
         
         List<Story> findStories = storyRepository.findAllById(id);

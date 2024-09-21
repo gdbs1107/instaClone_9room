@@ -16,6 +16,7 @@ public class StoryDTO {
     @NoArgsConstructor
     public static class StoryResponseDTO {
         //스토리 정보
+        private Long id;
         private String imagePath;
         private String fileName;
         private Integer likesCount;

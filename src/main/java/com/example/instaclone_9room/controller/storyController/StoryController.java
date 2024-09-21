@@ -43,8 +43,15 @@ public class StoryController {
         return ApiResponse.onSuccess(responseDTO);
     }
     
+    @GetMapping("/stories")
+    public ApiResponse<List<StoryDTO.StoryResponseDTO>> getAllStory(@AuthenticationPrincipal UserDetails userDetails) {
+        List<StoryDTO.StoryResponseDTO> responseDTOS = storyService.searchAllStory(userDetails.getUsername());
+        
+        return ApiResponse.onSuccess(responseDTOS);
+    }
     
-    @GetMapping("/{id}/stories")
+    
+    @GetMapping("/stories/{id}")
     public ApiResponse<List<StoryDTO.StoryResponseDTO>> getStoryById(@PathVariable Long id) {
         List<StoryDTO.StoryResponseDTO> responseDTOS = storyService.searchStoryById(id);
         

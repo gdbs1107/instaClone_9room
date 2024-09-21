@@ -13,5 +13,7 @@ public interface StoryService {
     
     StoryDTO.StoryResponseDTO searchStory(Long storyId);
     
+    List<StoryDTO.StoryResponseDTO> searchAllStory(String username);
+    
     List<StoryDTO.StoryResponseDTO> searchStoryById(Long id);
 }
