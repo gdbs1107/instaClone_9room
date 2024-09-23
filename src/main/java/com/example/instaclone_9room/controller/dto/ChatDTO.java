@@ -1,8 +1,6 @@
 package com.example.instaclone_9room.controller.dto;
 
-import ch.qos.logback.core.sift.AppenderTracker;
 import lombok.*;
-import org.springframework.data.domain.PageRequest;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,6 +32,27 @@ public class ChatDTO {
 
     }
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MessageDTO {
+        private Long messageId;
+        private Long chatRoomId;
+        private Long senderId;
+        private String content;
+        private LocalDateTime timeStamp;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Builder
+    public static class MessageListDTO {
+
+        private List<MessageDTO> messages;
+    }
+
 
     @NoArgsConstructor
     @AllArgsConstructor
@@ -62,21 +81,21 @@ public class ChatDTO {
     @Getter
     @Builder
     @Setter
-    public static class MessageDTO {
+    public static class SocketMessageDTO {
+
         public enum MessageType {
-            ENTER, CHAT, LEAVE
+            ENTER, CHAT, LEAVE;
+
         }
 
+        private String message;
         private MessageType messageType;
         private Long chatRoomId;
         private Long senderId;
-        private String message;
     }
 
 
 
-
-    //------------Response------------ //
 
     @NoArgsConstructor
     @AllArgsConstructor

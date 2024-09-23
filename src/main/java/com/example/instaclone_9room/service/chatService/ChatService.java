@@ -19,10 +19,14 @@ public interface ChatService {
 
     ChatDTO.UserLeaveResp leaveUser(String userName, Long chatRoomId);
 
+    ChatDTO.MessageListDTO getMessageList(String userName, Long chatRoomId);
+
+    void deleteMessage();
+
 
     // ------ 세션 사용 ----- //
 
-    void saveMessage(ChatDTO.MessageDTO messageDTO);
+    void saveMessage(ChatDTO.SocketMessageDTO socketMessageDTO);
 
 
 

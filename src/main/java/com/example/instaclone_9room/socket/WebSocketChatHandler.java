@@ -46,10 +46,10 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         log.info("payload {}", payload);
 
         // 페이로드 -> MessageDTO로 변환
-        ChatDTO.MessageDTO messageDTO = mapper.readValue(payload, ChatDTO.MessageDTO.class);
-        log.info("session {}", messageDTO.toString());
+        ChatDTO.SocketMessageDTO socketMessageDTO = mapper.readValue(payload, ChatDTO.SocketMessageDTO.class);
+        log.info("session {}", socketMessageDTO.toString());
 
-        Long chatRoomId = messageDTO.getChatRoomId();
+        Long chatRoomId = socketMessageDTO.getChatRoomId();
 
         // 메모리 상에 채팅방에 대한 세션 없으면 생성
         if (!chatRoomSessionMap.containsKey(chatRoomId)) {
@@ -57,16 +57,16 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         }
         Set<WebSocketSession> chatRoomSession = chatRoomSessionMap.get(chatRoomId);
 
-        switch (messageDTO.getMessageType()) {
+        switch (socketMessageDTO.getMessageType()) {
             case ENTER:
                 chatRoomSession.add(session);
                 break;
             case CHAT:
-                service.saveMessage(messageDTO);
-                sendMessageToChatRoom(messageDTO, chatRoomSession);
+                service.saveMessage(socketMessageDTO);
+                sendMessageToChatRoom(socketMessageDTO, chatRoomSession);
                 break;
             default:
-                log.warn("알 수 없는 메시지 타입: {}", messageDTO.getMessageType());
+                log.warn("알 수 없는 메시지 타입: {}", socketMessageDTO.getMessageType());
         }
     }
 
@@ -100,8 +100,8 @@ public class WebSocketChatHandler extends TextWebSocketHandler {
         chatRoomSession.removeIf(sess -> !sessions.contains(sess));
     }
 
-    public void sendMessageToChatRoom(ChatDTO.MessageDTO messageDTO, Set<WebSocketSession> chatRoomSession) {
-        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, messageDTO));//2
+    public void sendMessageToChatRoom(ChatDTO.SocketMessageDTO socketMessageDTO, Set<WebSocketSession> chatRoomSession) {
+        chatRoomSession.parallelStream().forEach(sess -> sendMessage(sess, socketMessageDTO));//2
     }
 
     // 모든 세션에 메시지 브로드캐스트 (Optional)

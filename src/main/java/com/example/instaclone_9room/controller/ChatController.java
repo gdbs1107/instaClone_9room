@@ -136,4 +136,27 @@ public class ChatController {
 
     }
 
+    @Operation(
+            summary = "메시지 조회 API",
+            description = "채팅방에 있는 메세지를 조회하는 API입니다. 채팅방에 있는 모든 메세지를 조회합니다."
+    )
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2001", description = "유효하지 않은 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2002", description = "만료된 토큰입니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "TOKEN2003", description = "토큰이 존재하지 않습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "MEMBER3001", description = "사용자를 찾을 수 없습니다"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "COMMON1001", description = "서버에러, 관리자에게 문의 바랍니다",
+                    content = @Content(schema = @Schema(implementation = com.example.instaclone_9room.apiPayload.ApiResponse.class)))
+
+    })
+    @GetMapping("/{chatRoomId}")
+    public ApiResponse<ChatDTO.MessageListDTO> getMessageList(@PathVariable Long chatRoomId,
+                                                                  @AuthenticationPrincipal UserDetails userDetails) {
+
+        ChatDTO.MessageListDTO response = chatService.getMessageList(userDetails.getUsername(), chatRoomId);
+
+        return ApiResponse.onSuccess(response);
+
+    }
+
 }

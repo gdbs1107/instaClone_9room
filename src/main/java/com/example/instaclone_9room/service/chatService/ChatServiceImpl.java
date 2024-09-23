@@ -257,6 +257,26 @@ public class ChatServiceImpl implements ChatService {
         return new ChatDTO.UserLeaveResp(findUser.getId(), chatRoomId);
     }
 
+    @Override
+    public ChatDTO.MessageListDTO getMessageList(String userName, Long chatRoomId) {
+
+
+        List<ChatPart> chatParts = findAllByChatRoomId(chatRoomId);
+
+        List<ChatDTO.MessageDTO> messageDTOList = chatParts.stream()
+                .flatMap(chatPart -> chatPart.getMessageList().stream())
+                .map(ChatConverter::convertToMessageDTO)
+                .sorted(Comparator.comparing(ChatDTO.MessageDTO::getTimeStamp)) // 시간 기준으로 정렬 (오래된 순)
+                .toList();
+        return ChatDTO.MessageListDTO.builder()
+                .messages(messageDTOList)
+                .build();
+
+    }
+
+    public void deleteMessage() {
+    }
+
 
     @Override
     public void chatRoomDelete(Long chatRoomId, String userName) {
@@ -267,13 +287,13 @@ public class ChatServiceImpl implements ChatService {
     // -----------------------소켓 통신 사용 예정----------------------- //
 
     @Override
-    public void saveMessage(ChatDTO.MessageDTO messageDTO) {
+    public void saveMessage(ChatDTO.SocketMessageDTO socketMessageDTO) {
         // 로그 추가: chatRoomId와 senderId 확인
-        log.info("Saving message with chatRoomId: {}, senderId: {}", messageDTO.getChatRoomId(), messageDTO.getSenderId());
+        log.info("Saving message with chatRoomId: {}, senderId: {}", socketMessageDTO.getChatRoomId(), socketMessageDTO.getSenderId());
 
-        ChatPart chatPart = findChatPartByChatRoomIdAndUserId(messageDTO.getChatRoomId(), messageDTO.getSenderId());
+        ChatPart chatPart = findChatPartByChatRoomIdAndUserId(socketMessageDTO.getChatRoomId(), socketMessageDTO.getSenderId());
 
-        Message message = ChatConverter.toMessage(messageDTO, chatPart);
+        Message message = ChatConverter.toSocketMessage(socketMessageDTO, chatPart);
 
         messageRepository.save(message);
     }
@@ -292,6 +312,10 @@ public class ChatServiceImpl implements ChatService {
     private ChatPart findChatPartByChatRoomIdAndUserId(Long chatRoomId, Long userId) {
         return chatPartRepository.findChatPartByChatRoomIdAndUserEntityId(chatRoomId, userId)
                 .orElseThrow(() -> new ChatCategoryHandler(ErrorStatus.CHATPART_NOT_FOUND));
+    }
+
+    private List<ChatPart> findAllByChatRoomId(Long chatRoomId) {
+        return chatPartRepository.findAllByChatRoomId(chatRoomId);
     }
 
 }
