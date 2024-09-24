@@ -5,9 +5,7 @@ import com.example.instaclone_9room.jwt.CustomLogoutFilter;
 import com.example.instaclone_9room.jwt.JWTFilter;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.jwt.LoginFilter;
-import com.example.instaclone_9room.oauth.CustomSuccessHandler;
 import com.example.instaclone_9room.repository.RefreshRepository;
-import com.example.instaclone_9room.service.oauth2Service.CustomOAuth2UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -38,8 +36,6 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final CustomSuccessHandler customSuccessHandler;
 
 
 
@@ -92,13 +88,6 @@ public class SecurityConfig {
         http.httpBasic((auth)->auth.disable());
 
 
-        //oauth2
-        http
-                .oauth2Login((oauth2) -> oauth2
-                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
-                                .userService(customOAuth2UserService))
-                        .successHandler(customSuccessHandler)
-                );
 
 
         //인가 구현
