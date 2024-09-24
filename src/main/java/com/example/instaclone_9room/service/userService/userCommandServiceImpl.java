@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.service.userService;
 
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.ImageCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.TokenCategoryHandler;
 import com.example.instaclone_9room.controller.dto.JoinDto;
@@ -8,6 +9,7 @@ import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.converter.UserConverter;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.enumPackage.Gender;
+import com.example.instaclone_9room.domain.userEntity.UserProfileImage;
 import com.example.instaclone_9room.jwt.JwtUtil;
 import com.example.instaclone_9room.repository.RefreshRepository;
 import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
@@ -16,6 +18,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -128,6 +132,7 @@ public class userCommandServiceImpl implements UserCommandService {
 
         Gender gender = UserConverter.toGender(joinDto.getGenderType());
 
+        //일반로그인에서는 이메일을 요구하지 않기 때문에 temp 기입
         UserEntity userEntity = UserEntity.builder()
                 .username(username)
                 .password(bCryptPasswordEncoder.encode(password))
@@ -139,6 +144,7 @@ public class userCommandServiceImpl implements UserCommandService {
                 .onPrivate(false)
                 .followerCount(0)
                 .followCount(0)
+                .email("temp@temp.com")
                 .build();
 
         userRepository.save(userEntity);
@@ -162,9 +168,10 @@ public class userCommandServiceImpl implements UserCommandService {
     public UserDTO.UserGetHomeResponseDTO userGetHomeProfile(String username){
 
         UserEntity user = findUser(username);
-        return UserConverter.toUserGetHomeResponseDTO(user);
-    }
+        UserProfileImage findImage = getFindImage(user);
 
+        return UserConverter.toUserGetHomeResponseDTO(user, findImage);
+    }
 
 
     @Override
@@ -193,7 +200,24 @@ public class userCommandServiceImpl implements UserCommandService {
     }
 
 
-    //프로필 사진 넣기 API
+    @Override
+    public void setUserInfo(UserDTO.UserSetInfo request, String username){
+        UserEntity user = findUser(username);
+
+        Gender gender = UserConverter.toGender(request.getGenderType());
+
+        user.setUserInfo(
+                false,
+                null,
+                0,
+                0,
+                gender,
+                request.getBirthday(),
+                request.getLink()
+        );
+
+        userRepository.save(user);
+    }
 
 
 
@@ -203,6 +227,11 @@ public class userCommandServiceImpl implements UserCommandService {
         return userRepository.findByUsername(username).orElseThrow(
                 ()->new MemberCategoryHandler(ErrorStatus.MEMBER_NOT_FOUND)
         );
+    }
+
+    private static UserProfileImage getFindImage(UserEntity user) {
+        return user.getUserProfileImages().stream()
+                .findFirst().orElseThrow(() -> new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_FOUND));
     }
 
 

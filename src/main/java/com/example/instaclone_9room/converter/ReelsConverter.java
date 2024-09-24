@@ -4,6 +4,7 @@ import com.example.instaclone_9room.controller.dto.ReelsCommentDTO;
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.reels.Reels;
+import com.example.instaclone_9room.domain.userEntity.UserProfileImage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public class ReelsConverter {
                 .build();
     }
 
-    public static ReelsDTO.ReelsResponseDTO toReelsResponseDTO(Reels reels, UserEntity user) {
+    public static ReelsDTO.ReelsResponseDTO toReelsResponseDTO(Reels reels, UserEntity user, UserProfileImage userProfileImage) {
         List<ReelsCommentDTO.CommentPostResponseDTO> reelsCommentDTOs = reels.getReelsComments().stream()
                 .map(comment -> ReelsCommentDTO.CommentPostResponseDTO.builder()
                         .content(comment.getContent())
@@ -40,7 +41,7 @@ public class ReelsConverter {
                 .commentCount(reels.getCommentCount())
                 .likeCount(reels.getLikesCount())
                 .content(reels.getContent())
-                .imagePath(user.getImagePath())
+                .imagePath(userProfileImage.getFilePath())
                 .name(user.getName())
                 .build();
     }

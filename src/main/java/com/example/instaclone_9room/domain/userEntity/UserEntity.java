@@ -31,7 +31,6 @@ public class UserEntity extends BaseEntity {
     @Column(name = "user_entity_id")
     private Long id;
 
-    @Column(nullable = false,unique = true, length = 20)
     private String username;
 
     //해싱돼서 제한을 걸 수 없음
@@ -55,9 +54,6 @@ public class UserEntity extends BaseEntity {
     @Column(length = 30)
     private String link;
 
-    private String imageName;
-    private String imagePath;
-
     @Nullable
     private Integer followCount;
     @Nullable
@@ -65,6 +61,7 @@ public class UserEntity extends BaseEntity {
 
 
 
+    private String email;
 
 
 
@@ -127,6 +124,32 @@ public class UserEntity extends BaseEntity {
         this.followerCount--;
     }
 
+
+    public void setEmail(String email) {
+        if (email != null) {
+            this.email = email;
+        }
+    }
+
+    public void setName(String name) {
+        if (name != null) {
+            this.name=name;
+        }
+    }
+
+
+    //소셜로그인 후 상세정보 입력하는 메서드
+    public void setUserInfo(Boolean onPrivate,String introduction,Integer followCount,Integer followerCount,Gender gender,
+                            LocalDate birthdate,String link){
+
+        this.onPrivate=onPrivate;
+        this.introduction=introduction;
+        this.followCount=followCount;
+        this.followerCount=followerCount;
+        this.gender=gender;
+        this.birthday=birthdate;
+        this.link=link;
+    }
 
 
 

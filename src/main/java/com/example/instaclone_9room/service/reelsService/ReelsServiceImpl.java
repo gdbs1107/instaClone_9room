@@ -1,12 +1,14 @@
 package com.example.instaclone_9room.service.reelsService;
 
 import com.example.instaclone_9room.apiPayload.code.status.ErrorStatus;
+import com.example.instaclone_9room.apiPayload.exception.handler.ImageCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.MemberCategoryHandler;
 import com.example.instaclone_9room.apiPayload.exception.handler.ReelsCategoryHandler;
 import com.example.instaclone_9room.controller.dto.ReelsDTO;
 import com.example.instaclone_9room.converter.ReelsConverter;
 import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import com.example.instaclone_9room.domain.reels.Reels;
+import com.example.instaclone_9room.domain.userEntity.UserProfileImage;
 import com.example.instaclone_9room.repository.reelsRepository.ReelsRepository;
 import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +40,9 @@ public class ReelsServiceImpl implements ReelsService {
 
         Reels findReels = findReels(reelsId);
         UserEntity userEntity = findReels.getUserEntity();
+        UserProfileImage findImage = getFindImage(userEntity);
 
-        return ReelsConverter.toReelsResponseDTO(findReels, userEntity);
+        return ReelsConverter.toReelsResponseDTO(findReels, userEntity, findImage);
 
     }
 
@@ -49,6 +52,8 @@ public class ReelsServiceImpl implements ReelsService {
     public ReelsDTO.ReelsResponseDTO getReelsByPage(String username, int page) {
 
         UserEntity user = findUser(username);
+        UserProfileImage findImage = getFindImage(user);
+
 
         Page<Reels> reelsPage = reelsRepository.findAllByUserEntity_Id(
                 user.getId(),
@@ -57,7 +62,7 @@ public class ReelsServiceImpl implements ReelsService {
 
         if (reelsPage.hasContent()) {
             Reels reels = reelsPage.getContent().get(0); // 한 페이지에 하나만 있으므로 첫 번째 항목을 가져옴
-            return new ReelsConverter().toReelsResponseDTO(reels, user);
+            return new ReelsConverter().toReelsResponseDTO(reels, user,findImage);
         } else {
             throw new ReelsCategoryHandler(ErrorStatus.REELS_END);
         }
@@ -112,5 +117,10 @@ public class ReelsServiceImpl implements ReelsService {
     private Reels findReels(Long id) {
         return reelsRepository.findById(id)
                 .orElseThrow(() -> new ReelsCategoryHandler(ErrorStatus.REELS_NOT_FOUND));
+    }
+
+    private static UserProfileImage getFindImage(UserEntity user) {
+        return user.getUserProfileImages().stream()
+                .findFirst().orElseThrow(() -> new ImageCategoryHandler(ErrorStatus.IMAGE_NOT_FOUND));
     }
 }
