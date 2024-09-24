@@ -1,7 +1,8 @@
 package com.example.instaclone_9room.controller.feedController;
 
 import com.example.instaclone_9room.apiPayload.ApiResponse;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.service.feedService.FeedLikesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

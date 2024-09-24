@@ -7,10 +7,11 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.converter.feedConverter.ImageConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
 import com.example.instaclone_9room.repository.postRepository.ImageRepository;
 import lombok.RequiredArgsConstructor;

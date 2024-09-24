@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.repository.storyRepository;
 
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.FeedLikes;
 import com.example.instaclone_9room.domain.storyEntitiy.Story;

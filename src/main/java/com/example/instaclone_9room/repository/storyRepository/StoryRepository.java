@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.repository.storyRepository;
 
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.storyEntitiy.Story;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

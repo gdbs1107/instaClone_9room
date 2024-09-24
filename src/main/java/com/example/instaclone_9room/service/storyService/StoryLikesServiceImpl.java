@@ -1,11 +1,12 @@
 package com.example.instaclone_9room.service.storyService;
 
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.FeedLikes;
 import com.example.instaclone_9room.domain.storyEntitiy.Story;
 import com.example.instaclone_9room.domain.storyEntitiy.StoryLikes;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.storyRepository.StoryLikesRepository;
 import com.example.instaclone_9room.repository.storyRepository.StoryRepository;
 import lombok.RequiredArgsConstructor;

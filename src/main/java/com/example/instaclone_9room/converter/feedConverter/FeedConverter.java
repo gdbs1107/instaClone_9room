@@ -2,7 +2,8 @@ package com.example.instaclone_9room.converter.feedConverter;
 
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedCommentDTO;
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
 import lombok.RequiredArgsConstructor;

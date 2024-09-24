@@ -1,9 +1,10 @@
 package com.example.instaclone_9room.service.feedService;
 
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.FeedLikes;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedLikesRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
 import jakarta.transaction.Transactional;

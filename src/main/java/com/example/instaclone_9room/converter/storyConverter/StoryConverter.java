@@ -1,7 +1,8 @@
 package com.example.instaclone_9room.converter.storyConverter;
 
 import com.example.instaclone_9room.controller.dto.storyDTO.StoryDTO;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.storyEntitiy.Story;
 
 import java.util.List;

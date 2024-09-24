@@ -1,6 +1,7 @@
 package com.example.instaclone_9room.controller.dto.storyDTO;
 
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

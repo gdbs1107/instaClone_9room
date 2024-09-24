@@ -7,9 +7,10 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.example.instaclone_9room.controller.dto.storyDTO.StoryDTO;
 import com.example.instaclone_9room.converter.storyConverter.StoryConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.storyEntitiy.Story;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.storyRepository.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

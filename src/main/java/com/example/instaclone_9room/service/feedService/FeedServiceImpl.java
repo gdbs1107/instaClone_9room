@@ -5,10 +5,11 @@ import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.converter.feedConverter.FeedConverter;
 import com.example.instaclone_9room.converter.feedConverter.ImageConverter;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
+
 import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
-import com.example.instaclone_9room.repository.UserRepository;
+import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
 import com.example.instaclone_9room.repository.postRepository.ImageRepository;
 import io.jsonwebtoken.io.IOException;
