@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface ImageRepository extends JpaRepository<Image, Long> {
+public interface FeedImageRepository extends JpaRepository<Image, Long> {
 
     @Query("select i from Image i where i.fileName = :fileName")
     Optional<Image> findByFileName(@Param("fileName")String fileName);
