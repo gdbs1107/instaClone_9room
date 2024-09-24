@@ -76,7 +76,7 @@ public class SecurityConfig {
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
 
-                        // exposedHeaders에 중복 설정 제거하고, 두 개의 헤더를 노출
+                        // exposedHeaders에 중복 설정 제거하고, 세 개의 헤더를 노출
                         configuration.setExposedHeaders(Arrays.asList("Set-Cookie", "access", "Authorization"));
 
                         return configuration;
@@ -87,8 +87,6 @@ public class SecurityConfig {
 
         //csrf는 rest구조에서 필요없음(STATELESS상태이기 때문)
         http.csrf((auth)->auth.disable());
-
-        //위와 동
         http.formLogin((auth)->auth.disable());
         http.httpBasic((auth)->auth.disable());
 

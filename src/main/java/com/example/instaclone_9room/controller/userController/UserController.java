@@ -4,7 +4,6 @@ import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.JoinDto;
 import com.example.instaclone_9room.controller.dto.UserDTO;
 import com.example.instaclone_9room.service.userService.UserCommandService;
-import com.example.instaclone_9room.service.userService.UserProfileImageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
