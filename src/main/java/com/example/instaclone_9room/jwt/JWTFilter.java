@@ -28,56 +28,39 @@ public class JWTFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        log.info("JWTFilter가 작동합니다");
+        // 헤더에서 Authorization 토큰을 꺼냄
+        String authorizationHeader = request.getHeader("Authorization");
+        log.info("토큰 탐색 시작");
 
-        // 우선 헤더에서 access 키에 담긴 토큰을 꺼냄
-        String accessToken = request.getHeader("access");
-
-        // 토큰 파싱을 위한 "Bearer " 제거 및 공백 제거
-        if (accessToken != null && accessToken.startsWith("Bearer ")) {
-            accessToken = accessToken.substring(7).trim();
-        }
-
-        // 만약 헤더에 accessToken이 없다면 쿠키에서 찾음
-        if (accessToken == null) {
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("access")) {
-                        accessToken = cookie.getValue();
-                        break;
-                    }
-                }
-            }
-        }
-
-        // 헤더와 쿠키에서 모두 accessToken을 찾지 못하면 다음 필터로 넘김
-        if (accessToken == null) {
+        // Authorization 헤더가 없거나 Bearer 스킴이 없으면 다음 필터로 이동
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
+            log.info("토큰 없음");
             return;
         }
 
+        // Bearer 뒤의 토큰을 추출
+        String accessToken = authorizationHeader.substring(7).trim();
+
         // 토큰 만료 여부 확인
         try {
+            log.info("토큰 있어서 검증 시작");
             jwtUtil.isExpired(accessToken);
         } catch (ExpiredJwtException e) {
-            PrintWriter writer = response.getWriter();
-            writer.print("access token expired");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().print("access token expired");
             return;
         }
 
         // 토큰이 access인지 확인
         String category = jwtUtil.getCategory(accessToken);
-
         if (!category.equals("access")) {
-            PrintWriter writer = response.getWriter();
-            writer.print("invalid access token");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().print("invalid access token");
             return;
         }
 
-        // 토큰에서 username과 role 획득
+        // username, role 값을 획득
         String username = jwtUtil.getUsername(accessToken);
         String role = jwtUtil.getRole(accessToken);
 
@@ -93,6 +76,5 @@ public class JWTFilter extends OncePerRequestFilter{
 
         filterChain.doFilter(request, response);
     }
-
 
 }
