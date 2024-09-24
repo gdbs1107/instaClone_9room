@@ -13,7 +13,7 @@ import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
 import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
-import com.example.instaclone_9room.repository.postRepository.ImageRepository;
+import com.example.instaclone_9room.repository.postRepository.FeedImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
     
     
     private final UserRepository userRepository;
-    private final ImageRepository imageRepository;
+    private final FeedImageRepository feedImageRepository;
     private final FeedRepository feedRepository;
     private final AmazonS3 s3Client;
     
@@ -51,7 +51,7 @@ public class ImageServiceImpl implements ImageService {
                     .map(file -> uploadImage(dirName, file))
                     .collect(Collectors.toList());
             
-            imageRepository.saveAll(images);
+            feedImageRepository.saveAll(images);
         } catch (Exception e) {
             throw new RuntimeException("Failed to upload images", e);
         }
@@ -61,7 +61,7 @@ public class ImageServiceImpl implements ImageService {
     
     @Override
     public void deleteImage(String fileName) throws FileNotFoundException {
-        Image image = imageRepository.findByFileName(fileName).orElseThrow(
+        Image image = feedImageRepository.findByFileName(fileName).orElseThrow(
                 () -> new FileNotFoundException("Image not found: " + fileName));
         
         // S3에서 이미지 삭제
@@ -72,12 +72,12 @@ public class ImageServiceImpl implements ImageService {
         }
         
         // 데이터베이스에서 이미지 레코드 삭제
-        imageRepository.delete(image);
+        feedImageRepository.delete(image);
     }
     
     @Override
     public ImageDTO.ImageResponseDTO findImageByFileName(String fileName) {
-        Image image = imageRepository.findByFileName(fileName).orElseThrow(
+        Image image = feedImageRepository.findByFileName(fileName).orElseThrow(
                 () -> new RuntimeException("Image not found: " + fileName));
         
         return ImageDTO.ImageResponseDTO.builder()

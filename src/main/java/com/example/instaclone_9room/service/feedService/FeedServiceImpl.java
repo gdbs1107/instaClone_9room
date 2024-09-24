@@ -1,6 +1,5 @@
 package com.example.instaclone_9room.service.feedService;
 
-import com.example.instaclone_9room.apiPayload.ApiResponse;
 import com.example.instaclone_9room.controller.dto.feedDTO.FeedDTO;
 import com.example.instaclone_9room.controller.dto.feedDTO.ImageDTO;
 import com.example.instaclone_9room.converter.feedConverter.FeedConverter;
@@ -11,7 +10,7 @@ import com.example.instaclone_9room.domain.feedEntity.Feed;
 import com.example.instaclone_9room.domain.feedEntity.Image;
 import com.example.instaclone_9room.repository.userEntityRepository.UserRepository;
 import com.example.instaclone_9room.repository.postRepository.FeedRepository;
-import com.example.instaclone_9room.repository.postRepository.ImageRepository;
+import com.example.instaclone_9room.repository.postRepository.FeedImageRepository;
 import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class FeedServiceImpl implements FeedService {
     
     private final FeedRepository feedRepository;
     private final UserRepository userRepository;
-    private final ImageRepository imageRepository;
+    private final FeedImageRepository feedImageRepository;
     
     
     @Override
@@ -43,14 +42,14 @@ public class FeedServiceImpl implements FeedService {
         List<Image> images = new ArrayList<>();
         
         for (String fileName : fileNames) {
-            Image image = imageRepository.findByFileName(fileName).orElseThrow(
+            Image image = feedImageRepository.findByFileName(fileName).orElseThrow(
                     () -> new RuntimeException("image not found"));
             images.add(image);
         }
         
         Feed newFeed = FeedConverter.toFeed(req, user, images);
         
-        imageRepository.saveAll(images);
+        feedImageRepository.saveAll(images);
         feedRepository.save(newFeed);
     }
     
@@ -73,7 +72,7 @@ public class FeedServiceImpl implements FeedService {
         
         existingFeed.update(req.getContent(), req.getLocation()); //본문 지역 제거
         
-        imageRepository.saveAll(existingFeed.getImages());
+        feedImageRepository.saveAll(existingFeed.getImages());
         feedRepository.save(existingFeed);
     }
     
