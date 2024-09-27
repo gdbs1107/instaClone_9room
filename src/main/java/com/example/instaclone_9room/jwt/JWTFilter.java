@@ -2,21 +2,25 @@ package com.example.instaclone_9room.jwt;
 
 
 import com.example.instaclone_9room.controller.dto.CustomUserDetails;
-import com.example.instaclone_9room.domain.UserEntity;
+import com.example.instaclone_9room.domain.userEntity.UserEntity;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JWTFilter extends OncePerRequestFilter{
 
     private final JwtUtil jwtUtil;
@@ -26,10 +30,12 @@ public class JWTFilter extends OncePerRequestFilter{
 
         // 헤더에서 Authorization 토큰을 꺼냄
         String authorizationHeader = request.getHeader("Authorization");
+        log.info("토큰 탐색 시작");
 
         // Authorization 헤더가 없거나 Bearer 스킴이 없으면 다음 필터로 이동
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
+            log.info("토큰 없음");
             return;
         }
 
@@ -38,6 +44,7 @@ public class JWTFilter extends OncePerRequestFilter{
 
         // 토큰 만료 여부 확인
         try {
+            log.info("토큰 있어서 검증 시작");
             jwtUtil.isExpired(accessToken);
         } catch (ExpiredJwtException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
