@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: test
-  config:
-    activate:
-      on-profile: dev
