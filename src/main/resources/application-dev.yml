@@ -22,30 +22,29 @@ spring:
           auto: update
         default_batch_fetch_size: 1000
 
-
-
   jwt:
     secret: ${JWT_SECRET}
 
-  springdoc:
-    show-login-endpoint: true
+springdoc:
+  show-login-endpoint: true
 
-    logging:
-      level:
-        org:
-          hibernate:
-            SQL: debug
-            type: trace
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: debug
+          type: trace
 
-  cloud:
-    aws:
-      s3:
-        bucket: insta-clone-coding-bucket
-      credentials:
-        accessKey: ${S3_ACESSKEY}
-        secretKey: ${S3_SECRETKEY}
-      region:
-        static: ap-northeast-2
-        auto: false
-      stack:
-        auto: false
+cloud:
+  aws:
+    s3:
+      bucket: insta-clone-coding-bucket
+    credentials:
+      accessKey: ${S3_ACESSKEY}
+      secretKey: ${S3_SECRETKEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
