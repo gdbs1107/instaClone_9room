@@ -1,4 +1,4 @@
-name: UMC Dev CI/CD
+name: instaClone_9room CI/CD
 
 on:
   pull_request:
