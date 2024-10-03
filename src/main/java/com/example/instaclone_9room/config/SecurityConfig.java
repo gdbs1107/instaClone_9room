@@ -96,6 +96,7 @@ public class SecurityConfig {
                 .requestMatchers("/reissue").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll() // Swagger 관련 경로를 허용
                 .requestMatchers("/ws/**").permitAll()
+                .requestMatchers("/health").permitAll()
                 .anyRequest().authenticated());
 
         http
