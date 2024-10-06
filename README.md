@@ -1,2 +1,4 @@
 구름톤 인스타 클론코딩
-![image](https://github.com/user-attachments/assets/a01194e9-27dc-44c8-9e3d-dd50693353d0)
+
+
+<img width="509" alt="image" src="https://github.com/user-attachments/assets/a03c3749-150a-40dc-9ed0-c9b7fea58957">
