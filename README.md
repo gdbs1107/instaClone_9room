@@ -12,10 +12,10 @@
 
 <h2>주요 기능</h2>
 <ul>
-<li><strong>유저 인증</strong>: Spring Security를 이용한 회원가입 및 로그인 기능, OAuth2 소셜 로그인을 지원 (구글, 카카오, 네이버).</li>
+<li><strong>유저 인증</strong>: Spring Security,JWT를 이용하여 Refresh,Access Token 기능.</li>
 <li><strong>피드 & 릴스</strong>: 유저가 이미지와 영상을 업로드하고, 좋아요 및 댓글을 달 수 있는 기능.</li>
 <li><strong>스토리</strong>: 인스타그램의 스토리 기능 구현.</li>
 <li><strong>팔로우 & 팔로워</strong>: 유저 간 팔로우, 팔로워 관계를 맺고 관리할 수 있는 기능.</li>
 <li><strong>댓글 & 좋아요</strong>: 게시물, 댓글, 스토리, 릴스에 대한 좋아요와 댓글 기능.</li>
-<li><strong>채팅</strong>: 유저 간 실시간 채팅 기능 구현.</li>
+<li><strong>채팅</strong>: Spring WebSocket, STOMP 를 이용한 유저 간 실시간 채팅 기능 구현.</li>
 </ul>
