@@ -19,3 +19,14 @@
 <li><strong>댓글 & 좋아요</strong>: 게시물, 댓글, 스토리, 릴스에 대한 좋아요와 댓글 기능.</li>
 <li><strong>채팅</strong>: Spring WebSocket, STOMP 를 이용한 유저 간 실시간 채팅 기능 구현.</li>
 </ul>
+
+
+
+<h2>기술 스택</h2>
+<ul>
+<li><strong>Backend</strong>: Java Spring, Spring Security, Spring WebSocket ...</li>
+<li><strong>Database</strong>: MySQL (AWS RDS)</li>
+<li><strong>Cloud</strong>: AWS (EC2, ELB, RDS, S3)</li>
+<li><strong>CI/CD</strong>: Git, GitHub, GitHub Actions</li>
+<li><strong>Other</strong>: Docker</li>
+</ul>
