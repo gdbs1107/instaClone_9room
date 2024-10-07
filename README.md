@@ -35,3 +35,11 @@
 <p>다음은 해당 프로젝트의 ERD(Entity Relationship Diagram)입니다:</p>
 <img width="976" alt="스크린샷 2024-10-07 오전 9 24 36" src="https://github.com/user-attachments/assets/25f40147-d6da-49a4-8097-682ded279f96">
 
+
+<h3>배포 환경</h3>
+<ul>
+<li><strong>AWS EC2</strong>: 애플리케이션 서버 호스팅</li>
+<li><strong>AWS RDS</strong>: MySQL 데이터베이스 호스팅</li>
+<li><strong>AWS S3</strong>: 이미지 및 영상 파일 저장소</li>
+<li><strong>GitHub Actions</strong>: CI/CD 파이프라인 설정</li>
+</ul>
