@@ -33,3 +33,5 @@
 
 <h2>ERD</h2>
 <p>다음은 해당 프로젝트의 ERD(Entity Relationship Diagram)입니다:</p>
+<img width="976" alt="스크린샷 2024-10-07 오전 9 24 36" src="https://github.com/user-attachments/assets/25f40147-d6da-49a4-8097-682ded279f96">
+
