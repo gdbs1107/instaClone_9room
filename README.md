@@ -30,3 +30,6 @@
 <li><strong>CI/CD</strong>: Git, GitHub, GitHub Actions</li>
 <li><strong>Other</strong>: Docker</li>
 </ul>
+
+<h2>ERD</h2>
+<p>다음은 해당 프로젝트의 ERD(Entity Relationship Diagram)입니다:</p>
