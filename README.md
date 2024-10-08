@@ -55,5 +55,6 @@
 <h2>기술명세서</h2>
 <ul>
 <p>다음은 해당 프로젝트의 기술명세서 입니다:</p>
-<img width="1461" alt="SCR-20241008-jcpe" src="https://github.com/user-attachments/assets/f0d6f122-c669-4dda-9e45-9a64bdd17c5b">
+<img width="1461" alt="SCR-20241008-jcpe" src="https://github.com/user-attachments/assets/5f4ebe7e-90b0-48cb-a8ce-3d8483d3b400">
+
 </ul>
