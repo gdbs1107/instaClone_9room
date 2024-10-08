@@ -42,7 +42,7 @@
 <br>
 <br>
 
-<h3>배포 환경</h3>
+<h2>배포 환경</h2>
 <ul>
 <li><strong>AWS EC2</strong>: 애플리케이션 서버 호스팅</li>
 <li><strong>AWS RDS</strong>: MySQL 데이터베이스 호스팅</li>
@@ -52,7 +52,7 @@
 <br>
 <br>
 
-<h4>기술명세서</h4>
+<h2>기술명세서</h2>
 <ul>
 <p>다음은 해당 프로젝트의 기술명세서 입니다:</p>
 <img width="1461" alt="SCR-20241008-jcpe" src="https://github.com/user-attachments/assets/f0d6f122-c669-4dda-9e45-9a64bdd17c5b">
