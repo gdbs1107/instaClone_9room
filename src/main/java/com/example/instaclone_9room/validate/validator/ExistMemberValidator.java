@@ -25,7 +25,6 @@ public class ExistMemberValidator implements ConstraintValidator<ExistMember, Lo
     public boolean isValid(Long userId, ConstraintValidatorContext context) {
         boolean isValid;
         ErrorStatus errorStatus;
-        // null is invalid
         if (userId == null) {
             errorStatus = ErrorStatus.MEMBER_NOT_FOUND;
             isValid = false;
