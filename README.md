@@ -49,3 +49,11 @@
 <li><strong>AWS S3</strong>: 이미지 및 영상 파일 저장소</li>
 <li><strong>GitHub Actions</strong>: CI/CD 파이프라인 설정</li>
 </ul>
+<br>
+<br>
+
+<h4>기술명세서</h4>
+<ul>
+<p>다음은 해당 프로젝트의 기술명세서 입니다:</p>
+<img width="1461" alt="SCR-20241008-jcpe" src="https://github.com/user-attachments/assets/f0d6f122-c669-4dda-9e45-9a64bdd17c5b">
+</ul>
